@@ -1,0 +1,29 @@
+We compiled complete human mitochondrial genomes for 13 representatives of major haplogroups 
+from NCBI, then extracted HVR1 (Hypervariable Region 1, positions 16024-16569 of the rCRS, ~546 nt).
+
+Human mitochondrial DNA is inherited maternally without recombination, so mutations accumulate 
+along strictly maternal lineages — making phylogenetic trees trace human migration out of Africa. 
+The tree rooted at haplogroup L0 (San Bushmen of southern Africa, ~200,000 years ago) and L1 is 
+the oldest split in the human mtDNA tree. Haplogroup L3, originating in East Africa ~70,000 years 
+ago, is the ancestor of every non-African haplogroup. From L3, two major branches emerged: 
+haplogroup M (dominant in South and East Asia) and haplogroup N (Eurasian). The European 
+haplogroups H, J, and T all derive from N, with H being the most common (~44% of Europeans). 
+Haplogroups A and B (from N) and C and D (from M) are among the five founding haplogroups of 
+Indigenous Americans, reflecting the peopling of the New World via Beringia ~15,000-20,000 years ago.
+
+Haplogroup assignments:
+- L0: San/KhoeSan (South Africa) — deepest branch, ~200 kya
+- L1: Yoruba (West Africa)
+- L3: Ethiopian — ancestor of M and N clades
+- M: Indian — founding Asian haplogroup
+- C: Evenki (Siberia) — markers C16223T, T16298C, C16327T
+- D: Japanese — markers C16223T, T16362C (East Asian)
+- N: Bedouin — Eurasian ancestor
+- R: Czech — major Eurasian subgroup of N
+- H: rCRS reference — most common European haplogroup (~44%)
+- J: German — markers C16069T, T16126C (~7% European)
+- T: Georgian — markers T16126C, C16294T (~10% European)
+- A: Ojibwe (Native American) — founding Americas haplogroup
+- B: Polynesian — found in Pacific and Native Americas
+
+Pairwise distances are Levenshtein (edit) distances between HVR1 nucleotide sequences (~540-546 nt).

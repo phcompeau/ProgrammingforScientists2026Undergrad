@@ -1,0 +1,13 @@
+We compiled gag polyprotein sequences (~500 amino acids) from reference strains of HIV-1, 
+HIV-2, and SIVcpz from NCBI.
+
+HIV-1 has three main groups: Group M (responsible for the global pandemic) is divided into 
+subtypes A through K, which emerged from separate transmissions of SIVcpz from chimpanzees 
+to humans. Group O (Outlier) and Group N (Non-M, Non-O) represent rare, independent 
+transmissions. HIV-2, which causes a milder disease, originated independently from SIVsm 
+(sooty mangabey), while SIVcpz (chimpanzee SIV) is the direct ancestor of HIV-1. 
+
+This dataset includes representative reference strains for HIV-1 subtypes A, B, C, D, and G, 
+plus the two major HIV-1 groups, HIV-2 Group A and B, and SIVcpz.
+
+Pairwise distances are Levenshtein (edit) distances between gag polyprotein sequences.

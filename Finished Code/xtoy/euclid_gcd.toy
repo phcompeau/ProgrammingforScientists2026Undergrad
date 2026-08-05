@@ -1,0 +1,65 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+//EuclidGCD(a, b)
+//    if a == 0 --> return b
+//    if b == 0 --> return a
+//    while a != b
+//        t = a -b
+//        if t > 0 // a > b
+//            a = t
+//        else
+//            b = t
+//    return a (or b)
+
+function main
+10: 81FF   read R[1]                     // a
+11: 82FF   read R[2]                     //b
+12: 9101   M[01] <- R[1]                 // put in memory
+13: 9202   M[02] <- R[2]
+14: FF20   R[F] <- PC; goto 20           // EuclidGCD() call
+15: 96FF   write R[6]                    
+16: 0000   halt                          
+
+
+function EuclidGCD
+// Input: R1 = a, R2 = b
+// Output: R6 = GCD(a, b)
+// Return address: RF
+// Temp vars: IDGAF
+20: C12C   if (R[1] == 0) goto 2C
+21: C22A   if (R[2] == 0) goto 2A
+
+
+// loop!
+22: 2312   R[3] <- R[1] - R[2]           // R3 = a-b
+23: C32A   if (R[3] == 0) goto 2A        // they are equal, so I am done! return either
+
+// otherwise, if a > b, then a-b >0, so R3 >0
+24: D328   if (R[3] > 0) goto 28         
+
+// if we make it here, what do we know??? a < b
+// set b = b-a
+25: 2321   R[3] <- R[2] - R[1]           // R3 = b-a
+26: 1230   R[2] <- R[3]                  // b = b-a
+27: C022   goto 22                       // go to start of loop
+
+// a is greater case! set a = a-b and loop
+28: 1130   R[1] <- R[3]                  // a = a-b
+29: C022   goto 22                       
+
+
+
+// done, a == b, nonzero
+2A: 1610   R[6] <- R[1]                  // R6 = a (or b)
+2B: EF00   goto R[F]                     // return
+
+// a = 0, so return b
+2C: 1620   R[6] <- R[2]                  // R6 = b
+2D: EF00   goto R[F]                     // return

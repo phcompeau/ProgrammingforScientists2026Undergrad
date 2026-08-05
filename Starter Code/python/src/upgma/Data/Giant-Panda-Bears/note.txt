@@ -1,0 +1,9 @@
+We retrieved cytochrome b protein sequences for 10 species in and around family Ursidae from NCBI.
+
+The placement of the giant panda (Ailuropoda melanoleuca) was one of the most debated questions 
+in mammalian systematics. For decades, biologists argued whether the giant panda was a bear 
+(family Ursidae), a relative of the red panda (family Ailuridae), or something else entirely. 
+Molecular data definitively placed the giant panda within Ursidae — and the red panda in its 
+own distinct family. The spectacled bear (Tremarctos ornatus) serves as the most basal true bear.
+
+Pairwise distances are Levenshtein (edit) distances between cytochrome b protein sequences.

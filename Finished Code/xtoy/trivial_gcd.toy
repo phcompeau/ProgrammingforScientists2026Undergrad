@@ -1,0 +1,128 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+//TrivialGCD(a, b)
+//    d = 1
+//    m = Min2(a, b)
+//    for every integer p between 1 and m
+//        if p is a divisor of both a and b
+//            d = p
+//    return d
+
+function main
+// read in two numbers from standard in
+// compute their gcd
+// write it to standard out 
+10: 81FF   read R[1]                     
+11: 82FF   read R[2]                     
+12: 9101   M[01] <- R[1]                 // store a in memory just in case we need it
+13: 9202   M[02] <- R[2]                 // store b in memory
+14: FF20   R[F] <- PC; goto 20           // call TrivialGCD() at line 20, RF = PC+1
+15: 96FF   write R[6]                    // GCD is stored in register 6
+16: 0000   halt                          // program done :)
+
+function TrivialGCD
+// TrivialGCD calls two subroutines
+// 1. Min2(a, b)
+// 2. IsDivisor(p, blah)
+// Input: R1 = a, R2 = b
+// Output: R6 = GCD(a, b)
+// Return address: RF
+// Temp variables: R4, R5, R6, R7, R8, R9, ...
+20: 7601   R[6] <- 0001                  // d = 1
+
+// now, call our min function
+21: F750   R[7] <- PC; goto 50           
+
+// snapshot min into memory
+22: 9403   M[03] <- R[4]                 
+
+// start p = 1
+23: 7501   R[5] <- 0001                  // sets p
+24: 7801   R[8] <- 0001                  // allows me to add 1 to p each time (constant)
+
+// start loop
+// how do I know that I'm done looping? when p > m, when p - m > 0
+25: 2954   R[9] <- R[5] - R[4]           // R9 = p-m
+26: D932   if (R[9] > 0) goto 32         // jump over rest of loop
+
+
+// check if p is a divisor of a
+27: 1150   R[1] <- R[5]                  // R1 = p
+28: 8201   R[2] <- M[01]                 // loads a into R2
+29: F740   R[7] <- PC; goto 40           // calls IsDivisor(p, a)
+// p is not a divisor of a if R3 = 0; skip the divisor of b check
+2A: C330   if (R[3] == 0) goto 30        // jump over divisor of b check
+
+// check if p is a divisor of b
+2B: 1150   R[1] <- R[5]                  // R1 = p
+2C: 8202   R[2] <- M[02]                 // R2 = b
+2D: F740   R[7] <- PC; goto 40           // calls IsDivisor(p, b)
+// if R3 = 0, not a divisor of b, carry on
+2E: C330   if (R[3] == 0) goto 30        // go to "not a divisor of both" place
+
+// if we make it here, what do we know? p divides both, so update d = p
+2F: 1650   R[6] <- R[5]                  // d = p
+
+// increment p and restart the loop
+30: 1558   R[5] <- R[5] + R[8]           // p++ (p = p+1)
+31: C025   goto 25                       
+
+// loop is done, what do we do? return!
+// optional: put final p into memory
+32: 9504   M[04] <- R[5]                 
+33: EF00   goto R[F]                     // return
+
+
+function IsDivisor
+// Input: R1 = p, R2 = x
+// Output: R3 = 1 if p is a divisor of x, else R3 = 0
+// Return: R7
+// Temp variables: R3
+// idea: keep subtracting p from x until you hit 0, in which case return 1,
+// or you hit < 0, in which case return 0
+40: C146   if (R[1] == 0) goto 46        // if p is zero, return 0 immediately (no block)
+
+41: 7300   R[3] <- 0000                  // default: not divisible
+
+// other check is if x is 0
+42: C24A   if (R[2] == 0) goto 4A         // x = 0, p divides 0, so set R3 = 1 (go to yes block)
+
+// main loop
+43: 2321   R[3] <- R[2] - R[1]           // R3 = x - p
+44: C34A   if (R[3] == 0) goto 4A         // is it zero? If so, great! Return 1
+45: D348   if (R[3] > 0) goto 48          // is it positive? If so, x - p > 0,  set R3 = R2 (x-p), keep looping
+// we know here that R3 < 0, so x-p < 0, so x < p, so p is not a divisor
+// this is the "no block"
+46: 7300   R[3] <- 0000                  
+47: E700   goto R[7]                     // return no
+
+// keep looping case
+48: 1230   R[2] <- R[3]                  // R2 = x-p
+49: C043   goto 43                       // jump to line 43
+
+// yes block
+4A: 7301   R[3] <- 0001                  // "yes"
+4B: E700   goto R[7]                     // return
+
+
+
+function Min2
+// computes the minimum of two integers
+// Inputs: R1 = a, R2 = b
+// Output: R4
+// Return address: R7
+// Temp variables: R3
+// idea: take a - b. If a - b > 0, a > b, so b is the min. Else, a is min
+50: 2312   R[3] <- R[1] - R[2]           // r3 = a - b
+51: D354   if (R[3] > 0) goto 54          // a - b > 0, a > b, b is min, output b
+52: 1410   R[4] <- R[1]                  // this is the else, and a is min. R4 = R1
+53: E700   goto R[7]                     
+54: 1420   R[4] <- R[2]                  // if block! a > b. R4 = R2
+55: E700   goto R[7]                     

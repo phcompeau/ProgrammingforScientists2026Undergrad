@@ -1,0 +1,9 @@
+Homo_sapiens_Human,0,3,3,4,6,4,3,4,11
+Pan_troglodytes_Chimpanzee,3,0,0,3,5,3,2,3,10
+Pan_paniscus_Bonobo,3,0,0,3,5,3,2,3,10
+Gorilla_gorilla_Gorilla,4,3,3,0,4,2,1,4,7
+Pongo_abelii_Orangutan,6,5,5,4,0,2,3,4,7
+Nomascus_leucogenys_Gibbon,4,3,3,2,2,0,1,2,7
+Macaca_mulatta_Rhesus_monkey,3,2,2,1,3,1,0,3,8
+Mus_musculus_Mouse,4,3,3,4,4,2,3,0,7
+Taeniopygia_guttata_Zebrafinch,11,10,10,7,7,7,8,7,0

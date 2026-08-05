@@ -1,0 +1,10 @@
+We retrieved mitochondrial cytochrome b protein sequences for 12 mammalian species from NCBI.
+
+This dataset illustrates one of the most surprising discoveries of molecular phylogenetics: 
+whales and dolphins (order Cetacea) are not merely related to even-toed ungulates (order 
+Artiodactyla) — they evolved from within Artiodactyla. In fact, the hippopotamus is more 
+closely related to whales than it is to other hoofed mammals like horses or rhinos. This 
+finding was deeply counterintuitive based on morphology alone, and required molecular data 
+to establish. The horse, rhinoceros, and elephant serve as outgroup comparisons.
+
+Pairwise distances are Levenshtein (edit) distances between cytochrome b protein sequences.

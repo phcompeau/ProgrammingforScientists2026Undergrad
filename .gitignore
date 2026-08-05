@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Generated output from running the code (images, animations, data dumps).
+# The output/ folders are kept so programs have somewhere to write.
+output/*
+!output/.gitkeep

@@ -1,0 +1,34 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+function main 
+// Reads n from stdin.
+// Calls SieveOfEratosthenes at 0x20 to fill primeBooleans in memory.
+// Then calls PrintBools at 0x40 to print all primes up to n.
+
+
+function SieveOfEratosthenes
+// Input:  R2 = n
+// Output: M[0x80 + p] = 1 if p is prime, else 0 (for 0 <= p <= n)
+// Return: pc <- R[E]
+
+
+function PrintBools
+// Input: None
+// Output: Prints values of p where M[0x80 + p] == 1
+// Return: R[F]
+
+
+
+function CrossOffMultiples
+// Input:  R1 = p, R2 = n
+// Output: For each multiple k = 2p, 3p, ..., k <= n:
+//         M[0x80 + k] <- 0
+// Return: pc <- R[F]
+            

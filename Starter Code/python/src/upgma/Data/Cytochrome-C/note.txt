@@ -1,0 +1,9 @@
+We retrieved somatic cytochrome c protein sequences for 16 diverse eukaryotes from UniProt/NCBI.
+
+Cytochrome c is a small electron-carrier protein (~104-112 amino acids) essential in mitochondrial 
+respiration. Because it evolves slowly under strong functional constraint, it obeys a molecular clock 
+reasonably well — making it a classic target for UPGMA. The resulting tree broadly recapitulates the 
+accepted phylogeny of eukaryotes, with plants and fungi as outgroups to animals, and mammals 
+clustering together with primates most closely related.
+
+Pairwise distances are Levenshtein (edit) distances between protein sequences.

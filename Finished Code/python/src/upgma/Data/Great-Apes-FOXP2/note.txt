@@ -1,0 +1,11 @@
+We retrieved FOXP2 (forkhead box protein P2) sequences for 9 species from UniProt/NCBI.
+
+FOXP2 is famous as a gene implicated in human speech and language. Mutations cause severe speech 
+and language impairment. Remarkably, the human FOXP2 protein differs from other great apes by only 
+2 amino acids — a tiny but apparently crucial difference thought to have been under intense positive 
+selection in the human lineage. The zebrafinch (Taeniopygia guttata) is included because FOXP2 is 
+also essential for vocal learning in songbirds — young zebra finches with disrupted FOXP2 cannot 
+properly learn their father's song. This parallel role in vocal learning in both humans and 
+songbirds makes FOXP2 one of the most fascinating genes in evolutionary biology.
+
+Pairwise distances are Levenshtein (edit) distances between protein sequences (~711-716 aa).

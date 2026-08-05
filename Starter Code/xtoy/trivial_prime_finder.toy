@@ -1,0 +1,71 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+function main
+// reads in a number from stdin, stores it in M[00].
+// then calls a primitive prime number finder,
+// which stores the primality of the numbers 0 to n
+// as integers 1 (prime) and 0 (not prime) starting at
+// M[80]. It then prints all such numbers that are prime.                       
+
+
+function TrivialPrimeFinder 
+// Input: R2 = n
+// Output: M[0x80 + p] = 1 if p is prime, else 0 (for 0 <= p <= n)
+// Return: pc <- R[E]
+
+
+
+
+function multiply
+// Input: R3 and R4             
+// Return address: RF     
+// Output: R6          
+// Temp vars: R1, R5, R6
+30: 7101   R[1] <- 0001                  // set R1 to 1
+31: 7600   R[6] <- 0000                  // set R6 to 0
+32: 7533   R[5] <- 0033                  // store jump address into R5
+33: C437   if (R[4] == 0) goto 37        // break loop as soon as R4 = 0
+34: 1663   R[6] <- R[6] + R[3]           // perform addition into R6
+35: 2441   R[4] <- R[4] - R[1]           // subtract 1 from counter
+36: E500   goto R[5]                     // jump to top of loop                                 
+37: EF00   goto R[F]                     // loop is broken, function returns
+
+function PrintBools
+// Input: None
+// Output: Prints values of p where M[0x80 + p] == 1
+// Return: R[F]
+// Initialize Registers
+
+function IsDivisor
+//Input: R1 = p, R2 = k
+//Output: R3 = 1 if R2 is a divisor of R1, and 0 otherwise
+//Temporary variables: R4
+//Return: RF
+50: C255   if (R[2] == 0) goto 55        // 0 is not a divisor of anything, so return 0
+51: 1410   R[4] <- R[1]                  // copy p into R4
+52: 2442   R[4] <- R[4] - R[2]           // lower remainder with p = p-k
+53: C457   if (R[4] == 0) goto 57        // if remainder is zero, go to 57 and return yes
+54: D452   if (R[4] > 0) goto 52         // continue for as long as the loop is positive
+
+//if we reach this part of the function, then we know that the answer is "no"
+55: 7300   R[3] <- 0000                  // set R3 to zero ("no")
+56: EF00   goto R[F]                     // return
+
+// if we are here, then we know that the answer is "yes"
+57: 7301   R[3] <- 0001                  // R4 is zero, so R1 is a divisor of R2
+58: EF00   goto R[F]                     // return
+
+function IsPrime
+//Input: R1
+//Output: 1 in R2 if R1 is prime, and 0 if it is not
+//Temporary variables: R1, R3, R4, R5, R6, R8, RE, RF
+//Return: RE
+
+

@@ -1,0 +1,9 @@
+Ailuropoda_melanoleuca_Giant_panda,0,184,398,178,287,300,347,187,294
+Ursus_americanus_American_black_bear,184,0,403,182,279,301,352,187,297
+Ursus_arctos_Brown_bear,398,403,0,441,406,422,420,419,410
+Ursus_maritimus_Polar_bear,178,182,441,0,297,313,380,155,304
+Ursus_thibetanus_Asiatic_black_bear,287,279,406,297,0,313,348,282,312
+Helarctos_malayanus_Sun_bear,300,301,422,313,313,0,356,295,314
+Tremarctos_ornatus_Spectacled_bear,347,352,420,380,348,356,0,350,358
+Ailurus_fulgens_Red_panda,187,187,419,155,282,295,350,0,292
+Mustela_putorius_Ferret,294,297,410,304,312,314,358,292,0
