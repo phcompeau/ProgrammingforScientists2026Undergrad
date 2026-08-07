@@ -14,10 +14,15 @@ def main():
 
     # sum_example_multiple_procs()
 
-    timing_comparison_serial_vs_multi_procs(1000000000)
+    timing_comparison_serial_vs_multi_procs(100000000)
 
 def timing_comparison_serial_vs_multi_procs(n:int):
+    """
+    Times a serial approach for summing the first n positive integers against a parallel approach.
+    """
     data = list(range(1, n+1))
+
+    # how many processes should I use? The number I have available
     num_procs = multiprocessing.cpu_count()
 
     # time the parallel approach
@@ -25,7 +30,7 @@ def timing_comparison_serial_vs_multi_procs(n:int):
     sum_multi_procs(data, num_procs)
     end_parallel =time.time()
     total_parallel = end_parallel - start_parallel
-    print(f"Sum of first {n} integers using {num_procs} processes is: {total_parallel}")
+    print(f"Time taken by parallel algorithm using {num_procs} processes: {total_parallel}")
 
     # time the serial approach
     start_serial = time.time()
@@ -33,7 +38,7 @@ def timing_comparison_serial_vs_multi_procs(n:int):
     # sum_multi_procs(data, 1) # a serial algorithm in disguise as a parallel one
     end_serial =time.time()
     total_serial = end_serial - start_serial
-    print(f"Sum of first {n} integers using serial computing is: {total_serial}")
+    print(f"Time taken by serial algorithm: {total_serial}")
 
     print(f"Speedup provided by parallel approach: {total_serial/total_parallel}")    
 
@@ -59,6 +64,7 @@ def sum_example_multiple_procs():
 def sum_multi_procs(data: list[int], num_procs:int) -> int:
     """
     Divides the work of summing all values in a list over num_procs concurrent (and hopefully parallel) processes.
+    Returns the sum of all elements in the list.
     """
     # divide the data into equally sized chunks
 
@@ -66,6 +72,8 @@ def sum_multi_procs(data: list[int], num_procs:int) -> int:
     chunk_size = len(data) // num_procs
 
     # need to be aware that num_procs * chunk_size may be < len(data)
+    # be careful: if len(data) = 1003 and num_procs = 10, then chunk_size = 100
+    # we will put the extra elements in the final process
 
     # make a list containing the sublists that I want
     data_slices: list[list[int]] = []
@@ -162,6 +170,9 @@ def sum_example_two_procs():
 
     # this is your first ever parallel program as of now
     # it's also CONCURRENT -- because it will run on one core -- and because there is task coordination
+
+    # concurrency: having multiple tasks in progress at the same time
+    # parallelism: literally doing multiple things at once with multiple workers (simultaneously)
 
     # we will call join() to wait for process to finish 
     p0.join()

@@ -77,6 +77,13 @@ def compute_craps_house_edge_parallel(num_trials:int, num_procs: int) -> float:
     Simulate num_trials trials of craps in parallel, divided over
     num_procs worker processes, and return the house edge of the game as the amount won/lost (+/-) divided by num_trials
     """
+    # 1. create a queue to store our results
+    # 2. initialize our worker processes
+    # 3. start the processes, which will put their return values into the queue
+    # 4. range over all processes and "join" them (wait until all are finished before continuing)
+    # 5. grab all results from the queue and combine
+
+    # win_total stores total amount won/lost over all workers
     win_total = 0
 
     # create my queue and processes
@@ -86,7 +93,11 @@ def compute_craps_house_edge_parallel(num_trials:int, num_procs: int) -> float:
     # how many trials should each worker take? (except for last)
     trials_one_proc = num_trials // num_procs
 
-    # start first num_procs - 1 processes 
+    # be careful: if num_trials = 1003 and num_procs = 10,
+    # then trials_one_proc = 1003 // 10 = 100
+    # so the final worker should get 3 extra trials
+
+    # start first num_procs - 1 processes
     for _ in range(num_procs-1):
         p = multiprocessing.Process(target= total_win_one_proc, args = (trials_one_proc, result_queue))
         processes.append(p)
@@ -103,8 +114,12 @@ def compute_craps_house_edge_parallel(num_trials:int, num_procs: int) -> float:
     # now join to wait on them to finish
     for p in processes:
         p.join()
+        # two ways of thinking of this:
+        # 1. every time through the loop, the current process will not allow the code to continue executing unless this process has finished
+        # 2. these two lines of code wait for every worker to finish
 
-    # now, collect results 
+    # now, collect results
+    # each worker is "reporting back" with amount won/lost
     for _ in range(num_procs):
         win_total += result_queue.get()
 
@@ -113,9 +128,11 @@ def compute_craps_house_edge_parallel(num_trials:int, num_procs: int) -> float:
 def total_win_one_proc(num_trials_one_proc:int, result_queue: multiprocessing.Queue) -> None:
     """
     One worker bee playing craps num_trials_one_proc times.
-    It places its amount won/lost (+/-) into the input queue
+    It places its amount won/lost (+/-) into the input queue.
     """
     win_total = 0
+
+    # range over the number of trials this worker gets, and simulate the game each time, adding in the result to win_total
     for _ in range(num_trials_one_proc):
         if play_craps_once():
             win_total += 1

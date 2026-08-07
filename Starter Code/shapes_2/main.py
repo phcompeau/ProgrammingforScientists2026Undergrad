@@ -8,8 +8,8 @@ class Rectangle:
     Represents a 2D rectangle with width, height, position, and rotation
 
     Attributes:
-        width: (float)
-        height: (float)
+        width: the rectangle's width (float)
+        height: the rectangle's height (float)
         x1: the x-coordinate of the rectangle's origin (float)
         y1: the y-coordinate of the rectangle's origin (float)
         rotation: rotation of shape in degrees (float)
@@ -23,7 +23,7 @@ class Rectangle:
     # Every class declaration should have a constructor to set fields
     # Also, Python calls fields "attributes"
     # We will allow the user to set attributes of an instance the second it is born
-    def __init__(self, width: float=0.0, height: float=0.0, x1: float=0, y1: float=0, rotation: float=0):
+    def __init__(self, width: float=0.0, height: float=0.0, x1: float=0.0, y1: float=0.0, rotation: float=0.0) -> None:
         # let's protect the program from a bad user 
         if width < 0.0 or height < 0.0:
             raise ValueError("width and height must be nonnegative.")
@@ -55,9 +55,9 @@ class Circle:
 
     description: str = "round"
 
-    def __init__(self, x1: float=0, y1: float = 0, radius: float = 0):
+    def __init__(self, x1: float=0.0, y1: float = 0.0, radius: float = 0.0) -> None:
         if radius < 0.0:
-            raise ValueError("width and height must be nonnegative.")
+            raise ValueError("radius must be nonnegative.")
         self.x1 = x1
         self.y1 = y1
         self.radius = radius
@@ -105,6 +105,9 @@ def main():
     print("The rectangle has been updated to", r)
 
     # lesson: you can't name functions the same thing in Python (except when you can, hold on for next week)
+
+    # redundancy means that we want to retain a minimal collection of attributes for an object
+    # so we compute the area from the attributes instead of storing it
 
     print("Rectangle's area is", area_rectangle(r))
     print("Circle's area is", area_circle(my_circle))

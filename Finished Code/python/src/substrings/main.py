@@ -1,8 +1,12 @@
 def main():
     print("Substrings in Python.")
 
+    # Python uses text[i: i+k] to indicate the substring of text that starts at position i and goes up to (but not including) i+k
+
+    # Convenience: subtract top index - bottom index to give length (the substring above has length k)
+
     s = "Hi Lovers"
-    print(s[1:5])
+    print(s[1:5]) # length 4, "i Lo"
     print(s[:7]) # if first index is omitted, it's zero
     print(s[4:]) # if final index is omitted, it's len(s)
 
@@ -13,7 +17,7 @@ def main():
 
     print("Our function:", pattern_count(pattern, text))
 
-    print("Built in function:", text.count(pattern)) # built in function
+    print("Built in function:", text.count(pattern)) # built in function; this doesn't include overlaps
 
     print("Starting positions:", starting_indices(pattern, text))
 
@@ -24,20 +28,21 @@ def main():
 
 def starting_indices(pattern: str, text:str) -> list[int]:
     """
-    Returns the list of all the starting positions of pattern in text.
+    Returns the list of all the starting positions of pattern in text, with overlaps.
+    e.g., "ATA" occurs at positions 0 and 2 in "ATATA".
     """
     n = len(text)
     k = len(pattern)
 
     if k == 0:
         raise ValueError("empty pattern not allowed.")
-    
+
     if k > n:
         return []
-    
-    positions = [] 
 
-    # range over all substrings, incrementing count every time we find a match 
+    positions = []
+
+    # range over all substrings, appending the position every time we find a match
     for i in range(n-k+1):
         # print("Current substring:", text[i:i+k])
         if pattern == text[i:i+k]:
@@ -67,13 +72,13 @@ def pattern_count(pattern: str, text: str) -> int:
 
     if k == 0:
         raise ValueError("empty pattern not allowed.")
-    
+
     if k > n:
         return 0
-    
-    count = 0 
 
-    # range over all substrings, incrementing count every time we find a match 
+    count = 0
+
+    # range over all substrings, incrementing count every time we find a match
     for i in range(n-k+1):
         # print("Current substring:", text[i:i+k])
         if pattern == text[i:i+k]:
@@ -106,7 +111,3 @@ PatternCount(pattern, text)
 
 if __name__ == "__main__":
     main()
-
-
-
-

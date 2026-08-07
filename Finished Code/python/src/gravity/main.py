@@ -5,10 +5,10 @@ Usage:
     python main.py <scenario_name> <num_gens> <time_step> <canvas_width> <drawing_frequency>
 
 Example:
-    python main.py jupiter_4 2000 0.01 800 5
+    python main.py jupiter_moons 2000 0.01 800 5
 
-This will read:   data/jupiter_4.txt
-and write video:  output/jupiter_4.mp4
+This will read:   data/jupiter_moons.txt
+and write video:  output/jupiter_moons.mp4
 """
 
 import sys
@@ -37,7 +37,7 @@ def main() -> None:
             "Usage:\n"
             "  python main.py <scenario_name> <num_gens> <time_step> <canvas_width> <drawing_frequency>\n"
             "Example:\n"
-            "  python main.py jupiter_4 2000 0.01 800 5"
+            "  python main.py jupiter_moons 2000 0.01 800 5"
         )
 
     scenario = sys.argv[1]

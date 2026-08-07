@@ -205,7 +205,7 @@ def draw_trails(
         if line_width == 0:
             line_width = 1
 
-        # Draw segments with a simple color fade toward the body's color
+        # Draw segments with color fade from white (oldest) to body color (newest)
         for j in range(num_trails - 1):
             alpha = 255.0 * j / num_trails
             red = int((1 - alpha / 255.0) * 255.0 + (alpha / 255.0) * b.red)

@@ -53,6 +53,8 @@ def main():
 
     print(f"Estimated house edge with {num_trials} trials is: {edge:.6f}")
 
+    print(f"That's about {edge*100:.3f}% of the amount wagered per bet.")
+
     # initial_stuff()
 
 
@@ -156,8 +158,9 @@ def play_craps_once() -> bool:
         #lost
         return False 
     else:
-        # first_roll is your winner, 7 is a loser 
+        # first_roll is your winner, 7 is a loser
         while True: #forever
+            # looks like an infinite loop, but it won't be with probability 1.
             new_roll = sum_dice(2)
             # is the new_roll 7 or previous roll's value?
             if new_roll == first_roll:
@@ -180,8 +183,10 @@ def compute_craps_house_edge(num_trials: int) -> float:
     """
     if num_trials <= 0:
         raise ValueError("num_trials must be a positive integer.")
-    
-    count = 0 # winnings/losings 
+
+    # first glimpse at Monte Carlo simulation: generate a large number of randomized trials to make an estimate of a simulation.
+
+    count = 0 # winnings/losings
 
     # run n trials of the game and keep track of winnings
     for _ in range(num_trials):
@@ -193,6 +198,15 @@ def compute_craps_house_edge(num_trials: int) -> float:
 
     return count/num_trials #averages outcome over all trials
 
+# Rules of craps
+
+# Roll two dice to give a sum x.
+
+# 1. If x is 7 or 11, then the player wins, and receives their wager back in addition to the amount of the wager.
+
+# 2. If x is 2, 3, or 12, then the player loses the wager.
+
+# 3. If x has some other value, then the player continues to roll the dice. On these subsequent rolls, the game stops if x is rolled, in which case the player wins, or if 7 is rolled, in which case the player loses. (Note that this is different to the first roll, when 7 is a winner.)
 
 if __name__ == "__main__":
     main()

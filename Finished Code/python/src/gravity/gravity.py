@@ -94,6 +94,8 @@ def update_universe(current_universe: Universe, time: float) -> Universe:
     _validate_time_step(time)
     _validate_gravitational_constant(Universe.gravitational_constant)
 
+    # new_universe = current_universe   # this would establish two names (references) for the same underlying Universe object
+    # instead, we need to perform a deep copy of the universe
     new_universe = copy_universe(current_universe)
 
     # Update every body in the cloned universe based on forces from current_universe
@@ -110,7 +112,17 @@ def update_velocity(b: Body, old_acceleration: OrderedPair, time: float) -> Orde
     """
     Update velocity using average acceleration over the step.
 
-    v_{t+Δt} = v_t + 0.5 * (a_t + a_{t+Δt}) * Δt
+    Formula:
+        v_{t+Δt} = v_t + 0.5 * (a_t + a_{t+Δt}) * Δt
+
+    Args:
+        b: The body whose velocity is being updated. Must have a `velocity`
+            attribute (OrderedPair) and a current `acceleration` attribute (OrderedPair).
+        old_acceleration: The acceleration of the body at the previous time step.
+        time: The time step Δt over which to update the velocity. Must be positive.
+
+    Returns:
+        A new OrderedPair containing the updated velocity components (vx, vy).
     """
     _validate_body(b)
     _validate_pair(old_acceleration, "old_acceleration")
@@ -125,7 +137,18 @@ def update_position(b: Body, old_acc: OrderedPair, old_vel: OrderedPair, time: f
     """
     Update position using constant-acceleration kinematics.
 
-    p_{t+Δt} = p_t + v_t * Δt + 0.5 * a_t * Δt^2
+    Formula:
+        p_{t+Δt} = p_t + v_t * Δt + 0.5 * a_t * Δt^2
+
+    Args:
+        b: The body whose position is being updated. Must have a `position`
+            attribute (OrderedPair).
+        old_acc: The acceleration of the body at the previous time step.
+        old_vel: The velocity of the body at the previous time step.
+        time: The time step Δt over which to update the position. Must be positive.
+
+    Returns:
+        A new OrderedPair containing the updated position components (px, py).
     """
     _validate_body(b)
     _validate_pair(old_acc, "old_acc")
@@ -139,19 +162,44 @@ def update_position(b: Body, old_acc: OrderedPair, old_vel: OrderedPair, time: f
 
 def update_acceleration(current_universe: Universe, b: Body) -> OrderedPair:
     """
-    Compute acceleration from the net gravitational force on a body (a = F / m).
+    Compute the body's acceleration from the net gravitational force.
+
+    Uses:
+        a = F / m (Newton's second law)
+
+    Args:
+        current_universe: The universe containing all bodies that
+            contribute gravitational force.
+        b: The body whose acceleration is being computed.
+
+    Returns:
+        A 2D vector (ax, ay) representing the updated acceleration.
     """
     _validate_universe(current_universe)
     _validate_body(b)
     _validate_gravitational_constant(Universe.gravitational_constant)
 
-    force = compute_net_force(current_universe, b)
-    return OrderedPair(force.x / b.mass, force.y / b.mass)
+    net_force = compute_net_force(current_universe, b)
+
+    # apply Newton's second law, componentwise
+    ax = net_force.x / b.mass
+    ay = net_force.y / b.mass
+
+    return OrderedPair(ax, ay)
 
 
 def compute_net_force(current_universe: Universe, b: Body) -> OrderedPair:
     """
     Compute the net gravitational force on a body from all other bodies.
+
+    Args:
+        current_universe: The universe containing all bodies. Must have a list
+            of bodies and a valid gravitational constant.
+        b: The body on which the net gravitational force is computed.
+
+    Returns:
+        A 2D vector (x, y) representing the net gravitational force acting
+        on the given body.
     """
     _validate_universe(current_universe)
     _validate_body(b)
@@ -160,11 +208,14 @@ def compute_net_force(current_universe: Universe, b: Body) -> OrderedPair:
     net_force = OrderedPair(0.0, 0.0)
     G = Universe.gravitational_constant
 
+    # range over all bodies and determine force acting on b
     for cur_body in current_universe.bodies:
+        # don't compute the force of b acting on itself
         if cur_body is b:
             continue
         # We validate bodies in _validate_universe, but be robust if lists change:
         _validate_body(cur_body)
+        # compute force of cur_body acting on b
         current_force = compute_force(b, cur_body, G)
         net_force.x += current_force.x
         net_force.y += current_force.y
@@ -174,9 +225,17 @@ def compute_net_force(current_universe: Universe, b: Body) -> OrderedPair:
 
 def compute_force(b1: Body, b2: Body, G: float) -> OrderedPair:
     """
-    Gravitational force exerted on b1 by b2.
+    Compute the gravitational force exerted on one body by another.
 
-    Newton's law: F = G * m1 * m2 / r^2, along the line b1→b2.
+    Newton's law: F = G * m1 * m2 / r^2, along the line from b1 to b2.
+
+    Args:
+        b1: The body on which the force is acting.
+        b2: The body exerting the gravitational force.
+        G: Gravitational constant.
+
+    Returns:
+        A 2D vector (x, y) representing the force exerted on b1 by b2.
     """
     _validate_body(b1, idx_hint="(b1)")
     _validate_body(b2, idx_hint="(b2)")
@@ -184,27 +243,54 @@ def compute_force(b1: Body, b2: Body, G: float) -> OrderedPair:
 
     dx = b2.position.x - b1.position.x
     dy = b2.position.y - b1.position.y
-    d = math.hypot(dx, dy)  # distance
+    d = math.hypot(dx, dy)  # distance between the two bodies
 
     if d == 0.0:
-        return OrderedPair(0.0, 0.0)
+        return OrderedPair(0.0, 0.0)  # treat as no force
 
-    F_mag = G * b1.mass * b2.mass / (d * d)
-    return OrderedPair(F_mag * dx / d, F_mag * dy / d)
+    F_magnitude = G * b1.mass * b2.mass / (d * d)
+
+    # break F into components
+    Fx = F_magnitude * dx / d
+    Fy = F_magnitude * dy / d
+
+    return OrderedPair(Fx, Fy)
 
 
 def copy_universe(current_universe: Universe) -> Universe:
     """
-    Deep-copy a Universe (bodies and width). G is a class attribute.
+    Deep-copy a Universe (bodies and width).
+    The gravitational constant G is a class attribute and does not need to be copied.
+
+    Args:
+        current_universe: The universe to copy. Must contain a list of bodies
+            and a width value.
+
+    Returns:
+        A new Universe instance with deep-copied bodies and the same width
+        as the original.
     """
     _validate_universe(current_universe)
-    new_bodies = [copy_body(b) for b in current_universe.bodies]
+
+    new_bodies: list[Body] = []
+
+    for b in current_universe.bodies:
+        new_bodies.append(copy_body(b))
+
     return Universe(new_bodies, current_universe.width)
 
 
 def copy_body(b: Body) -> Body:
     """
     Deep-copy a Body, including position, velocity, and acceleration.
+
+    Args:
+        b: The body to copy. Must contain name, mass, radius, position,
+            velocity, acceleration, and color attributes.
+
+    Returns:
+        A new Body instance with identical properties and deep-copied
+        OrderedPair objects for position, velocity, and acceleration.
     """
     _validate_body(b)
     return Body(

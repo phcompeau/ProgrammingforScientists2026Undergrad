@@ -161,7 +161,7 @@ def draw_skew(skew_list: list[int]) -> None:
     pyplot.title("Skew Diagram")
     pyplot.xlabel("Genome Position")
     pyplot.ylabel("Skew Value")
-    pyplot.savefig("skewDiagram.png")
+    pyplot.savefig("skew_diagram.png")
 
 if __name__ == "__main__":
     main()

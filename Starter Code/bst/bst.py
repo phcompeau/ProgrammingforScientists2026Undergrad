@@ -77,7 +77,7 @@ class Node:
         # TODO: implement
         pass    
 
-        def inorder_traversal(self) -> list[Self]:
+    def inorder_traversal(self) -> list[Self]:
         """
         Perform an inorder traversal and return a list of nodes.
 

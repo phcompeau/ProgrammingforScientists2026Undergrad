@@ -20,7 +20,7 @@ cd ProgrammingforScientists2026Undergrad
 git pull        # run this before each class to get new material
 ```
 
-If you edited a file and `git pull` refuses to run, the fix is almost always to copy your edited file somewhere safe, discard the change, pull, and paste your work back. Ask a TA before doing anything more clever than that.
+**Do your own work in a copy, not the original.** When you start a topic, copy its folder from `Starter Code/` into `python/src/` and edit the copy. We push updates to the original folders every week, and Git will refuse to pull over files you have changed. If that happens anyway, the fix is almost always to copy your edited file somewhere safe, discard the change, pull, and paste your work back. Ask a TA before doing anything more clever than that.
 
 ## What is in here
 

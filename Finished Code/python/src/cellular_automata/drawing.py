@@ -59,6 +59,10 @@ def draw_game_board(current_board: GameBoard, cell_width: int) -> pygame.Surface
             # what is the current cell's state?
             val = current_board[i][j]
 
+            # make sure the state has a color before we try to look it up
+            if val not in color_map:
+                raise ValueError("Error: out of range value " + str(val) + " in board when drawing board.")
+
             # what color should I color it? Only color it if it's not the background color
             if val != 0:
                 # set the center 

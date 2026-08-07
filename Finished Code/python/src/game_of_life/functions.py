@@ -96,7 +96,7 @@ def assert_rectangular(board: GameBoard) -> None:
     # range over remaining rows, and flip out if any has length not equal to first_row_length 
     for row in range(1, count_rows(board)):
         if len(board[row]) != first_row_length:
-            raise ValueError("Board is not rectangular at row index " + row)
+            raise ValueError("Board is not rectangular at row index " + str(row))
 
 
 def play_game_of_life(initial_board: GameBoard, num_gens: int) -> list[GameBoard]:
@@ -113,7 +113,7 @@ def play_game_of_life(initial_board: GameBoard, num_gens: int) -> list[GameBoard
     if not isinstance(num_gens, int) or num_gens < 0:
         raise ValueError("num_gens must be a non-negative integer.")
     
-    boards = []
+    boards: list[GameBoard] = []
     boards.append(initial_board)
     # one-liner: boards = [initial_board]
 

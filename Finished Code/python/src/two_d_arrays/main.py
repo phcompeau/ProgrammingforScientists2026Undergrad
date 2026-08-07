@@ -6,7 +6,7 @@ def main():
     # a 2-d tuple is a tuple whose elements are tuples
     kernel = (
         (0.05, 0.20, 0.05),
-        (0.20, 0, 0.20),
+        (0.20, 0.00, 0.20),
         (0.05, 0.20, 0.05),
     )
 

@@ -31,9 +31,9 @@ def find_clumps(text: str, k: int, window_length: int, t: int) -> list[str]:
     - list[str]: All distinct k-mers forming (L, t)-clumps in text.
 
     Notes:
-    - Follow the pseudocode in FIND_CLUMPS_PSEUDOCODE.
+    - Follow the FindClumps pseudocode above.
     - Build a frequency table for each window using `frequency_table`.
-    - Use `contains` to avoid duplicates (or see the faster variant below).
+    - Avoid duplicates by checking `s not in patterns` before appending.
     """
     # TODO: Implement this function
     pass

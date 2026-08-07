@@ -34,7 +34,7 @@ def parse_rgb(line: str) -> tuple[int, int, int]:
         line: A string like "255, 128, 64".
 
     Returns:
-        A tuple (red, green, blue), each 0–255.
+        A tuple (red, green, blue), each in the range 0 to 255.
 
     Raises:
         ValueError: If the input cannot be parsed into exactly three integers.
@@ -86,7 +86,13 @@ def read_universe(filename: str) -> Universe:
     if raw_lines and raw_lines[0].startswith("\ufeff"):
         raw_lines[0] = raw_lines[0].lstrip("\ufeff")
 
-    lines = [ln.strip() for ln in raw_lines if ln.strip() and not ln.lstrip().startswith("#")]
+    # Keep only non-empty, non-comment lines
+    lines: list[str] = []
+    for ln in raw_lines:
+        stripped = ln.strip()
+        if stripped and not stripped.startswith("#"):
+            lines.append(stripped)
+
     if len(lines) < 2:
         raise ValueError("Universe file must have at least two lines: width and G.")
 

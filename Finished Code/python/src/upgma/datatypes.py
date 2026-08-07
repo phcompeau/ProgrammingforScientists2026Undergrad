@@ -79,10 +79,27 @@ class Node:
 
         inside = ",".join(parts)
 
-        # Internal node: include label if present
-        return f"({inside}){self.label}" if self.label else f"({inside})"
+        # Internal node: we omit its label, since ancestor labels like
+        # "Ancestor Species: 5" contain spaces and colons, which are
+        # special characters in Newick format
+        return f"({inside})"
 
-# alias declarations 
+# Sample tree
+#
+#        root (age=4)
+#        /          \
+#      (1)          (4)
+#      /              \
+# internal1 (age=3)    C
+#   /     \
+# (3)     (3)
+#  /         \
+# A           B
+#
+# Newick format: ((A:3,B:3):1,C:4)
+# Newick format of tree whose root is internal1 is (A:3,B:3)
+
+# alias declarations
 
 DistanceMatrix = list[list[float]]
 

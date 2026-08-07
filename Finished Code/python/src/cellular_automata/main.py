@@ -13,6 +13,11 @@ def main():
 
     # first, parse command line arguments to take num generations, which game to play, initial board, where to draw it, etc.
 
+    if len(sys.argv) != 7:
+        raise ValueError(
+            "Usage: python main.py neighborhood_type rule_file initial_board_file output_file cell_width num_gens"
+        )
+
     neighborhood_type = sys.argv[1]
     rule_file = sys.argv[2]
 
@@ -40,6 +45,8 @@ def main():
 
     print("Drawing to canvases.")
 
+    pygame.init()
+
     surfaces = draw_game_boards(boards, cell_width)
 
     print("Drawing done! Now, animating.")
@@ -60,6 +67,8 @@ def main():
     writer.close()
 
     print("Success! MP4 video produced.")
+
+    pygame.quit()
 
     print("Animation finished! Exiting normally.")
 

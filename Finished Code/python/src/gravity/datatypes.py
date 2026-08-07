@@ -23,9 +23,9 @@ class Body:
         position: Current position as an OrderedPair.
         velocity: Current velocity as an OrderedPair.
         acceleration: Current acceleration as an OrderedPair.
-        red: Red component of the display color (0–255).
-        green: Green component of the display color (0–255).
-        blue: Blue component of the display color (0–255).
+        red: Red component of the display color (0 to 255).
+        green: Green component of the display color (0 to 255).
+        blue: Blue component of the display color (0 to 255).
     """
 
     def __init__(
@@ -62,7 +62,7 @@ class Universe:
             shared by all Universe instances.
 
     Class Attributes:
-        gravitational_constant: float — default value can be set globally.
+        gravitational_constant: float whose default value can be set globally.
     """
 
     gravitational_constant: float = 6.674e-11  # Default; can be overridden

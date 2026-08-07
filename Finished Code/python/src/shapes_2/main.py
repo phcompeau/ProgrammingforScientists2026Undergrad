@@ -34,10 +34,15 @@ class Rectangle:
     width: float = 1.0 
     height: float = 1.0
     rotation: float = 0.0
-    x1: float = 0.0 
+    x1: float = 0.0
     y1: float = 0.0
 
-    
+    # let's perform some parameter checks
+    def __post_init__(self) -> None:
+        """Runs right after init and raises an error if invalid values are given for attributes."""
+        if self.width < 0.0 or self.height < 0.0:
+            raise ValueError("Width and height must be nonnegative.")
+
     def area(self) -> float:
         """Method to return the area of rectangle."""
         return self.width * self.height
@@ -47,7 +52,7 @@ class Rectangle:
         self.x1 += a 
         self.y1 += b
 
-    def scale(self, f: float):
+    def scale(self, f: float) -> None:
         """Dilate the shape by a factor of f."""
         self.width *= f
         self.height *= f
@@ -71,7 +76,12 @@ class Circle:
     radius: float = 1.0
     x1: float = 0.0
     y1: float = 0.0
-    
+
+    def __post_init__(self) -> None:
+        """Runs right after init and raises an error if invalid values are given for attributes."""
+        if self.radius < 0.0:
+            raise ValueError("Radius must be nonnegative.")
+
     def area(self) -> float:
         """Method to compute area of circle."""
         return 3.0 * self.radius ** 2
@@ -81,9 +91,9 @@ class Circle:
         self.x1 += a 
         self.y1 += b
 
-    def scale(self, f: float):
+    def scale(self, f: float) -> None:
         """Dilate the shape by a factor of f."""
-        self.radius *= f    
+        self.radius *= f
 
 @dataclass
 class Node:

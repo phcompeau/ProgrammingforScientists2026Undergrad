@@ -69,8 +69,8 @@ def set_row_values(line_elements: list[str]) -> list[bool]:
     if not isinstance(line_elements, list) or len(line_elements) == 0:
         raise ValueError("line_elements must be a non-empty list.")
     
-    # make our row 
-    current_row = [] # this will be a blank list of booleans
+    # make our row
+    current_row: list[bool] = [] # this will be a blank list of booleans
     
     for val in line_elements:
         if val == "0":  # dead

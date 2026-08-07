@@ -4,6 +4,7 @@ def main():
     # Python represents arrays in two ways
 
     # way #1 is called a "Tuple"
+    # tuples are useful if we know the values in advance
     primes = (2, 3, 5, 9, 11)
 
     # tuples are great when the length of the array is short and fixed
@@ -14,37 +15,37 @@ def main():
     # elements of primes are primes[i], where i ranges from 0 up to and including 4
     print(primes[2])
 
-    # we need to update primes to fix our mistake 
+    # we need to update primes to fix our mistake
     # primes[3] = 7
     # This gives an error!
     # We cannot update individual elements of a tuple
-    # Tuples are immutable: we can't change individual elements, and we can't append an element to them 
+    # Tuples are immutable: we can't change individual elements, and we can't append an element to them
 
-    # we can update the whole tuple 
+    # we can update the whole tuple
     primes = (2, 3, 5, 7, 11)
 
     print("primes is now", primes)
 
-    # mostly, we will work with lists when we implement arrays 
-    empty_list = []
+    # mostly, we will work with lists when we implement arrays
+    empty_list = []   # or = list()
 
-    n = 6 
-    a = [0] * n
+    n = 6
+    a = [0] * n   # [0, 0, 0, 0, 0, 0]
 
     print(a)
 
-    # lists can have multiple types in them 
+    # lists can have multiple types in them
     mixed_list = [1, 3.14, "Hi", True]
     print(mixed_list)
 
-    # lists are mutable, meaning we can set individual elements 
+    # lists are mutable, meaning we can set individual elements
     a[0] = -8
     i = 3
     k = 4
     a[2*i-4] = (k//2) ** 4 + 1 #2*i - 4 = 2
     print(a)
 
-    # python gives a len() function to tell the length of the array 
+    # python gives a len() function to tell the length of the array
     print("a has length", len(a))
 
     # indices of a range from 0 to len(a) - 1
@@ -52,9 +53,19 @@ def main():
 
     print(a)
 
-    # Python has "negative indexing", where you can go backward through a list 
+    # Python has "negative indexing", where you can go backward through a list
+    # a[-1]: last element of a
+    # a[-2]: penultimate element
+    # a[-3]: antepenultimate element
+    # ... this goes back how far?
+    # a[-len(a)]: first element of a
     a[-2] = 68
     # we will not use this so help me god
+
+    # what happens if you give Python something weird
+    # indices outside the range from -len(a) to len(a) - 1 produce IndexErrors
+    # a[len(a)] = 7
+    # a[-len(a)-1] = 2
 
     print(a)
 
@@ -76,9 +87,14 @@ def main():
 
     print("After function, c is", c)
 
+    # integers, strings, floats are pass by value (a copy is created when they go into a function)
     # Lists in Python are pass by reference
+    # you die in the function, you die IRL
 
 def change_first_element(a: list[int]):
+    if len(a) == 0:
+        raise ValueError("Error: empty list given.")
+
     a[0] = 1
 
 # Variadic function takes an arbitrary number of parameters
@@ -95,7 +111,7 @@ def min_integers(*numbers: int) -> int:
 
     for val in numbers:
         if val < m:
-            m = val 
+            m = val
 
     return m
 
@@ -112,17 +128,15 @@ def min_integer_array(a:list[int]) -> int:
     """
 
     if len(a) == 0:
-        raise ValueError("Error: empty list given.") 
+        raise ValueError("Error: empty list given.")
 
-    m = 0
+    m = a[0]  # stores our minimum
 
     # iterate over list, updating m if we find a smaller value
-
-    for i, val in enumerate(a):
-        # ranges over the values in a list
-        # if we find a smaller value than the current min 
-        # OR we are at the first element, update m
-        if val < m or i == 0:
+    for val in a:
+        # is current value better than what I currently have?
+        if val < m:
+            # update m appropriately
             m = val
 
     return m
@@ -131,17 +145,25 @@ def min_integer_array(a:list[int]) -> int:
 def factorial_array(n: int) -> list[int]:
     """
     Generates a list of factorials, from 0! to n! inclusively.
-    """
-    # check n < 0 
+    The result is a list of length n+1 where the k-th element is k!
 
-    # I know how long the array should be, so I create all the data behind the scenes 
-    fact = [0]*(n+1)
+    Raises an error if n < 0.
+    """
+    if n < 0:
+        raise ValueError("Error: negative input given.")
+
+    # I know how long the array should be, so I create all the data behind the scenes
+    fact = [0]*(n+1)  # preview: this can produce many nightmares also
 
     fact[0] = 1 #0! = 1
+
+    # range through and set k! = k*(k-1)!
     for k in range(1, n+1):
         # two ways: #1, call a subroutine factorial()
         # fact[k] = factorial(k)
         fact[k] = fact[k-1] * k
+
+    # fact[-1] = fact[len(fact)-1], the last element
 
     return fact
 

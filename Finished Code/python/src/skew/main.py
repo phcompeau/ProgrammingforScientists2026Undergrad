@@ -5,14 +5,14 @@ import requests
 def main():
     print("Building a skew array.")
 
-    # --- Tiny local demo (uncomment after implementing functions) ---
+    # --- Tiny local demo ---
     demo_genome = "CATGGGCATCGGCCATACGCC"
     arr = skew_array(demo_genome)
     print("Demo skew array length:", len(arr))
     print("First few values:", arr[:10])
     print("Minimum skew indices (demo):", minimum_skew(demo_genome))
 
-    # --- E. coli genome experiment & plotting (uncomment to run) ---
+    # --- E. coli genome experiment & plotting ---
     url = "https://bioinformaticsalgorithms.com/data/realdatasets/Replication/E_coli.txt"
 
     response = requests.get(url)
@@ -41,6 +41,15 @@ def main():
     print("Skew diagram drawn! Exiting normally.")
 
 
+
+# Why does this work for finding replication origins?
+# we want to find where replication begins in a bacterium
+# half of genome after origin spends its life single-stranded more often
+# common C -> U -> T mutation on single-stranded DNA
+# result: after ori, shortage of C and normal G
+
+# on the other half of the genome, normal C (and shortage of G)
+# idea: plot #G - #C over genome, look for change
 
 """
 Skew(symbol)
@@ -196,7 +205,14 @@ def draw_skew(skew_list: list[int]) -> None:
     pyplot.title("Skew Diagram")
     pyplot.xlabel("Genome Position")
     pyplot.ylabel("Skew Value")
-    pyplot.savefig("skewDiagram.png")
+    pyplot.savefig("skew_diagram.png")
+    pyplot.show()
+
+# worked example
+# GCCATGCAA
+# skew[5] = -1
+# skew[6] = (-1+1) = 0
+# skew[7] = skew[6] - 1 = -1
 
 if __name__ == "__main__":
     main()

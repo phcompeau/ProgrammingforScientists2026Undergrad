@@ -14,8 +14,8 @@ def main():
 
     # Let's declare some variables
     j = 14  #Python gives this type int
-    x = -2.3 #type: float 
-    yo_world = "Hi" #type: string 
+    x = -2.3 #type: float
+    yo_world = "Hi" #type: string
     statement = True # type: bool
 
     #Note: multi-word variable names use snake_case
@@ -25,11 +25,11 @@ def main():
     print(yo_world)
     print(statement)
 
-    # the point of variables is that they can change 
+    # the point of variables is that they can change
     j = -7
 
 
-    # let's print them on one line 
+    # let's print them on one line
     print("j is", j)
     print("x is", x)
     print("yo_world is", yo_world)
@@ -40,6 +40,7 @@ def main():
     print(type(yo_world))
     print(type(x))
 
+    # Python uses dynamic typing (the type of a variable can change)
     # don't do this! All variables should start and end with the same type
     statement = "I hate python"
     print("statement now has type", type(statement))
@@ -48,10 +49,12 @@ def main():
     print(2 * (j+5))
     print(x/4 + 3.16)
 
-    # some languages don't like you combining variables of different types with operations 
+    # some languages don't like you combining variables of different types with operations
     print(x*j) # Python is happy :) .. will give float
 
-    # three more operators: power, int division, and remainder 
+    print("After multiplication, j has type", type(j))
+
+    # three more operators: power, int division, and remainder
     print(14/3) # this is our old friend 4.666666666666667
     print(14 // 3) # this is integer division (prints 4)
     print(14 % 3) # this is the remainder after division (2)

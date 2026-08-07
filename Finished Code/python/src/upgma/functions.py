@@ -5,7 +5,7 @@ def upgma(mtx: DistanceMatrix, species_names: list[str]) -> Tree:
     Build a phylogenetic tree using the UPGMA algorithm.
 
     Given a distance matrix and species names, iteratively merges the closest
-    clusters and updates the matrix using cluster-size–weighted averages.
+    clusters and updates the matrix using cluster-size-weighted averages.
     The resulting tree has `n` leaves (the species) and `n-1` internal nodes.
 
     Args:
@@ -25,7 +25,8 @@ def upgma(mtx: DistanceMatrix, species_names: list[str]) -> Tree:
     # initialize the tree by creating nodes and assigning species names to the leaves
     t = initialize_tree(species_names)
 
-    clusters = t[:num_leaves]
+    # clusters refer to the first num_leaves nodes in tree
+    clusters = t[:num_leaves]  # is this OK? Should this make *new* nodes? No! It makes copies of the keys to the locker that contains the leaves
 
     # range over all the internal nodes, and iterate one step of UPGMA algorithm 
     for p in range(num_leaves, 2*num_leaves-1):
@@ -213,6 +214,8 @@ def find_min_element(mtx: DistanceMatrix) -> tuple[int, int, float]:
         for j in range(i+1, len(mtx[i])):
                 if mtx[i][j] < min_val:
                     row, col, min_val = i, j, mtx[i][j]
+
+    # nice exercise: write a function that asserts that mtx is a distance matrix (non-negative values, symmetric across main diagonal, satisfies the triangle inequality)
 
     return row, col, min_val
 

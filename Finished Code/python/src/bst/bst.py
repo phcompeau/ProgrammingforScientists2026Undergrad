@@ -110,7 +110,7 @@ class Node:
         # key is already in the tree; do nothing
         return self
 
-        def inorder_traversal(self) -> list[Self]:
+    def inorder_traversal(self) -> list[Self]:
         """
         Perform an inorder traversal and return a list of nodes.
 
@@ -121,14 +121,18 @@ class Node:
 
         # Traverse left subtree first
         if self.left_child is not None:
-            result.extend(self.left_child.inorder_traversal())
+            left_nodes = self.left_child.inorder_traversal()
+            for node in left_nodes:
+                result.append(node)
 
         # Visit current node
         result.append(self)
 
         # Traverse right subtree next
         if self.right_child is not None:
-            result.extend(self.right_child.inorder_traversal())
+            right_nodes = self.right_child.inorder_traversal()
+            for node in right_nodes:
+                result.append(node)
 
         return result
 

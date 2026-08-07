@@ -1,91 +1,129 @@
 def main():
-    print("Dictionaries in Python (aka maps).")
+    print("Dictionaries in Python.")
 
-    # polls = {} # empty dictionary
+    # polls = {}   # standard dictionary declaration
 
-    # polls is going to be a dictionary whose keys are states and whose values are a polling percentage for a candidate in that state 
+    # polls is going to be a dictionary whose keys are states and whose values are a polling percentage for a candidate in that state
     polls: dict[str, float] = {}
 
-    # we can set the value associated with any key
-    polls["Pennsylvania"] = 0.517 
+    # let's add some elements
+    polls["Pennsylvania"] = 0.517
     polls["Ohio"] = 0.488
     polls["Texas"] = 0.378
     polls["Florida"] = 0.5
 
-    print("Number of states in dictionary:", len(polls))
+    print("Number of elements in my dictionary is", len(polls))
+
+    # primes = {}
+    # primes[0] = 2
+    # primes[1] = 3
+    # primes[2] = 5
+    # etc.
+    # This is really bad.
 
     polls["Vermont"] = 0.69
 
-    print("Vermont poll:", polls["Vermont"])
+    print(polls["Vermont"])
 
-    print("Number of states in dictionary:", len(polls))
+    print("Number of elements in my dictionary is", len(polls))
 
-    # bye Florida forever
-
-    # is Florida in our polling data?
-    if "Florida" in polls: # this is useful for checking if a key is a key of a given dictionary
+    # let's get rid of Florida, if it's in the dictionary
+    if "Florida" in polls:  # this is useful for checking if a key is a key of a given dictionary
         del polls["Florida"]
 
-    print("Number of states in dictionary after Florida deletion:", len(polls))
+    print(polls)
 
-    # list and dictionary literals 
-    symbols = ["A", "C", "G", "T"]
+    # we can create a small list with a list literal
+    # primes = [2, 3, 5, 7, 11]
 
+    # dictionaries have literals too
     electoral_votes: dict[str, int] = {
         "Pennsylvania": 20,
         "Ohio": 18,
         "Texas": 38
     }
 
-    update_votes(electoral_votes)
+    update_votes_2024(electoral_votes)
 
-    # are dictionaries pass by value or reference????
+    print("As of 2024, the number of votes in Pennsylvania is", electoral_votes["Pennsylvania"])
 
-    print("After function call, printing electoral votes.")
-    print(electoral_votes)
+    # Dictionaries are pass by reference
 
-    # let's print things more nicely 
-    # when ranging over a list, we get the values of the list 
-    # with dictionaries, we get the KEYS of the list
+    # ranging over dictionaries
+    # when we range, the order is based on the order in which elements were added to the dictionary
+
+    # when ranging over a list, we get the values of the list
+    # with dictionaries, we get the KEYS
     for state_name in electoral_votes:
-        print("The number of electoral votes in", state_name, "is", electoral_votes[state_name])
+        print("Number of votes in", state_name, "is", electoral_votes[state_name])
 
-    # we also have double ranging for dictionaries 
-    for state_name, votes in electoral_votes.items():
-        print("The number of electoral votes in", state_name, "is", votes)
+    # we also have double ranging for dictionaries
+    for key, num_votes in electoral_votes.items():
+        print("Number of votes in", key, "is", num_votes)
 
     # let's instead get these in alphabetical order. but how?
 
-    # for a dictionary dict, Python gives us an operator dict.keys() that produces the dictionary's keys, which we can convert to a list
-    state_names = list(electoral_votes.keys())
-    print(state_names)
+    # for a dictionary, Python gives us dict.keys(), which produces the dictionary's keys; we can convert this to a list
+    keys = list(electoral_votes.keys())
+    print(keys)
 
-    # Python gives us a built in sorting algorithm that sorts a list into alphabetical order :) 
-    state_names.sort()
+    # sort the keys (Python gives us a built in sorting algorithm)
+    keys.sort()
+    print(keys)
 
-    print(state_names)
+    # range over the states
+    for state_name in keys:
+        # I'm ranging over a list, but that list is the collection of state names
+        print("Num of electoral votes in", state_name, "is", electoral_votes[state_name])
 
-    # now we can print the dictionary by ranging over the sorted keys and printing the associated values 
+    # there's a faster approach
+    # for state_name in sorted(electoral_votes):
+        # print("Num of electoral votes in", state_name, "is", electoral_votes[state_name])
 
-    for state in state_names:
-        print("The number of electoral votes in", state, "is", electoral_votes[state])
+    # we also can get just the values of a dictionary with dict.values()
 
+    total_votes = 0
 
+    for num_votes in list(electoral_votes.values()):
+        total_votes += num_votes
 
+    print("Total votes:", total_votes)
 
-
-def update_votes(votes: dict[str, int]) -> None:
+def update_votes_2024(votes: dict[str, int]) -> None:
     """
-    Update votes according to 2024 values.
+    Updates electoral college votes from 2020 to 2024.
+
+    Parameters:
+    - votes: dict[str, int] representing a map of states to votes
+
+    Returns:
+    (None): updates the dictionary "in place"
     """
     votes["Pennsylvania"] = 19
     votes["Ohio"] = 17
     votes["Texas"] = 40
 
-    
 
 
+def complement(dna:str) -> str:
+    """
+    Finds the complementary strand of a given DNA string, this time using a dictionary.
+    """
+    dna2 = ""
 
+    # before, we could use if/elif statements, or a match statement (switch)
+    comp_dict: dict[str, str] = {
+        "A": "T",
+        "T": "A",
+        "C": "G",
+        "G": "C"
+    }
+
+    # now, range over the string, and set the appropriate value of dna2
+    for symbol in dna:
+        dna2 += comp_dict[symbol]
+
+    return dna2
 
 if __name__ == "__main__":
     main()

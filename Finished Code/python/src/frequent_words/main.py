@@ -26,8 +26,8 @@ def frequency_table(text: str, k: int) -> dict[str, int]:
     if k <= 0:
         raise ValueError("k is not positive.")
     if k > len(text):
-        return []
-    
+        return {}
+
     # declare a blank map
     freq_map: dict[str, int] = {}
 
@@ -148,7 +148,7 @@ def main():
     k = 3
     print(find_frequent_words(text, k))
     
-    # Uncomment this block to experiment with the Vibrio cholerae ori region
+    # Experiment with the Vibrio cholerae ori region
     text = ("ATCAATGATCAACGTAAGCTTCTAAGCATGATCAAGGTGCTCACACAGTTTATCCACAACCTGAGTGG"
             "ATGACATCAAGATAGGTCGTTGTATCTCCTTCCTCTCGTACTCTCATGACCACGGAAAGATGATCAA"
             "GAGAGGATGATTTCTTGGCCATATCGCAATGAATACTTGTGACTTGTGCTTCCAATTGACATCTTCA"

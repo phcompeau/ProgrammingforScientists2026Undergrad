@@ -227,8 +227,7 @@ def count_columns(board: GameBoard) -> int:
     if not isinstance(board, list) or len(board) == 0:
         raise ValueError("board must be a non-empty 2D list.")
 
-    if len(board) == 0:
-        raise ValueError("Error: no rows in GameBoard.")
+    assert_rectangular(board)
 
     return len(board[0])
 

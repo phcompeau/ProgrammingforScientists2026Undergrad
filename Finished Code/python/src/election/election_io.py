@@ -16,7 +16,8 @@ def read_electoral_votes(filename: str) -> dict[str, int]:
 
     # read in the file contents
     with open(filename, 'r', newline='', encoding='utf-8') as file:
-        lines = csv.reader(file)
+        lines = csv.reader(file)  # each line becomes a list of strings
+        # e.g., the first line is ["Alabama", "9"]
         # range over lines, parse each line, and add values to our dictionary
         for line in lines:
             if not line:
@@ -55,7 +56,8 @@ def read_polling_data(filename: str) -> dict[str, float]:
             # line has three items (state name and two percentages)
             state_name = line[0]
             percentage_1 = float(line[1])
+            # we can ignore line[2] since we can infer it from candidate 1's percentage
             # normalize percentage (divide by 100) and set the appropriate dictionary value
             candidate_1_percentages[state_name] = percentage_1 / 100.0
-            
+
     return candidate_1_percentages

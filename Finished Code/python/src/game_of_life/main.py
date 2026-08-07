@@ -7,15 +7,6 @@ from functions import play_game_of_life
 from drawing import draw_game_board, draw_game_boards
 
 
-def pygame_surface_to_numpy(surface: pygame.Surface) -> numpy.ndarray:
-    """
-    Convert a Pygame Surface to a NumPy RGB image array.
-    Returns:
-        numpy.ndarray: Frame as (height, width, 3) array.
-    """
-    return None  # TODO: implement
-
-
 def main():
     print("Coding the Game of Life!")
 
@@ -39,8 +30,6 @@ def main():
 
     # when we type command line arguments, a tuple of strings is created called sys.argv
     # length of tuple is 1 more than # of arguments because the first one is always the name of the program, e.g., "main.py"
-
-    pygame.quit()
 
     if len(sys.argv) != 5:
         raise ValueError("Usage: python main.py initial_board.csv output_prefix cell_width num_gens")
@@ -89,7 +78,7 @@ def main():
 
     print("Success! MP4 video produced.")
 
-    pygame.image.save(surfaces[len(surfaces)-1], "output/test.png")
+    pygame.quit()
 
 
 def pygame_surface_to_numpy(surface: pygame.Surface) -> numpy.ndarray:

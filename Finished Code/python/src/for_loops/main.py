@@ -1,83 +1,141 @@
+import random
+
 def main():
     print("For loops in Python.")
 
-    print(another_factorial(10))
+    print(another_factorial(5))
+    print(yet_another_factorial(5))
 
-def say_hi_five():
-    """
-    Prints "Hi" five times.
-    """
-    # if bottom index is 0, you can omit it
+    say_hi_five_times()
+
+    #pittsburgh_january()
+
+# General rule: use a for loop any time you can
+
+# Use a while loop when you're waiting on a condition
+# (e.g., user input, randomness, convergence)
+
+# range(a, b) in Python represents the integers between a and b-1, inclusively
+
+# range() has a third parameter, which is a "step size", that allows us to jump the variable by this amount each time through the loop
+
+def say_hi_five_times():
+    # print Hello World five times
+    # if the bottom index is 0, you can omit it
     for _ in range(5):
-        print("hi")
         # _ indicates that we don't need the variable
+        print("Hello, World!")
 
 def sum_even(k: int) -> int:
     """
-    Returns the sum of all even positive integers up to and possibly including k.
+    Sums all the even positive integers up to and (possibly including) k.
+
+    Parameters:
+    - k: int
+
+    Returns:
+    - int: sum of the even positive integers up to k.
     """
+    if k < 0:
+        raise ValueError("Error: Negative k given to function.")
+
     s = 0
 
-    for i in range(2, k+1):
-        # is i even?
-        if i % 2 == 0:
-            #yes 
-            s += i
-
-    return s
-
-def another_sum_even(k: int) -> int:
     """
-    Returns the sum of all even positive integers up to and possibly including k.
+    # solution 1
+    for j in range(2, k+1):
+        # is j even?
+        if j % 2 == 0:
+            # yes, so add it to sum
+            s += j
     """
-    s = 0
 
-    # the third parameter in range is the "step size";
-    # it tells us how much to increase i by each time through the loop
-    for i in range(2, k+1, 2):
-        s += i
-        # i must always be even
+    # solution 2: skip the odd numbers
+    for j in range(2, k+1, 2):  # note: step size of 2 means that we add 2 to j every time through
+        s += j
+
+    # 2 + 4 + ... + k = 2 * (1 + 2 + ... + k/2)
+    """
+    # solution 3: use gauss
+    return 2*gauss_sum(k//2)
+    """
 
     return s
 
 def yet_another_factorial(n: int) -> int:
     """
-    Factorial, but with for, and fancy.
+    Produces n! = n * (n-1) * ... (2) * 1
+
+    Parameters:
+    - n (int)
+
+    Returns:
+    int: n!
+
+    Raises an error if n < 0.
     """
-    # let's ensure that n >= 0
     if n < 0:
-        print("n is", n)
-        raise ValueError("Error: negative input given to factorial.")
-    
-    product = 1 
+        # handle negative input with an error
+        raise ValueError("Error: negative input given to factorial().")
 
-    # for loops are always preferable IF we know how many iterations through the loop we're going to take 
-    # there are other instances where we can only use while
-    for i in range(n, 0, -1):
+    p = 1  # think of p as the container that will represent my growing product
+
+    # for every integer i between 1 and n, p = p*i
+    for i in range(n, 0, -1):  #-1 means decrease i by 1 each time
         # i lives only within this loop
-        product *= i
+        p = p*i   # left side: variable, right side: value
 
-    return product
+    # we are here in the function when i > n
+    return p
+
+def pittsburgh_january():
+    """
+    Simulates Pittsburgh winter.
+    Each day has an 80% chance of snow.
+    The loop continues until it stops snowing, and I move to Florida.
+    """
+
+    day = 1  # date
+    dream = True  # start off dreaming
+
+    while dream == True:
+        # generate a random number between 0 and 1
+        x = random.random()
+        if x < 0.8:
+            print("It is January", day, "and it is snowing.")
+            print("Continue dream of Tampa.")
+            day += 1
+        else:
+            # it didn't snow!
+            dream = False
+            print("It is January", day, "and no snow.")
+            print("Headed to Tampa.")
 
 def another_factorial(n: int) -> int:
     """
-    Factorial, but with for.
+    Produces n! = n * (n-1) * ... (2) * 1
+
+    Parameters:
+    - n (int)
+
+    Returns:
+    int: n!
+
+    Raises an error if n < 0.
     """
-    # let's ensure that n >= 0
     if n < 0:
-        print("n is", n)
-        raise ValueError("Error: negative input given to factorial.")
-    
-    product = 1 
+        # handle negative input with an error
+        raise ValueError("Error: negative input given to factorial().")
 
+    p = 1  # think of p as the container that will represent my growing product
 
-    # for loops are always preferable IF we know how many iterations through the loop we're going to take 
-    # there are other instances where we can only use while
-    for i in range(1, n+1):
+    # for every integer i between 1 and n, p = p*i
+    for i in range(1, n+1): # adds 1 to i automatically
         # i lives only within this loop
-        product *= i
+        p = p*i   # left side: variable, right side: value
 
-    return product
+    # we are here in the function when i > n
+    return p
 
 if __name__ == "__main__":
     main()
