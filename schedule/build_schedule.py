@@ -1,7 +1,9 @@
 """Build the 02-120 master schedule page from schedule.yaml.
 
-Usage:  python3 build_schedule.py [output.html]
-Default output is ../docs/index.html so GitHub Pages can serve it.
+Usage:  python3 build_schedule.py [output.html] [--fragment]
+
+Default output is ../docs/index.html, a complete HTML document for GitHub Pages.
+Pass --fragment to emit the body only, for hosts that supply their own <head>.
 """
 
 import datetime
@@ -592,19 +594,39 @@ PAGE = r"""<title>02-120 Semester Map</title>
 """
 
 
+DOCUMENT_HEAD = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="02-120 Programming for Scientists, Fall 2026: the semester day by day.">
+"""
+
+
 def main() -> None:
     """Read the YAML and write the HTML page."""
     data = yaml.safe_load((HERE / "schedule.yaml").read_text())
     challenge_file = HERE / "daily_challenges.yaml"
     if challenge_file.exists():
         data.update(yaml.safe_load(challenge_file.read_text()))
-    if len(sys.argv) > 1:
-        out = Path(sys.argv[1])
+    arguments = []
+    for value in sys.argv[1:]:
+        if value != "--fragment":
+            arguments.append(value)
+    fragment = "--fragment" in sys.argv
+    if arguments:
+        out = Path(arguments[0])
     else:
         out = DEFAULT_OUT
+    body = render_page(data)
+    if fragment:
+        page = body
+    else:
+        head, rest = body.split("</style>", 1)
+        page = DOCUMENT_HEAD + head + "</style>\n</head>\n<body>" + rest + "\n</body>\n</html>\n"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(render_page(data))
-    print(f"wrote {out}")
+    out.write_text(page)
+    print(f"wrote {out}" + (" (fragment)" if fragment else " (full document)"))
 
 
 main()
