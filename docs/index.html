@@ -1,0 +1,1152 @@
+<title>02-120 Semester Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #F7F8FA;
+    --surface: #FFFFFF;
+    --surface-2: #F1F3F7;
+    --ink: #171A20;
+    --ink-2: #39414F;
+    --muted: #5C6472;
+    --rule: #DFE3E9;
+    --rule-strong: #C6CDD8;
+    --blue: #1F5F8B;
+    --blue-soft: #E7EFF6;
+    --red: #B01B2E;
+    --red-soft: #FBEAEC;
+    --now: #FFF8E4;
+    --now-edge: #E0B348;
+    --shadow: 0 1px 2px rgba(23, 26, 32, .05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---------- masthead ---------- */
+  .mast { padding: 56px 0 28px; border-bottom: 2px solid var(--ink); }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-family: Spectral, Georgia, serif;
+    font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.1;
+    margin: 0 0 14px; text-wrap: balance; letter-spacing: -.01em;
+  }
+  .meets {
+    display: flex; flex-wrap: wrap; gap: 6px 22px;
+    font-size: 15px; color: var(--ink-2); margin-bottom: 20px;
+  }
+  .meets span { display: inline-flex; gap: 8px; }
+  .meets b { font-weight: 600; color: var(--muted); font-size: 13px;
+             font-family: "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quick a {
+    display: inline-block; padding: 6px 13px; border: 1px solid var(--rule-strong);
+    border-radius: 999px; background: var(--surface); color: var(--ink-2);
+    font-size: 14px; text-decoration: none; box-shadow: var(--shadow);
+  }
+  .quick a:hover { border-color: var(--blue); color: var(--blue); }
+  .quick a.jump { border-color: var(--now-edge); background: var(--now); color: var(--ink); }
+
+  /* ---------- how it works ---------- */
+  .about { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; padding: 30px 0 8px; }
+  .about p { margin: 0; color: var(--ink-2); max-width: 62ch; }
+  .about h3 {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px;
+  }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 18px 0 30px;
+    border-bottom: 1px solid var(--rule); margin-bottom: 8px;
+    font-size: 13px; color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+
+  /* ---------- weeks ---------- */
+  .week { padding: 34px 0 8px; border-bottom: 1px solid var(--rule); }
+  .week.past .whead, .week.past .rows { opacity: .55; }
+  .week.now {
+    background: var(--now);
+    margin: 0 -18px; padding: 34px 18px 12px;
+    border-radius: 6px; border-bottom-color: var(--now-edge);
+  }
+  .whead {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .wleft { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .wlabel {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--surface);
+    background: var(--ink); padding: 4px 9px; border-radius: 3px;
+  }
+  .week.now .wlabel { background: var(--red); }
+  .wtitle {
+    font-family: Spectral, Georgia, serif; font-weight: 600; font-size: 24px;
+    margin: 0; letter-spacing: -.005em;
+  }
+  .wright {
+    display: flex; gap: 14px; align-items: baseline;
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .wprep { color: var(--blue); }
+  .wnote {
+    margin: 0 0 14px; padding: 10px 14px; background: var(--surface-2);
+    border-left: 3px solid var(--rule-strong); border-radius: 0 4px 4px 0;
+    font-size: 14.5px; color: var(--ink-2); max-width: 88ch;
+  }
+  .nowpill {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--red); border: 1px solid var(--red);
+    padding: 3px 8px; border-radius: 999px;
+  }
+
+  .strip {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    margin: 0 0 14px; padding: 9px 12px;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 5px;
+  }
+  .striplabel {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); white-space: nowrap;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: baseline; gap: 5px;
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-variant-numeric: tabular-nums;
+    padding: 3px 8px; border: 1px solid var(--rule-strong); border-radius: 3px;
+    color: var(--ink-2); text-decoration: none; background: var(--ground);
+  }
+  .striplink { color: var(--blue); text-decoration: none; }
+  .striplink:hover { text-decoration: underline; }
+  .chip-weekend { border-style: dashed; }
+  .chip-exam, .chip-study { border-color: var(--red); color: var(--red); background: var(--red-soft); }
+  .chiptag {
+    font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  }
+  .chip-exam .chiptag, .chip-study .chiptag { color: var(--red); }
+
+  /* ---------- rows ---------- */
+  .rows { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border-radius: 5px; overflow: hidden; }
+  .row {
+    display: grid; grid-template-columns: 124px 1.25fr 1.6fr 0.95fr;
+    gap: 20px; padding: 15px 16px 15px 13px;
+    background: var(--surface); border-left: 3px solid transparent;
+  }
+  .row-lecture { border-left-color: var(--rule-strong); }
+  .row-recitation { border-left-color: var(--blue); }
+  .row-exam { border-left-color: var(--red); background: var(--red-soft); }
+  .row-deadline { border-left-color: var(--red); }
+  .row-no-class { border-left-color: transparent; background: var(--surface-2); }
+  .row-no-class .ctitle { color: var(--muted); font-style: italic; }
+
+  .rowhead {
+    background: var(--surface-2); border-left-color: var(--rule);
+    padding-top: 7px; padding-bottom: 7px;
+  }
+  .rowhead .cell {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .cell-date { display: flex; flex-direction: column; gap: 3px; }
+  .date {
+    font-family: "IBM Plex Mono", monospace; font-size: 15px; font-weight: 500;
+    font-variant-numeric: tabular-nums; color: var(--ink);
+  }
+  .kind {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .row-exam .kind, .row-deadline .kind { color: var(--red); }
+
+  .colhead { display: none; }
+  .ctitle { font-weight: 600; font-size: 15.5px; }
+  .detail { color: var(--muted); font-size: 14.5px; margin-top: 3px; max-width: 52ch; }
+  .none { color: var(--rule-strong); }
+
+  ul.preplist, ul.duelist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .prep, .due { font-size: 14.5px; line-height: 1.42; }
+  .prep-reference, .prep-after { color: var(--muted); }
+  .tag {
+    font-family: "IBM Plex Mono", monospace; font-size: 9.5px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 2px 6px; border-radius: 3px;
+    background: var(--surface-2); color: var(--muted); margin-right: 7px;
+    border: 1px solid var(--rule); vertical-align: 1px;
+  }
+  .prepnote { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+  .mins {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted);
+    font-variant-numeric: tabular-nums; margin-left: 7px; white-space: nowrap;
+  }
+  .due { color: var(--red); font-weight: 600; }
+  .due a { color: var(--red); }
+  .due-flag { font-weight: 600; }
+  .tbd {
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); border: 1px dashed var(--rule-strong);
+    padding: 2px 6px; border-radius: 3px; margin-left: 9px; vertical-align: 2px; font-weight: 400;
+  }
+
+  footer {
+    padding: 34px 0 0; color: var(--muted); font-size: 13.5px;
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  footer .stamp { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 18px 13px; }
+    .cell-date { flex-direction: row; align-items: baseline; gap: 10px; }
+    .colhead {
+      display: block; font-family: "IBM Plex Mono", monospace; font-size: 10px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+    }
+    .cell-class .colhead { display: none; }
+    .cell-prep:has(.none), .cell-due:has(.none) { display: none; }
+    .rowhead { display: none; }
+    .whead { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">Carnegie Mellon University &middot; Fall 2026</p>
+    <h1>02-120 Programming for Scientists: the semester, day by day</h1>
+    <div class="meets">
+      <span><b>Lecture</b>Tue/Thu 9:30-10:50, GHC 4307</span>
+      <span><b>Recitation</b>Fri, GHC 4211 (A: 12:00, B: 3:00)</span>
+    </div>
+    <nav class="quick">
+      <a class="jump" href="#now" id="jumpnow">Jump to this week</a>
+      <a href="https://canvas.cmu.edu/courses/55141" target="_blank" rel="noopener">Canvas</a>
+      <a href="https://edstem.org/us/courses/101123/discussion" target="_blank" rel="noopener">Ed Discussion</a>
+      <a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">Homework autograders</a>
+      <a href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges</a>
+      <a href="https://programmingforlovers.com" target="_blank" rel="noopener">Code alongs</a>
+      <a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad" target="_blank" rel="noopener">Course code</a>
+    </nav>
+  </header>
+
+  <div class="about">
+    <div>
+      <h3>How this course works</h3>
+      <p>This course flips the basics. You learn programming fundamentals outside of class using the readings and code-along videos at programmingforlovers.com, and we spend class time building the fun scientific applications together: hunting for replication origins, forecasting elections, growing cellular automata, simulating gravity, and more. Class assumes you have completed the preparation listed for that day.</p>
+    </div>
+    <div>
+      <h3>How to prepare</h3>
+      <p>Each code-along length below is watch time. Do not just watch: pause and type the code yourself, and complete the exercises on each page. Budget roughly twice the video length. Code-along exercises are submitted in the homework autograder course and count toward your programming grade, and daily challenges continue throughout the semester.</p>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--rule-strong)"></i>Lecture</span>
+    <span><i class="swatch" style="background:var(--blue)"></i>Recitation</span>
+    <span><i class="swatch" style="background:var(--red)"></i>Exam or deadline</span>
+    <span>Times shown are video watch time. Budget about double.</span>
+  </div>
+
+  
+    <section class="week" data-start="2026-08-24" data-end="2026-08-28">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 0</span>
+          <h2 class="wtitle">Introduction and AI 0</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Aug 24 &ndash; Aug 28</span>
+          <span class="wprep">reading only</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Wed 8/26<span class="chiptag">reading</span></span><span class="chip chip-challenge">Thu 8/27</span><span class="chip chip-challenge">Fri 8/28</span><span class="chip chip-weekend">Sun 8/30<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-08-25">
+        <div class="cell cell-date">
+          <span class="date">Tue 8/25</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Intros, syllabus, and what is programming?</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-08-27">
+        <div class="cell cell-date">
+          <span class="date">Thu 8/27</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">AI 0: What is AI?</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-core-text/" target="_blank" rel="noopener">Read the Chapter 0 core text</a></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-08-28">
+        <div class="cell cell-date">
+          <span class="date">Fri 8/28</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 0: Introduction to Git</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-after"><span class="tag tag-after">After class</span><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/installing-python-and-writing-our-first-program/" target="_blank" rel="noopener">Chapter 0 code alongs: Installing Python and Writing Our First Program</a><span class="mins">10 min</span></li><li class="prep prep-after"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/types-and-numeric-variables-in-python/" target="_blank" rel="noopener">Variables in Python</a><span class="mins">25 min</span></li><li class="prep prep-after"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/functions-in-python/" target="_blank" rel="noopener">Functions in Python</a><span class="mins">34 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-08-31" data-end="2026-09-04">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 1</span>
+          <h2 class="wtitle">Integers and intro programming</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Aug 31 &ndash; Sep 4</span>
+          <span class="wprep">2 hr 37 min of required prep</span>
+        </div>
+      </header>
+      <p class="wnote">Catch-up and review: full videos of the GCD and prime-finding code alongs are posted on the Chapter 0 code-along pages if you miss class or want a replay.</p>
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Tue 9/1</span><span class="chip chip-challenge">Wed 9/2</span><span class="chip chip-challenge">Thu 9/3</span><span class="chip chip-challenge">Fri 9/4</span><span class="chip chip-weekend">Sun 9/6<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-09-01">
+        <div class="cell cell-date">
+          <span class="date">Tue 9/1</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">GCD and primes I</div><div class="detail">We build Euclid&#x27;s greatest common divisor algorithms together in class.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/conditionals-in-python/" target="_blank" rel="noopener">Chapter 0 code along: Conditionals</a><span class="mins">35 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/while-loops-in-python/" target="_blank" rel="noopener">While Loops</a><span class="mins">40 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/for-loops-in-python/" target="_blank" rel="noopener">For Loops</a><span class="mins">34 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/arrays-and-lists-in-python/" target="_blank" rel="noopener">Arrays, Tuples, and Lists</a><span class="mins">48 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-03">
+        <div class="cell cell-date">
+          <span class="date">Thu 9/3</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">GCD and primes II</div><div class="detail">We implement prime-finding algorithms, plot the primes, and draw the Ulam spiral.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-09-04">
+        <div class="cell cell-date">
+          <span class="date">Fri 9/4</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 1: Testing and debugging</div><div class="detail">Plus a short ungraded paper diagnostic.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-09-07" data-end="2026-09-11">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 2</span>
+          <h2 class="wtitle">AI 1 and strings</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Sep 7 &ndash; Sep 11</span>
+          <span class="wprep">2 hr 18 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 9/7<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 9/8</span><span class="chip chip-challenge">Wed 9/9</span><span class="chip chip-challenge">Thu 9/10</span><span class="chip chip-challenge">Fri 9/11</span><span class="chip chip-weekend">Sun 9/13<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-09-08">
+        <div class="cell cell-date">
+          <span class="date">Tue 9/8</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">AI 1: Learning with AI</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-10">
+        <div class="cell cell-date">
+          <span class="date">Thu 9/10</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">String algorithms</div><div class="detail">We hunt for the replication origin of a real bacterial genome: frequent words and the skew diagram.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-core-text/" target="_blank" rel="noopener">Read the Chapter 1 core text</a></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/an-introduction-to-strings-in-python/" target="_blank" rel="noopener">Chapter 1 code along: An Introduction to Strings</a><span class="mins">57 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/substrings-and-sublists-in-python/" target="_blank" rel="noopener">Substrings and Sublists</a><span class="mins">37 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/dictionaries-in-python/" target="_blank" rel="noopener">Dictionaries</a><span class="mins">44 min</span></li><li class="prep prep-after"><span class="tag tag-after">After class</span><a href="https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/finding-clumps-in-python/" target="_blank" rel="noopener">Finding Clumps, posted as a companion to HW1</a><span class="mins">1 hr 29 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-09-11">
+        <div class="cell cell-date">
+          <span class="date">Fri 9/11</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 2: Sorting I</div><div class="detail">k-mer counting and insertion sort on a real E. coli window.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-09-14" data-end="2026-09-18">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 3</span>
+          <h2 class="wtitle">AI 2 and Monte Carlo simulation</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Sep 14 &ndash; Sep 18</span>
+          <span class="wprep">1 hr 10 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 9/14<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 9/15</span><span class="chip chip-challenge">Wed 9/16</span><span class="chip chip-challenge">Thu 9/17</span><span class="chip chip-challenge">Fri 9/18</span><span class="chip chip-weekend">Sun 9/20<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-09-14">
+        <div class="cell cell-date">
+          <span class="date">Mon 9/14</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW0 due (integer functions)</a></li></ul></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-15">
+        <div class="cell cell-date">
+          <span class="date">Tue 9/15</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">AI 2: Managing AI</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-17">
+        <div class="cell cell-date">
+          <span class="date">Thu 9/17</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Simulating a presidential election</div><div class="detail">Including parsing real polling data.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-core-text/" target="_blank" rel="noopener">Read the Chapter 2 core text</a></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/generating-random-numbers-and-rolling-dice-python/" target="_blank" rel="noopener">Chapter 2 code along: Generating Random Numbers and Rolling Dice</a><span class="mins">31 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/simulating-craps-with-monte-carlo-simulation-python/" target="_blank" rel="noopener">Simulating Craps</a><span class="mins">39 min</span></li><li class="prep prep-reference"><span class="tag tag-reference">Optional</span><a href="https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/parsing-election-polling-data-from-files-python/" target="_blank" rel="noopener">Parsing Election Polling Data covers the file-parsing details we move through quickly in class</a><span class="mins">1 hr 1 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-09-18">
+        <div class="cell cell-date">
+          <span class="date">Fri 9/18</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 3: Sorting II</div><div class="detail">Recursion, quicksort, and the full-genome pipeline.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-09-21" data-end="2026-09-25">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 4</span>
+          <h2 class="wtitle">AI 3 and Midterm 0</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Sep 21 &ndash; Sep 25</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      <p class="wnote">No new code alongs this week; use your outside-of-class time to prepare for the exam.</p>
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 9/21<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 9/22</span><span class="chip chip-study">Wed 9/23<span class="chiptag">study day</span></span><span class="chip chip-exam">Thu 9/24<span class="chiptag">exam day</span></span><span class="chip chip-challenge">Fri 9/25</span><span class="chip chip-weekend">Sun 9/27<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-09-21">
+        <div class="cell cell-date">
+          <span class="date">Mon 9/21</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW1 due (strings and metagenomics)</a></li></ul></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-22">
+        <div class="cell cell-date">
+          <span class="date">Tue 9/22</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">AI 3: Building a project</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-exam" data-date="2026-09-24">
+        <div class="cell cell-date">
+          <span class="date">Thu 9/24</span>
+          <span class="kind">Exam</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Midterm 0</div><div class="detail">Introduction to programming and string algorithms.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-09-25">
+        <div class="cell cell-date">
+          <span class="date">Fri 9/25</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 4</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-09-28" data-end="2026-10-02">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 5</span>
+          <h2 class="wtitle">Cellular automata</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Sep 28 &ndash; Oct 2</span>
+          <span class="wprep">2 hr 7 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 9/28<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 9/29</span><span class="chip chip-challenge">Wed 9/30</span><span class="chip chip-challenge">Thu 10/1</span><span class="chip chip-challenge">Fri 10/2</span><span class="chip chip-weekend">Sun 10/4<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-09-28">
+        <div class="cell cell-date">
+          <span class="date">Mon 9/28</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW2 due (PRNG)</a></li></ul></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-09-29">
+        <div class="cell cell-date">
+          <span class="date">Tue 9/29</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Game of Life I</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-core-text/" target="_blank" rel="noopener">Read the Chapter 3 core text, first three sections</a></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-two-dimensional-arrays/" target="_blank" rel="noopener">Chapter 3 code along: Introduction to Two-Dimensional Arrays</a><span class="mins">1 hr 3 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-10-01">
+        <div class="cell cell-date">
+          <span class="date">Thu 10/1</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Game of Life II</div><div class="detail">We finish implementing and animating the Game of Life.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-graphics/" target="_blank" rel="noopener">Chapter 3 code along: Introduction to Graphics</a><span class="mins">1 hr 4 min</span></li><li class="prep prep-after"><span class="tag tag-after">After class</span><a href="https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/infinitude-of-cellular-automata-including-self-replicating-langton-loops/" target="_blank" rel="noopener">Read the page on an infinitude of cellular automata and the self-replicating Langton loops; it leads directly into HW3</a></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-10-02">
+        <div class="cell cell-date">
+          <span class="date">Fri 10/2</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 5</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-10-05" data-end="2026-10-09">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 6</span>
+          <h2 class="wtitle">Object-oriented programming and the gravity simulator</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Oct 5 &ndash; Oct 9</span>
+          <span class="wprep">1 hr 42 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 10/5<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 10/6</span><span class="chip chip-challenge">Wed 10/7</span><span class="chip chip-challenge">Thu 10/8</span><span class="chip chip-challenge">Fri 10/9</span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-10-06">
+        <div class="cell cell-date">
+          <span class="date">Tue 10/6</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">OOP I</div><div class="detail">We plan the gravity simulator top-down and start the physics engine.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-4/chapter-4-core-text/" target="_blank" rel="noopener">Read the Chapter 4 core text</a></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-4/chapter-4-python-code-alongs/introduction-to-object-oriented-programming-in-python/" target="_blank" rel="noopener">Chapter 4 code along: An Introduction to Classes</a><span class="mins">1 hr 42 min</span><span class="prepnote">This is the longest preparation of the semester. Start early.</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-10-08">
+        <div class="cell cell-date">
+          <span class="date">Thu 10/8</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">OOP II</div><div class="detail">We finish the engine and animate the solar system.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-10-09">
+        <div class="cell cell-date">
+          <span class="date">Fri 10/9</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 6</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW3 due (automata and Gray-Scott)</a></li></ul></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-10-12" data-end="2026-10-16">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">No class</span>
+          <h2 class="wtitle">Fall Break</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Oct 12 &ndash; Oct 16</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      <p class="wnote">Nothing is due. If you want a head start on trees, the Week 7 preparation is posted.</p>
+      
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-no-class" data-date="2026-10-13">
+        <div class="cell cell-date">
+          <span class="date">Tue 10/13</span>
+          <span class="kind">No class</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Fall Break, no class</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-no-class" data-date="2026-10-15">
+        <div class="cell cell-date">
+          <span class="date">Thu 10/15</span>
+          <span class="kind">No class</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Fall Break, no class</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-10-19" data-end="2026-10-23">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 7</span>
+          <h2 class="wtitle">Evolutionary trees</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Oct 19 &ndash; Oct 23</span>
+          <span class="wprep">1 hr 54 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-reading">Mon 10/19<span class="chiptag">reading</span></span><span class="chip chip-challenge">Tue 10/20</span><span class="chip chip-reading">Wed 10/21<span class="chiptag">reading</span></span><span class="chip chip-challenge">Thu 10/22</span><span class="chip chip-challenge">Fri 10/23</span><span class="chip chip-weekend">Sun 10/25<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-10-20">
+        <div class="cell cell-date">
+          <span class="date">Tue 10/20</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Trees I</div><div class="detail">We start implementing UPGMA.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-5/chapter-5-core-text/" target="_blank" rel="noopener">Read the Chapter 5 core text</a></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/first-evolutionary-tree-code-along-in-python/" target="_blank" rel="noopener">Chapter 5 code along: Returning to Shapes, An Introduction to Methods</a><span class="mins">1 hr 47 min</span></li><li class="prep prep-required"><a href="https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/data-for-trees/" target="_blank" rel="noopener">Data for Trees</a><span class="mins">7 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-10-22">
+        <div class="cell cell-date">
+          <span class="date">Thu 10/22</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Trees II</div><div class="detail">We finish UPGMA and apply it to real data.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-after"><span class="tag tag-after">After class</span><a href="https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/recursion-and-completing-our-upgma-implementation-in-python/" target="_blank" rel="noopener">Recursion and Completing UPGMA covers the remaining details, including Newick format</a><span class="mins">2 hr 3 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-10-23">
+        <div class="cell cell-date">
+          <span class="date">Fri 10/23</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 7</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due due-flag"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW4 due (boids). Last hand-built assignment; AI tools unlock from HW5 onward.</a></li></ul></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-10-26" data-end="2026-10-30">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 8</span>
+          <h2 class="wtitle">Midterm 1</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Oct 26 &ndash; Oct 30</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      <p class="wnote">No new code alongs this week.</p>
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Mon 10/26</span><span class="chip chip-challenge">Tue 10/27</span><span class="chip chip-challenge">Wed 10/28</span><span class="chip chip-challenge">Thu 10/29</span><span class="chip chip-challenge">Fri 10/30</span><span class="chip chip-weekend">Sun 11/1<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-exam" data-date="2026-10-27">
+        <div class="cell cell-date">
+          <span class="date">Tue 10/27</span>
+          <span class="kind">Exam</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Midterm 1</div><div class="detail">Monte Carlo and PRNGs, cellular automata, top-down design, OOP.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-10-29">
+        <div class="cell cell-date">
+          <span class="date">Thu 10/29</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">To be announced<span class="tbd">to be confirmed</span></div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-10-30">
+        <div class="cell cell-date">
+          <span class="date">Fri 10/30</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 8</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-11-02" data-end="2026-11-06">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 9</span>
+          <h2 class="wtitle">Parallel programming 1</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Nov 2 &ndash; Nov 6</span>
+          <span class="wprep">1 hr 44 min of required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Mon 11/2</span><span class="chip chip-challenge">Tue 11/3</span><span class="chip chip-reading">Wed 11/4<span class="chiptag">reading</span></span><span class="chip chip-challenge">Thu 11/5</span><span class="chip chip-challenge">Fri 11/6</span><span class="chip chip-challenge">Sun 11/8</span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-11-02">
+        <div class="cell cell-date">
+          <span class="date">Mon 11/2</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW5 due (Barnes-Hut)</a></li></ul></div>
+      </div>
+      <div class="row row-no-class" data-date="2026-11-03">
+        <div class="cell cell-date">
+          <span class="date">Tue 11/3</span>
+          <span class="kind">No class</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Election Day, no class</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-11-05">
+        <div class="cell cell-date">
+          <span class="date">Thu 11/5</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Parallel I</div><div class="detail">Summing a list in parallel and timing the speedup.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required">Read the assigned introduction to parallelism versus concurrency</li><li class="prep prep-required">Watch Parallel Programming Part 1 on YouTube<span class="mins">1 hr 44 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-11-06">
+        <div class="cell cell-date">
+          <span class="date">Fri 11/6</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 9</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-11-09" data-end="2026-11-13">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 10</span>
+          <h2 class="wtitle">Parallel programming 2 and assembly 1</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Nov 9 &ndash; Nov 13</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Mon 11/9</span><span class="chip chip-challenge">Tue 11/10</span><span class="chip chip-challenge">Wed 11/11</span><span class="chip chip-challenge">Thu 11/12</span><span class="chip chip-challenge">Fri 11/13</span><span class="chip chip-weekend">Sun 11/15<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-11-10">
+        <div class="cell cell-date">
+          <span class="date">Tue 11/10</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Parallel II</div><div class="detail">Parallel craps and a parallel reaction-diffusion simulator.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-11-12">
+        <div class="cell cell-date">
+          <span class="date">Thu 11/12</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Assembly I</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-reference"><span class="tag tag-reference">Optional</span>Parallel Programming Part 2 is on YouTube as a companion<span class="mins">2 hr 14 min</span></li><li class="prep prep-reference">The reaction-diffusion build is on YouTube as a companion<span class="mins">3 hr 8 min</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-11-13">
+        <div class="cell cell-date">
+          <span class="date">Fri 11/13</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 10</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-11-16" data-end="2026-11-20">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 11</span>
+          <h2 class="wtitle">Assembly 2 and theory 1</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Nov 16 &ndash; Nov 20</span>
+          <span class="wprep">reading only</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Mon 11/16</span><span class="chip chip-challenge">Tue 11/17</span><span class="chip chip-challenge">Wed 11/18</span><span class="chip chip-challenge">Thu 11/19</span><span class="chip chip-challenge">Fri 11/20</span><span class="chip chip-weekend">Sun 11/22<span class="chiptag">weekend</span></span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-11-16">
+        <div class="cell cell-date">
+          <span class="date">Mon 11/16</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW6 due (parallel sandpiles)</a></li></ul></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-11-17">
+        <div class="cell cell-date">
+          <span class="date">Tue 11/17</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Assembly II</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-required">Read the assigned introduction to memory management and binary</li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-11-19">
+        <div class="cell cell-date">
+          <span class="date">Thu 11/19</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Theory I</div><div class="detail">Turing machines and the halting problem.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><ul class="preplist"><li class="prep prep-reference"><span class="tag tag-reference">Optional</span>Assembly Language Part 1 is on YouTube for review and for HW7<span class="mins">1 hr 54 min</span></li><li class="prep prep-reference">Assembly Language Part 2 is on YouTube for review and for HW7<span class="mins">2 hr</span></li></ul></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-11-20">
+        <div class="cell cell-date">
+          <span class="date">Fri 11/20</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 11</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-11-23" data-end="2026-11-27">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 12</span>
+          <h2 class="wtitle">Theory 2 and Thanksgiving</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Nov 23 &ndash; Nov 27</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      <p class="wnote">Outside of class this week: HW7 and your project.</p>
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Mon 11/23</span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-lecture" data-date="2026-11-24">
+        <div class="cell cell-date">
+          <span class="date">Tue 11/24</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Theory II</div><div class="detail">P versus NP.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-no-class" data-date="2026-11-26">
+        <div class="cell cell-date">
+          <span class="date">Thu 11/26</span>
+          <span class="kind">No class</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Thanksgiving, no class and no recitation</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-11-30" data-end="2026-12-04">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Week 13</span>
+          <h2 class="wtitle">Projects</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Nov 30 &ndash; Dec 4</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="strip">
+        <a class="striplabel striplink" href="https://p4l-website.vercel.app/courses/02-120-daily-challenges/" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
+        <div class="chips"><span class="chip chip-challenge">Tue 12/1</span><span class="chip chip-challenge">Wed 12/2</span><span class="chip chip-challenge">Thu 12/3</span><span class="chip chip-challenge">Fri 12/4</span></div>
+      </div>
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-deadline" data-date="2026-11-30">
+        <div class="cell cell-date">
+          <span class="date">Mon 11/30</span>
+          <span class="kind">Deadline</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><ul class="duelist"><li class="due"><a href="https://p4l-website.vercel.app/courses/02-120-homework/" target="_blank" rel="noopener">HW7 due (assembly)</a></li></ul></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-12-01">
+        <div class="cell cell-date">
+          <span class="date">Tue 12/1</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Project presentations</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-lecture" data-date="2026-12-03">
+        <div class="cell cell-date">
+          <span class="date">Thu 12/3</span>
+          <span class="kind">Lecture</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Project presentations</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div>
+      <div class="row row-recitation" data-date="2026-12-04">
+        <div class="cell cell-date">
+          <span class="date">Fri 12/4</span>
+          <span class="kind">Recitation</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Recitation 12</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+    <section class="week" data-start="2026-12-07" data-end="2026-12-11">
+      <header class="whead">
+        <div class="wleft">
+          <span class="wlabel">Finals</span>
+          <h2 class="wtitle">Finals week</h2>
+        </div>
+        <div class="wright">
+          <span class="wspan">Dec 7 &ndash; Dec 11</span>
+          <span class="wprep">no required prep</span>
+        </div>
+      </header>
+      
+      
+      <div class="rows">
+        <div class="row rowhead">
+          <div class="cell">Date</div>
+          <div class="cell">In class</div>
+          <div class="cell">Complete before class</div>
+          <div class="cell">Due</div>
+        </div>
+      <div class="row row-exam" data-date="2026-12-07">
+        <div class="cell cell-date">
+          <span class="date">Mon 12/7</span>
+          <span class="kind">Exam</span>
+        </div>
+        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Midterm 2, held in the final exam period<span class="tbd">to be confirmed</span></div><div class="detail">OOP II, parallel programming, assembly language, and theory. Exact date and time set by the registrar.</div></div>
+        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
+        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
+      </div></div>
+    </section>
+
+  <footer>
+    <span>Recitation topics beyond Sorting II are announced closer to the date. Items marked <em>to be confirmed</em> are not yet final, and daily-challenge dates are provisional.</span>
+    <span class="stamp">Updated August 27, 2026</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var today = new Date();
+    var iso = today.getFullYear() + "-" +
+              String(today.getMonth() + 1).padStart(2, "0") + "-" +
+              String(today.getDate()).padStart(2, "0");
+    var weeks = document.querySelectorAll(".week");
+    var current = null;
+    for (var i = 0; i < weeks.length; i++) {
+      var week = weeks[i];
+      var start = week.getAttribute("data-start");
+      var end = week.getAttribute("data-end");
+      if (iso > end) {
+        week.classList.add("past");
+      } else if (iso >= start && iso <= end) {
+        week.classList.add("now");
+        current = week;
+      }
+    }
+    if (current === null) {
+      for (var j = 0; j < weeks.length; j++) {
+        if (!weeks[j].classList.contains("past")) { current = weeks[j]; break; }
+      }
+    }
+    if (current) {
+      current.id = "now";
+      var head = current.querySelector(".wleft");
+      var pill = document.createElement("span");
+      pill.className = "nowpill";
+      pill.textContent = current.classList.contains("now") ? "this week" : "up next";
+      head.appendChild(pill);
+    } else {
+      document.getElementById("jumpnow").style.display = "none";
+    }
+  })();
+</script>

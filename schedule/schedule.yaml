@@ -1,0 +1,493 @@
+# 02-120 Programming for Scientists, Fall 2026
+# SINGLE SOURCE OF TRUTH for the course calendar.
+# Edit this file, then run: python3 build_schedule.py
+#
+# Item kinds:
+#   day.kind      lecture | recitation | exam | no-class | deadline
+#   prepare.kind  required  (must be done BEFORE this day)
+#                 after     (do this AFTER this class, before the next thing)
+#                 reference (optional companion / catch-up)
+
+course:
+  number: "02-120"
+  title: "Programming for Scientists"
+  term: "Fall 2026"
+  lecture_time: "Tue/Thu 9:30-10:50, GHC 4307"
+  recitation_time: "Fri, GHC 4211 (A: 12:00, B: 3:00)"
+  canvas: "https://canvas.cmu.edu/courses/55141"
+  ed: "https://edstem.org/us/courses/101123/discussion"
+  homework: "https://p4l-website.vercel.app/courses/02-120-homework/"
+  daily: "https://p4l-website.vercel.app/courses/02-120-daily-challenges/"
+  repo: "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
+  intro: >-
+    This course flips the basics. You learn programming fundamentals outside of class using
+    the readings and code-along videos at programmingforlovers.com, and we spend class time
+    building the fun scientific applications together: hunting for replication origins,
+    forecasting elections, growing cellular automata, simulating gravity, and more.
+    Class assumes you have completed the preparation listed for that day.
+  how_to_prepare: >-
+    Each code-along length below is watch time. Do not just watch: pause and type the code
+    yourself, and complete the exercises on each page. Budget roughly twice the video length.
+    Code-along exercises are submitted in the homework autograder course and count toward your
+    programming grade, and daily challenges continue throughout the semester.
+
+links:
+  ch0_text:   "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-core-text/"
+  ch0_along:  "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/"
+  ch1_text:   "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-core-text/"
+  ch1_along:  "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/"
+  ch2_text:   "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-core-text/"
+  ch2_along:  "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/"
+  ch3_text:   "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-core-text/"
+  ch3_along:  "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/"
+  ch4_text:   "https://programmingforlovers.com/chapter-4/chapter-4-core-text/"
+  ch4_along:  "https://programmingforlovers.com/chapter-4/chapter-4-python-code-alongs/"
+  ch5_text:   "https://programmingforlovers.com/chapter-5/chapter-5-core-text/"
+  ch5_along:  "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/"
+
+  # Per-lesson code-along pages (verified against the chapter index pages 2026-08-27).
+  ca_install: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/installing-python-and-writing-our-first-program/"
+  ca_variables: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/types-and-numeric-variables-in-python/"
+  ca_functions: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/functions-in-python/"
+  ca_conditionals: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/conditionals-in-python/"
+  ca_while: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/while-loops-in-python/"
+  ca_for: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/for-loops-in-python/"
+  ca_arrays: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/arrays-and-lists-in-python/"
+  ca_gcd: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/implementing-gcd-algorithms-in-python/"
+  ca_primes: "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-python-code-alongs/implementing-prime-finding-algorithms-in-python/"
+  ca_strings: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/an-introduction-to-strings-in-python/"
+  ca_substrings: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/substrings-and-sublists-in-python/"
+  ca_dicts: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/dictionaries-in-python/"
+  ca_clumps: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/finding-clumps-in-python/"
+  ca_random: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/generating-random-numbers-and-rolling-dice-python/"
+  ca_craps: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/simulating-craps-with-monte-carlo-simulation-python/"
+  ca_polling: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/parsing-election-polling-data-from-files-python/"
+  ca_2darrays: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-two-dimensional-arrays/"
+  ca_graphics: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-graphics/"
+  ca_langton: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/infinitude-of-cellular-automata-including-self-replicating-langton-loops/"
+  ca_classes: "https://programmingforlovers.com/chapter-4/chapter-4-python-code-alongs/introduction-to-object-oriented-programming-in-python/"
+  ca_methods: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/first-evolutionary-tree-code-along-in-python/"
+  ca_datatrees: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/data-for-trees/"
+  ca_recursion: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/recursion-and-completing-our-upgma-implementation-in-python/"
+
+weeks:
+
+  - title: "Introduction and AI 0"
+    label: "Week 0"
+    start: 2026-08-24
+    end: 2026-08-28
+    days:
+      - date: 2026-08-25
+        kind: lecture
+        title: "Intros, syllabus, and what is programming?"
+      - date: 2026-08-27
+        kind: lecture
+        title: "AI 0: What is AI?"
+        prepare:
+          - kind: required
+            text: "Read the Chapter 0 core text"
+            url: ch0_text
+      - date: 2026-08-28
+        kind: recitation
+        title: "Recitation 0: Introduction to Git"
+        prepare:
+          - kind: after
+            text: "Chapter 0 code alongs: Installing Python and Writing Our First Program"
+            url: ca_install
+            minutes: 10
+          - kind: after
+            text: "Variables in Python"
+            url: ca_variables
+            minutes: 25
+          - kind: after
+            text: "Functions in Python"
+            url: ca_functions
+            minutes: 34
+
+  - title: "Integers and intro programming"
+    label: "Week 1"
+    start: 2026-08-31
+    end: 2026-09-04
+    note: >-
+      Catch-up and review: full videos of the GCD and prime-finding code alongs are posted on
+      the Chapter 0 code-along pages if you miss class or want a replay.
+    days:
+      - date: 2026-09-01
+        kind: lecture
+        title: "GCD and primes I"
+        detail: "We build Euclid's greatest common divisor algorithms together in class."
+        prepare:
+          - kind: required
+            text: "Chapter 0 code along: Conditionals"
+            url: ca_conditionals
+            minutes: 35
+          - kind: required
+            text: "While Loops"
+            url: ca_while
+            minutes: 40
+          - kind: required
+            text: "For Loops"
+            url: ca_for
+            minutes: 34
+          - kind: required
+            text: "Arrays, Tuples, and Lists"
+            url: ca_arrays
+            minutes: 48
+      - date: 2026-09-03
+        kind: lecture
+        title: "GCD and primes II"
+        detail: "We implement prime-finding algorithms, plot the primes, and draw the Ulam spiral."
+      - date: 2026-09-04
+        kind: recitation
+        title: "Recitation 1: Testing and debugging"
+        detail: "Plus a short ungraded paper diagnostic."
+
+  - title: "AI 1 and strings"
+    label: "Week 2"
+    start: 2026-09-07
+    end: 2026-09-11
+    days:
+      - date: 2026-09-08
+        kind: lecture
+        title: "AI 1: Learning with AI"
+      - date: 2026-09-10
+        kind: lecture
+        title: "String algorithms"
+        detail: "We hunt for the replication origin of a real bacterial genome: frequent words and the skew diagram."
+        prepare:
+          - kind: required
+            text: "Read the Chapter 1 core text"
+            url: ch1_text
+          - kind: required
+            text: "Chapter 1 code along: An Introduction to Strings"
+            url: ca_strings
+            minutes: 57
+          - kind: required
+            text: "Substrings and Sublists"
+            url: ca_substrings
+            minutes: 37
+          - kind: required
+            text: "Dictionaries"
+            url: ca_dicts
+            minutes: 44
+          - kind: after
+            text: "Finding Clumps, posted as a companion to HW1"
+            url: ca_clumps
+            minutes: 89
+      - date: 2026-09-11
+        kind: recitation
+        title: "Recitation 2: Sorting I"
+        detail: "k-mer counting and insertion sort on a real E. coli window."
+
+  - title: "AI 2 and Monte Carlo simulation"
+    label: "Week 3"
+    start: 2026-09-14
+    end: 2026-09-18
+    days:
+      - date: 2026-09-14
+        kind: deadline
+        due:
+          - text: "HW0 due (integer functions)"
+      - date: 2026-09-15
+        kind: lecture
+        title: "AI 2: Managing AI"
+      - date: 2026-09-17
+        kind: lecture
+        title: "Simulating a presidential election"
+        detail: "Including parsing real polling data."
+        prepare:
+          - kind: required
+            text: "Read the Chapter 2 core text"
+            url: ch2_text
+          - kind: required
+            text: "Chapter 2 code along: Generating Random Numbers and Rolling Dice"
+            url: ca_random
+            minutes: 31
+          - kind: required
+            text: "Simulating Craps"
+            url: ca_craps
+            minutes: 39
+          - kind: reference
+            text: "Parsing Election Polling Data covers the file-parsing details we move through quickly in class"
+            url: ca_polling
+            minutes: 61
+      - date: 2026-09-18
+        kind: recitation
+        title: "Recitation 3: Sorting II"
+        detail: "Recursion, quicksort, and the full-genome pipeline."
+
+  - title: "AI 3 and Midterm 0"
+    label: "Week 4"
+    start: 2026-09-21
+    end: 2026-09-25
+    note: "No new code alongs this week; use your outside-of-class time to prepare for the exam."
+    days:
+      - date: 2026-09-21
+        kind: deadline
+        due:
+          - text: "HW1 due (strings and metagenomics)"
+      - date: 2026-09-22
+        kind: lecture
+        title: "AI 3: Building a project"
+      - date: 2026-09-24
+        kind: exam
+        title: "Midterm 0"
+        detail: "Introduction to programming and string algorithms."
+      - date: 2026-09-25
+        kind: recitation
+        title: "Recitation 4"
+
+  - title: "Cellular automata"
+    label: "Week 5"
+    start: 2026-09-28
+    end: 2026-10-02
+    days:
+      - date: 2026-09-28
+        kind: deadline
+        due:
+          - text: "HW2 due (PRNG)"
+      - date: 2026-09-29
+        kind: lecture
+        title: "Game of Life I"
+        prepare:
+          - kind: required
+            text: "Read the Chapter 3 core text, first three sections"
+            url: ch3_text
+          - kind: required
+            text: "Chapter 3 code along: Introduction to Two-Dimensional Arrays"
+            url: ca_2darrays
+            minutes: 63
+      - date: 2026-10-01
+        kind: lecture
+        title: "Game of Life II"
+        detail: "We finish implementing and animating the Game of Life."
+        prepare:
+          - kind: required
+            text: "Chapter 3 code along: Introduction to Graphics"
+            url: ca_graphics
+            minutes: 64
+          - kind: after
+            text: "Read the page on an infinitude of cellular automata and the self-replicating Langton loops; it leads directly into HW3"
+            url: ca_langton
+      - date: 2026-10-02
+        kind: recitation
+        title: "Recitation 5"
+
+  - title: "Object-oriented programming and the gravity simulator"
+    label: "Week 6"
+    start: 2026-10-05
+    end: 2026-10-09
+    days:
+      - date: 2026-10-06
+        kind: lecture
+        title: "OOP I"
+        detail: "We plan the gravity simulator top-down and start the physics engine."
+        prepare:
+          - kind: required
+            text: "Read the Chapter 4 core text"
+            url: ch4_text
+          - kind: required
+            text: "Chapter 4 code along: An Introduction to Classes"
+            url: ca_classes
+            minutes: 102
+            note: "This is the longest preparation of the semester. Start early."
+      - date: 2026-10-08
+        kind: lecture
+        title: "OOP II"
+        detail: "We finish the engine and animate the solar system."
+      - date: 2026-10-09
+        kind: recitation
+        title: "Recitation 6"
+        due:
+          - text: "HW3 due (automata and Gray-Scott)"
+
+  - title: "Fall Break"
+    label: "No class"
+    start: 2026-10-12
+    end: 2026-10-16
+    note: "Nothing is due. If you want a head start on trees, the Week 7 preparation is posted."
+    days:
+      - date: 2026-10-13
+        kind: no-class
+        title: "Fall Break, no class"
+      - date: 2026-10-15
+        kind: no-class
+        title: "Fall Break, no class"
+
+  - title: "Evolutionary trees"
+    label: "Week 7"
+    start: 2026-10-19
+    end: 2026-10-23
+    days:
+      - date: 2026-10-20
+        kind: lecture
+        title: "Trees I"
+        detail: "We start implementing UPGMA."
+        prepare:
+          - kind: required
+            text: "Read the Chapter 5 core text"
+            url: ch5_text
+          - kind: required
+            text: "Chapter 5 code along: Returning to Shapes, An Introduction to Methods"
+            url: ca_methods
+            minutes: 107
+          - kind: required
+            text: "Data for Trees"
+            url: ca_datatrees
+            minutes: 7
+      - date: 2026-10-22
+        kind: lecture
+        title: "Trees II"
+        detail: "We finish UPGMA and apply it to real data."
+        prepare:
+          - kind: after
+            text: "Recursion and Completing UPGMA covers the remaining details, including Newick format"
+            url: ca_recursion
+            minutes: 123
+      - date: 2026-10-23
+        kind: recitation
+        title: "Recitation 7"
+        due:
+          - text: "HW4 due (boids). Last hand-built assignment; AI tools unlock from HW5 onward."
+            flag: true
+
+  - title: "Midterm 1"
+    label: "Week 8"
+    start: 2026-10-26
+    end: 2026-10-30
+    note: "No new code alongs this week."
+    days:
+      - date: 2026-10-27
+        kind: exam
+        title: "Midterm 1"
+        detail: "Monte Carlo and PRNGs, cellular automata, top-down design, OOP."
+      - date: 2026-10-29
+        kind: lecture
+        title: "To be announced"
+        tbd: true
+      - date: 2026-10-30
+        kind: recitation
+        title: "Recitation 8"
+
+  - title: "Parallel programming 1"
+    label: "Week 9"
+    start: 2026-11-02
+    end: 2026-11-06
+    days:
+      - date: 2026-11-02
+        kind: deadline
+        due:
+          - text: "HW5 due (Barnes-Hut)"
+      - date: 2026-11-03
+        kind: no-class
+        title: "Election Day, no class"
+      - date: 2026-11-05
+        kind: lecture
+        title: "Parallel I"
+        detail: "Summing a list in parallel and timing the speedup."
+        prepare:
+          - kind: required
+            text: "Read the assigned introduction to parallelism versus concurrency"
+          - kind: required
+            text: "Watch Parallel Programming Part 1 on YouTube"
+            minutes: 104
+      - date: 2026-11-06
+        kind: recitation
+        title: "Recitation 9"
+
+  - title: "Parallel programming 2 and assembly 1"
+    label: "Week 10"
+    start: 2026-11-09
+    end: 2026-11-13
+    days:
+      - date: 2026-11-10
+        kind: lecture
+        title: "Parallel II"
+        detail: "Parallel craps and a parallel reaction-diffusion simulator."
+      - date: 2026-11-12
+        kind: lecture
+        title: "Assembly I"
+        prepare:
+          - kind: reference
+            text: "Parallel Programming Part 2 is on YouTube as a companion"
+            minutes: 134
+          - kind: reference
+            text: "The reaction-diffusion build is on YouTube as a companion"
+            minutes: 188
+      - date: 2026-11-13
+        kind: recitation
+        title: "Recitation 10"
+
+  - title: "Assembly 2 and theory 1"
+    label: "Week 11"
+    start: 2026-11-16
+    end: 2026-11-20
+    days:
+      - date: 2026-11-16
+        kind: deadline
+        due:
+          - text: "HW6 due (parallel sandpiles)"
+      - date: 2026-11-17
+        kind: lecture
+        title: "Assembly II"
+        prepare:
+          - kind: required
+            text: "Read the assigned introduction to memory management and binary"
+      - date: 2026-11-19
+        kind: lecture
+        title: "Theory I"
+        detail: "Turing machines and the halting problem."
+        prepare:
+          - kind: reference
+            text: "Assembly Language Part 1 is on YouTube for review and for HW7"
+            minutes: 114
+          - kind: reference
+            text: "Assembly Language Part 2 is on YouTube for review and for HW7"
+            minutes: 120
+      - date: 2026-11-20
+        kind: recitation
+        title: "Recitation 11"
+
+  - title: "Theory 2 and Thanksgiving"
+    label: "Week 12"
+    start: 2026-11-23
+    end: 2026-11-27
+    note: "Outside of class this week: HW7 and your project."
+    days:
+      - date: 2026-11-24
+        kind: lecture
+        title: "Theory II"
+        detail: "P versus NP."
+      - date: 2026-11-26
+        kind: no-class
+        title: "Thanksgiving, no class and no recitation"
+
+  - title: "Projects"
+    label: "Week 13"
+    start: 2026-11-30
+    end: 2026-12-04
+    days:
+      - date: 2026-11-30
+        kind: deadline
+        due:
+          - text: "HW7 due (assembly)"
+      - date: 2026-12-01
+        kind: lecture
+        title: "Project presentations"
+      - date: 2026-12-03
+        kind: lecture
+        title: "Project presentations"
+      - date: 2026-12-04
+        kind: recitation
+        title: "Recitation 12"
+
+  - title: "Finals week"
+    label: "Finals"
+    start: 2026-12-07
+    end: 2026-12-11
+    days:
+      - date: 2026-12-07
+        kind: exam
+        title: "Midterm 2, held in the final exam period"
+        detail: "OOP II, parallel programming, assembly language, and theory. Exact date and time set by the registrar."
+        tbd: true
