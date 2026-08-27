@@ -42,7 +42,7 @@
   a:hover { text-decoration-thickness: 2px; }
   a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
 
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px 96px; }
+  .wrap { max-width: 1800px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 44px) 96px; }
 
   /* ---------- masthead ---------- */
   .mast { padding: 56px 0 28px; border-bottom: 2px solid var(--ink); }
@@ -73,8 +73,8 @@
   .quick a.jump { border-color: var(--now-edge); background: var(--now); color: var(--ink); }
 
   /* ---------- how it works ---------- */
-  .about { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; padding: 30px 0 8px; }
-  .about p { margin: 0; color: var(--ink-2); max-width: 62ch; }
+  .about { display: grid; gap: 20px 48px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); padding: 30px 0 8px; max-width: 1500px; }
+  .about p { margin: 0; color: var(--ink-2); max-width: 68ch; }
   .about h3 {
     font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500;
     letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px;
@@ -155,7 +155,7 @@
   /* ---------- rows ---------- */
   .rows { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border-radius: 5px; overflow: hidden; }
   .row {
-    display: grid; grid-template-columns: 124px 1.25fr 1.6fr 0.95fr;
+    display: grid; grid-template-columns: 132px minmax(0, 1.25fr) minmax(0, 1.9fr) minmax(0, 0.8fr);
     gap: 20px; padding: 15px 16px 15px 13px;
     background: var(--surface); border-left: 3px solid transparent;
   }
@@ -187,11 +187,11 @@
 
   .colhead { display: none; }
   .ctitle { font-weight: 600; font-size: 15.5px; }
-  .detail { color: var(--muted); font-size: 14.5px; margin-top: 3px; max-width: 52ch; }
+  .detail { color: var(--muted); font-size: 14.5px; margin-top: 3px; max-width: 60ch; }
   .none { color: var(--rule-strong); }
 
   ul.preplist, ul.duelist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-  .prep, .due { font-size: 14.5px; line-height: 1.42; }
+  .prep, .due { font-size: 14.5px; line-height: 1.42; max-width: 72ch; }
   .prep-reference, .prep-after { color: var(--muted); }
   .tag {
     font-family: "IBM Plex Mono", monospace; font-size: 9.5px; letter-spacing: .1em;
@@ -219,7 +219,7 @@
   }
   footer .stamp { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
 
-  @media (max-width: 860px) {
+  @media (max-width: 920px) {
     .about { grid-template-columns: 1fr; }
     .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 18px 13px; }
     .cell-date { flex-direction: row; align-items: baseline; gap: 10px; }
