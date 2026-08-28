@@ -58,13 +58,17 @@ links:
   ca_strings: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/an-introduction-to-strings-in-python/"
   ca_substrings: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/substrings-and-sublists-in-python/"
   ca_dicts: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/dictionaries-in-python/"
+  ca_frequent: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/finding-frequent-words-in-python/"
+  ca_skew: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/building-a-skew-array-in-python/"
   ca_clumps: "https://programmingforlovers.com/chapter-1-finding-replication-origins-in-bacterial-genomes/chapter-1-python-code-alongs/finding-clumps-in-python/"
   ca_random: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/generating-random-numbers-and-rolling-dice-python/"
   ca_craps: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/simulating-craps-with-monte-carlo-simulation-python/"
   ca_polling: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/parsing-election-polling-data-from-files-python/"
+  ca_election: "https://programmingforlovers.com/chapter-2-forecasting-a-presidential-election-with-monte-carlo-simulation/chapter-2-python-code-alongs/simulating-an-election-from-polling-data-python/"
   ca_2darrays: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-two-dimensional-arrays/"
   ca_graphics: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/introduction-to-graphics/"
   ca_langton: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/infinitude-of-cellular-automata-including-self-replicating-langton-loops/"
+  ca_gol: "https://programmingforlovers.com/chapter-3-building-a-self-replicating-cellular-automaton-with-top-down-programming/chapter-3-python-code-alongs/implementing-game-of-life/"
   ca_classes: "https://programmingforlovers.com/chapter-4/chapter-4-python-code-alongs/introduction-to-object-oriented-programming-in-python/"
   ca_methods: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/first-evolutionary-tree-code-along-in-python/"
   ca_datatrees: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/data-for-trees/"
@@ -170,10 +174,16 @@ weeks:
             text: "Dictionaries"
             url: ca_dicts
             minutes: 44
+          - kind: required
+            text: "Finding Frequent Words"
+            url: ca_frequent
           - kind: after
             text: "Finding Clumps, posted as a companion to HW1"
             url: ca_clumps
             minutes: 89
+          - kind: after
+            text: "Building a Skew Array, the second half of the origin hunt"
+            url: ca_skew
       - date: 2026-09-11
         kind: recitation
         title: "Recitation 2: Sorting I"
@@ -211,6 +221,9 @@ weeks:
             text: "Parsing Election Polling Data covers the file-parsing details we move through quickly in class"
             url: ca_polling
             minutes: 61
+          - kind: after
+            text: "Simulating an Election from Polling Data, to replay what we build in class"
+            url: ca_election
       - date: 2026-09-18
         kind: recitation
         title: "Recitation 3: Sorting II"
@@ -257,6 +270,9 @@ weeks:
             text: "Chapter 3 code along: Introduction to Two-Dimensional Arrays"
             url: ca_2darrays
             minutes: 63
+          - kind: after
+            text: "Implementing the Game of Life, to replay what we build in class"
+            url: ca_gol
       - date: 2026-10-01
         kind: lecture
         title: "Game of Life II"
