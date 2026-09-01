@@ -319,7 +319,6 @@ weeks:
     end: 2026-10-16
     note: "Nothing is due. If you want a head start on trees, the Week 7 preparation is posted."
     image: "assets/fall-break.jpg"
-    image_caption: "Drop in."
     days:
       - date: 2026-10-13
         kind: no-class

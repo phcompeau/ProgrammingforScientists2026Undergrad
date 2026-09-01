@@ -117,16 +117,21 @@
     border-left: 3px solid var(--rule-strong); border-radius: 0 4px 4px 0;
     font-size: 14.5px; color: var(--ink-2); max-width: 88ch;
   }
-  .wfig {
-    margin: 0 0 16px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  .rowgrid {
+    display: grid; grid-template-columns: 132px minmax(0, 1.25fr) minmax(0, 1.9fr) minmax(0, 0.8fr);
+    column-gap: 20px; padding: 0 16px; background: var(--surface);
   }
-  .wfig img {
-    height: 190px; width: auto; border-radius: 6px; display: block;
-    box-shadow: 0 2px 8px rgba(23, 26, 32, .14);
+  .gcell { padding: 15px 0; }
+  .gcell-last { border-bottom: 0; }
+  .gcell:not(.gcell-last) { border-bottom: 1px solid var(--rule); }
+  .gdate {
+    display: flex; flex-direction: column; gap: 3px;
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
   }
-  .wfig figcaption {
-    font-family: Spectral, Georgia, serif; font-style: italic;
-    font-size: 18px; color: var(--ink-2); max-width: 34ch;
+  .gfig {
+    align-self: center; justify-self: start;
+    max-width: 100%; height: 210px; width: auto; margin: 14px 0;
+    border-radius: 6px; display: block; box-shadow: 0 2px 8px rgba(23, 26, 32, .14);
   }
   .nowpill {
     font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em;
@@ -207,6 +212,9 @@
     .brand .scs { height: 44px; }
     .brand .cbd { height: 39px; }
     .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 18px 13px; }
+    .rowgrid { grid-template-columns: 1fr; padding: 4px 14px 16px; }
+    .rowgrid .gcell, .rowgrid .gfig { grid-column: 1 !important; grid-row: auto !important; }
+    .gfig { height: auto; max-height: 240px; }
     .cell-date { flex-direction: row; align-items: baseline; gap: 10px; }
     .colhead {
       display: block; font-family: "IBM Plex Mono", monospace; font-size: 10px;
@@ -590,10 +598,6 @@
         </div>
       </header>
       <p class="wnote">Nothing is due. If you want a head start on trees, the Week 7 preparation is posted.</p>
-      <figure class="wfig">
-        <img src="assets/fall-break.jpg" alt="Drop in.">
-        <figcaption>Drop in.</figcaption>
-      </figure>
       <div class="rows">
         <div class="row rowhead">
           <div class="cell">Date</div>
@@ -601,24 +605,24 @@
           <div class="cell">Complete before class</div>
           <div class="cell">Due</div>
         </div>
-      <div class="row row-no-class" data-date="2026-10-13">
-        <div class="cell cell-date">
+        <div class="rowgrid">
+        <div class="gcell gdate" style="grid-column: 1; grid-row: 1;">
           <span class="date">Tue 10/13</span>
           <span class="kind">No class</span>
         </div>
-        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Fall Break, no class</div></div>
-        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
-        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
-      </div>
-      <div class="row row-no-class" data-date="2026-10-15">
-        <div class="cell cell-date">
+        <div class="gcell" style="grid-column: 2; grid-row: 1;">
+          <div class="ctitle">Fall Break, no class</div>
+        </div>
+        <div class="gcell gdate gcell-last" style="grid-column: 1; grid-row: 2;">
           <span class="date">Thu 10/15</span>
           <span class="kind">No class</span>
         </div>
-        <div class="cell cell-class"><span class="colhead">In class</span><div class="ctitle">Fall Break, no class</div></div>
-        <div class="cell cell-prep"><span class="colhead">Before class</span><span class="none">&middot;</span></div>
-        <div class="cell cell-due"><span class="colhead">Due</span><span class="none">&middot;</span></div>
-      </div></div>
+        <div class="gcell gcell-last" style="grid-column: 2; grid-row: 2;">
+          <div class="ctitle">Fall Break, no class</div>
+        </div>
+        <img class="gfig" src="assets/fall-break.jpg" alt="Fall Break"
+             style="grid-column: 3 / -1; grid-row: 1 / 3;">
+        </div></div>
     </section>
     <section class="week" data-start="2026-10-19" data-end="2026-10-23">
       <header class="whead">

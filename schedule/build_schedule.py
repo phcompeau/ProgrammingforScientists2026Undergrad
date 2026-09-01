@@ -144,21 +144,41 @@ def render_day(day: dict[str, Any], course: dict[str, Any], links: dict[str, str
       </div>"""
 
 
+def render_image_rows(week: dict[str, Any]) -> str:
+    """Render a week whose days share one picture across the 'complete before class' column."""
+    cells: list[str] = []
+    row_number = 0
+    for day in week["days"]:
+        row_number = row_number + 1
+        last = " gcell-last" if row_number == len(week["days"]) else ""
+        kind_label = KIND_LABELS[day["kind"]]
+        cells.append(f'''
+        <div class="gcell gdate{last}" style="grid-column: 1; grid-row: {row_number};">
+          <span class="date">{esc(format_date(day["date"]))}</span>
+          <span class="kind">{esc(kind_label)}</span>
+        </div>
+        <div class="gcell{last}" style="grid-column: 2; grid-row: {row_number};">
+          <div class="ctitle">{esc(day["title"])}</div>
+        </div>''')
+    picture = f'''
+        <img class="gfig" src="{esc(week["image"])}" alt="{esc(week["title"])}"
+             style="grid-column: 3 / -1; grid-row: 1 / {len(week["days"]) + 1};">'''
+    return f'''
+        <div class="rowgrid">{"".join(cells)}{picture}
+        </div>'''
+
+
 def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, str]) -> str:
     """Render one week band with its header and rows."""
     note = ""
     if week.get("note"):
         note = f'<p class="wnote">{esc(week["note"])}</p>'
-    if week.get("image"):
-        caption = esc(week.get("image_caption", ""))
-        note = note + f'''
-      <figure class="wfig">
-        <img src="{esc(week["image"])}" alt="{caption}">
-        <figcaption>{caption}</figcaption>
-      </figure>'''
     rows: list[str] = []
-    for day in week["days"]:
-        rows.append(render_day(day, course, links))
+    if week.get("image"):
+        rows.append(render_image_rows(week))
+    else:
+        for day in week["days"]:
+            rows.append(render_day(day, course, links))
     return f"""
     <section class="week" data-start="{week['start'].isoformat()}" data-end="{week['end'].isoformat()}">
       <header class="whead">
@@ -314,16 +334,21 @@ PAGE = r"""<title>02-120 Semester Map</title>
     border-left: 3px solid var(--rule-strong); border-radius: 0 4px 4px 0;
     font-size: 14.5px; color: var(--ink-2); max-width: 88ch;
   }
-  .wfig {
-    margin: 0 0 16px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  .rowgrid {
+    display: grid; grid-template-columns: 132px minmax(0, 1.25fr) minmax(0, 1.9fr) minmax(0, 0.8fr);
+    column-gap: 20px; padding: 0 16px; background: var(--surface);
   }
-  .wfig img {
-    height: 190px; width: auto; border-radius: 6px; display: block;
-    box-shadow: 0 2px 8px rgba(23, 26, 32, .14);
+  .gcell { padding: 15px 0; }
+  .gcell-last { border-bottom: 0; }
+  .gcell:not(.gcell-last) { border-bottom: 1px solid var(--rule); }
+  .gdate {
+    display: flex; flex-direction: column; gap: 3px;
+    font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
   }
-  .wfig figcaption {
-    font-family: Spectral, Georgia, serif; font-style: italic;
-    font-size: 18px; color: var(--ink-2); max-width: 34ch;
+  .gfig {
+    align-self: center; justify-self: start;
+    max-width: 100%; height: 210px; width: auto; margin: 14px 0;
+    border-radius: 6px; display: block; box-shadow: 0 2px 8px rgba(23, 26, 32, .14);
   }
   .nowpill {
     font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em;
@@ -404,6 +429,9 @@ PAGE = r"""<title>02-120 Semester Map</title>
     .brand .scs { height: 44px; }
     .brand .cbd { height: 39px; }
     .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 18px 13px; }
+    .rowgrid { grid-template-columns: 1fr; padding: 4px 14px 16px; }
+    .rowgrid .gcell, .rowgrid .gfig { grid-column: 1 !important; grid-row: auto !important; }
+    .gfig { height: auto; max-height: 240px; }
     .cell-date { flex-direction: row; align-items: baseline; gap: 10px; }
     .colhead {
       display: block; font-family: "IBM Plex Mono", monospace; font-size: 10px;
