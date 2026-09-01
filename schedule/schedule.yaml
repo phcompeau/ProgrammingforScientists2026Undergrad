@@ -19,17 +19,8 @@ course:
   homework: "https://p4l-website.vercel.app/courses/02-120-homework/"
   daily: "https://p4l-website.vercel.app/courses/02-120-daily-challenges/"
   repo: "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
-  intro: >-
-    This course flips the basics. You learn programming fundamentals outside of class using
-    the readings and code-along videos at programmingforlovers.com, and we spend class time
-    building the fun scientific applications together: hunting for replication origins,
-    forecasting elections, growing cellular automata, simulating gravity, and more.
-    Class assumes you have completed the preparation listed for that day.
-  how_to_prepare: >-
-    Each code-along length below is watch time. Do not just watch: pause and type the code
-    yourself, and complete the exercises on each page. Budget roughly twice the video length.
-    Code-along exercises are submitted in the homework autograder course and count toward your
-    programming grade, and daily challenges continue throughout the semester.
+  note: >-
+    Code alongs listed under Complete before class are done on your own, ahead of that class meeting.
 
 links:
   ch0_text:   "https://programmingforlovers.com/chapter-0-ancient-greek-mathematics-foundations-of-computational-thinking/chapter-0-core-text/"
@@ -76,7 +67,7 @@ links:
 
 weeks:
 
-  - title: "Introduction and AI 0"
+  - title: "Welcome to Class and AI Foundations"
     label: "Week 0"
     start: 2026-08-24
     end: 2026-08-28
@@ -108,7 +99,7 @@ weeks:
             url: ca_functions
             minutes: 34
 
-  - title: "Integers and intro programming"
+  - title: "Ancient Greek Math and the Foundations of Computer Science"
     label: "Week 1"
     start: 2026-08-31
     end: 2026-09-04
@@ -146,7 +137,7 @@ weeks:
         title: "Recitation 1: Testing and debugging"
         detail: "Plus a short ungraded paper diagnostic."
 
-  - title: "AI 1 and strings"
+  - title: "Hunting for Hidden Messages in Bacterial Genomes"
     label: "Week 2"
     start: 2026-09-07
     end: 2026-09-11
@@ -189,7 +180,7 @@ weeks:
         title: "Recitation 2: Sorting I"
         detail: "k-mer counting and insertion sort on a real E. coli window."
 
-  - title: "AI 2 and Monte Carlo simulation"
+  - title: "Forecasting a Presidential Election"
     label: "Week 3"
     start: 2026-09-14
     end: 2026-09-18
@@ -229,7 +220,7 @@ weeks:
         title: "Recitation 3: Sorting II"
         detail: "Recursion, quicksort, and the full-genome pipeline."
 
-  - title: "AI 3 and Midterm 0"
+  - title: "Building a Project with AI, and Midterm 0"
     label: "Week 4"
     start: 2026-09-21
     end: 2026-09-25
@@ -250,7 +241,7 @@ weeks:
         kind: recitation
         title: "Recitation 4"
 
-  - title: "Cellular automata"
+  - title: "Discovering a Self-Replicating Automaton"
     label: "Week 5"
     start: 2026-09-28
     end: 2026-10-02
@@ -289,7 +280,7 @@ weeks:
         kind: recitation
         title: "Recitation 5"
 
-  - title: "Object-oriented programming and the gravity simulator"
+  - title: "Building a Gravity Simulator with Object-Oriented Programming"
     label: "Week 6"
     start: 2026-10-05
     end: 2026-10-09
@@ -330,7 +321,7 @@ weeks:
         kind: no-class
         title: "Fall Break, no class"
 
-  - title: "Evolutionary trees"
+  - title: "Evolutionary Trees and More Object-Oriented Programming"
     label: "Week 7"
     start: 2026-10-19
     end: 2026-10-23

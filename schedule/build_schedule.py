@@ -63,28 +63,6 @@ def format_minutes(total: int) -> str:
     return f"{hours} hr {minutes} min"
 
 
-def required_prep(week: dict[str, Any]) -> tuple[int, int]:
-    """Count of required preparation items in a week, and their total watch time."""
-    count = 0
-    total = 0
-    for day in week["days"]:
-        for item in day.get("prepare", []):
-            if item.get("kind", "required") == "required":
-                count = count + 1
-                total = total + item.get("minutes", 0)
-    return count, total
-
-
-def prep_summary(week: dict[str, Any]) -> str:
-    """One phrase describing the week's required preparation load."""
-    count, total = required_prep(week)
-    if count == 0:
-        return "no required prep"
-    if total == 0:
-        return "reading only"
-    return f"{format_minutes(total)} of required prep"
-
-
 CHALLENGE_LABELS = {
     "reading": "reading",
     "weekend": "weekend",
@@ -223,8 +201,6 @@ def render_day(day: dict[str, Any], course: dict[str, Any], links: dict[str, str
 def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, str],
                 challenges: list[dict[str, Any]], exams: set[datetime.date]) -> str:
     """Render one week band with its header and rows."""
-    prep_note = f'<span class="wprep">{esc(prep_summary(week))}</span>'
-    span = f"{week['start'].strftime('%b %-d')} &ndash; {week['end'].strftime('%b %-d')}"
     note = ""
     if week.get("note"):
         note = f'<p class="wnote">{esc(week["note"])}</p>'
@@ -237,10 +213,6 @@ def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, s
         <div class="wleft">
           <span class="wlabel">{esc(week['label'])}</span>
           <h2 class="wtitle">{esc(week['title'])}</h2>
-        </div>
-        <div class="wright">
-          <span class="wspan">{span}</span>
-          {prep_note}
         </div>
       </header>
       {note}
@@ -271,8 +243,7 @@ def render_page(data: dict[str, Any]) -> str:
                .replace("{{TERM}}", esc(course["term"])) \
                .replace("{{LECTURE}}", esc(course["lecture_time"])) \
                .replace("{{RECITATION}}", esc(course["recitation_time"])) \
-               .replace("{{INTRO}}", esc(course["intro"])) \
-               .replace("{{HOWTO}}", esc(course["how_to_prepare"])) \
+               .replace("{{NOTE}}", esc(course["note"])) \
                .replace("{{CANVAS}}", esc(course["canvas"])) \
                .replace("{{ED}}", esc(course["ed"])) \
                .replace("{{HOMEWORK}}", esc(course["homework"])) \
@@ -321,16 +292,23 @@ PAGE = r"""<title>02-120 Semester Map</title>
   .wrap { max-width: 1800px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 44px) 96px; }
 
   /* ---------- masthead ---------- */
-  .mast { padding: 56px 0 28px; border-bottom: 2px solid var(--ink); }
-  .eyebrow {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
-    margin: 0 0 10px;
+  .mast { padding: 34px 0 28px; border-bottom: 2px solid var(--ink); }
+  .brand {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; margin: 0 0 30px;
   }
+  .brand img { display: block; width: auto; }
+  .brand .scs { height: 44px; }
+  .brand .cbd { height: 40px; }
   h1 {
     font-family: Spectral, Georgia, serif;
     font-weight: 600; font-size: clamp(32px, 5vw, 46px); line-height: 1.1;
-    margin: 0 0 14px; text-wrap: balance; letter-spacing: -.01em;
+    margin: 0 0 8px; text-wrap: balance; letter-spacing: -.01em;
+  }
+  .term {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 14px;
   }
   .meets {
     display: flex; flex-wrap: wrap; gap: 6px 22px;
@@ -348,15 +326,8 @@ PAGE = r"""<title>02-120 Semester Map</title>
   .quick a:hover { border-color: var(--blue); color: var(--blue); }
   .quick a.jump { border-color: var(--now-edge); background: var(--now); color: var(--ink); }
 
-  /* ---------- how it works ---------- */
-  .about { display: grid; gap: 20px 48px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); padding: 30px 0 8px; max-width: 1500px; }
-  .about p { margin: 0; color: var(--ink-2); max-width: 68ch; }
-  .about h3 {
-    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 500;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px;
-  }
   .legend {
-    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 18px 0 30px;
+    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 26px 0 30px;
     border-bottom: 1px solid var(--rule); margin-bottom: 8px;
     font-size: 13px; color: var(--muted);
   }
@@ -365,7 +336,6 @@ PAGE = r"""<title>02-120 Semester Map</title>
 
   /* ---------- weeks ---------- */
   .week { padding: 34px 0 8px; border-bottom: 1px solid var(--rule); }
-  .week.past .whead, .week.past .rows { opacity: .55; }
   .week.now {
     background: var(--now);
     margin: 0 -18px; padding: 34px 18px 12px;
@@ -386,12 +356,6 @@ PAGE = r"""<title>02-120 Semester Map</title>
     font-family: Spectral, Georgia, serif; font-weight: 600; font-size: 24px;
     margin: 0; letter-spacing: -.005em;
   }
-  .wright {
-    display: flex; gap: 14px; align-items: baseline;
-    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-  .wprep { color: var(--blue); }
   .wnote {
     margin: 0 0 14px; padding: 10px 14px; background: var(--surface-2);
     border-left: 3px solid var(--rule-strong); border-radius: 0 4px 4px 0;
@@ -496,7 +460,9 @@ PAGE = r"""<title>02-120 Semester Map</title>
   footer .stamp { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
 
   @media (max-width: 920px) {
-    .about { grid-template-columns: 1fr; }
+    .brand { gap: 16px; }
+    .brand .scs { height: 32px; }
+    .brand .cbd { height: 29px; }
     .row { grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 18px 13px; }
     .cell-date { flex-direction: row; align-items: baseline; gap: 10px; }
     .colhead {
@@ -512,8 +478,12 @@ PAGE = r"""<title>02-120 Semester Map</title>
 
 <div class="wrap">
   <header class="mast">
-    <p class="eyebrow">Carnegie Mellon University &middot; {{TERM}}</p>
-    <h1>{{NUMBER}} {{TITLE}}: the semester, day by day</h1>
+    <div class="brand">
+      <img class="scs" src="assets/cmu-scs.png" alt="Carnegie Mellon University School of Computer Science">
+      <img class="cbd" src="assets/cbd.png" alt="Computational Biology Department">
+    </div>
+    <h1>{{NUMBER}} {{TITLE}}</h1>
+    <p class="term">{{TERM}}</p>
     <div class="meets">
       <span><b>Lecture</b>{{LECTURE}}</span>
       <span><b>Recitation</b>{{RECITATION}}</span>
@@ -529,22 +499,11 @@ PAGE = r"""<title>02-120 Semester Map</title>
     </nav>
   </header>
 
-  <div class="about">
-    <div>
-      <h3>How this course works</h3>
-      <p>{{INTRO}}</p>
-    </div>
-    <div>
-      <h3>How to prepare</h3>
-      <p>{{HOWTO}}</p>
-    </div>
-  </div>
-
   <div class="legend">
     <span><i class="swatch" style="background:var(--rule-strong)"></i>Lecture</span>
     <span><i class="swatch" style="background:var(--blue)"></i>Recitation</span>
     <span><i class="swatch" style="background:var(--red)"></i>Exam or deadline</span>
-    <span>Times shown are video watch time. Budget about double.</span>
+    <span>{{NOTE}}</span>
   </div>
 
   {{WEEKS}}
