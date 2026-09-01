@@ -63,60 +63,6 @@ def format_minutes(total: int) -> str:
     return f"{hours} hr {minutes} min"
 
 
-CHALLENGE_LABELS = {
-    "reading": "reading",
-    "weekend": "weekend",
-    "study": "study day",
-    "exam": "exam day",
-    "challenge": "",
-}
-
-
-def exam_dates(data: dict[str, Any]) -> set[datetime.date]:
-    """Every date the F26 schedule actually holds an exam, plus the day before."""
-    dates: set[datetime.date] = set()
-    for week in data["weeks"]:
-        for day in week["days"]:
-            if day["kind"] == "exam":
-                dates.add(day["date"])
-                dates.add(day["date"] - datetime.timedelta(days=1))
-    return dates
-
-
-def challenges_in_week(week: dict[str, Any], challenges: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Every daily challenge whose date falls inside one week."""
-    inside: list[dict[str, Any]] = []
-    for item in challenges:
-        if week["start"] <= item["date"] <= week["end"] + datetime.timedelta(days=2):
-            inside.append(item)
-    return inside
-
-
-def render_challenges(week: dict[str, Any], challenges: list[dict[str, Any]],
-                      exams: set[datetime.date], daily: str) -> str:
-    """Render one week's daily-challenge strip."""
-    inside = challenges_in_week(week, challenges)
-    if not inside:
-        return ""
-    chips: list[str] = []
-    for item in inside:
-        kind = item["kind"]
-        if kind in ("exam", "study") and item["date"] not in exams:
-            kind = "challenge"
-        label = CHALLENGE_LABELS[kind]
-        suffix = ""
-        if label:
-            suffix = f'<span class="chiptag">{esc(label)}</span>'
-        chips.append(
-            f'<span class="chip chip-{kind}">{esc(format_date(item["date"]))}{suffix}</span>'
-        )
-    return f"""
-      <div class="strip">
-        <a class="striplabel striplink" href="{esc(daily)}" target="_blank" rel="noopener">Daily challenges &rsaquo;</a>
-        <div class="chips">{"".join(chips)}</div>
-      </div>"""
-
-
 def render_prepare(day: dict[str, Any], links: dict[str, str]) -> str:
     """Render the 'Prepare first' cell for one day."""
     items = day.get("prepare", [])
@@ -198,12 +144,18 @@ def render_day(day: dict[str, Any], course: dict[str, Any], links: dict[str, str
       </div>"""
 
 
-def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, str],
-                challenges: list[dict[str, Any]], exams: set[datetime.date]) -> str:
+def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, str]) -> str:
     """Render one week band with its header and rows."""
     note = ""
     if week.get("note"):
         note = f'<p class="wnote">{esc(week["note"])}</p>'
+    if week.get("image"):
+        caption = esc(week.get("image_caption", ""))
+        note = note + f'''
+      <figure class="wfig">
+        <img src="{esc(week["image"])}" alt="{caption}">
+        <figcaption>{caption}</figcaption>
+      </figure>'''
     rows: list[str] = []
     for day in week["days"]:
         rows.append(render_day(day, course, links))
@@ -216,7 +168,6 @@ def render_week(week: dict[str, Any], course: dict[str, Any], links: dict[str, s
         </div>
       </header>
       {note}
-      {render_challenges(week, challenges, exams, course["daily"])}
       <div class="rows">
         <div class="row rowhead">
           <div class="cell">Date</div>
@@ -231,11 +182,9 @@ def render_page(data: dict[str, Any]) -> str:
     """Render the whole schedule page."""
     course = data["course"]
     links = data["links"]
-    challenges = data.get("daily_challenges", [])
-    exams = exam_dates(data)
     weeks: list[str] = []
     for week in data["weeks"]:
-        weeks.append(render_week(week, course, links, challenges, exams))
+        weeks.append(render_week(week, course, links))
     stamp = datetime.date.today().strftime("%B %-d, %Y")
     return PAGE.replace("{{WEEKS}}", "".join(weeks)) \
                .replace("{{NUMBER}}", esc(course["number"])) \
@@ -243,6 +192,7 @@ def render_page(data: dict[str, Any]) -> str:
                .replace("{{TERM}}", esc(course["term"])) \
                .replace("{{LECTURE}}", esc(course["lecture_time"])) \
                .replace("{{RECITATION}}", esc(course["recitation_time"])) \
+               .replace("{{WORKS}}", esc(course["works"])) \
                .replace("{{NOTE}}", esc(course["note"])) \
                .replace("{{CANVAS}}", esc(course["canvas"])) \
                .replace("{{ED}}", esc(course["ed"])) \
@@ -326,8 +276,11 @@ PAGE = r"""<title>02-120 Semester Map</title>
   .quick a:hover { border-color: var(--blue); color: var(--blue); }
   .quick a.jump { border-color: var(--now-edge); background: var(--now); color: var(--ink); }
 
+  .works {
+    margin: 26px 0 0; max-width: 78ch; color: var(--ink-2); font-size: 16.5px;
+  }
   .legend {
-    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 26px 0 30px;
+    display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 22px 0 30px;
     border-bottom: 1px solid var(--rule); margin-bottom: 8px;
     font-size: 13px; color: var(--muted);
   }
@@ -361,36 +314,23 @@ PAGE = r"""<title>02-120 Semester Map</title>
     border-left: 3px solid var(--rule-strong); border-radius: 0 4px 4px 0;
     font-size: 14.5px; color: var(--ink-2); max-width: 88ch;
   }
+  .wfig {
+    margin: 0 0 16px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .wfig img {
+    height: 190px; width: auto; border-radius: 6px; display: block;
+    box-shadow: 0 2px 8px rgba(23, 26, 32, .14);
+  }
+  .wfig figcaption {
+    font-family: Spectral, Georgia, serif; font-style: italic;
+    font-size: 18px; color: var(--ink-2); max-width: 34ch;
+  }
   .nowpill {
     font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em;
     text-transform: uppercase; color: var(--red); border: 1px solid var(--red);
     padding: 3px 8px; border-radius: 999px;
   }
 
-  .strip {
-    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
-    margin: 0 0 14px; padding: 9px 12px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 5px;
-  }
-  .striplabel {
-    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--muted); white-space: nowrap;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip {
-    display: inline-flex; align-items: baseline; gap: 5px;
-    font-family: "IBM Plex Mono", monospace; font-size: 12px; font-variant-numeric: tabular-nums;
-    padding: 3px 8px; border: 1px solid var(--rule-strong); border-radius: 3px;
-    color: var(--ink-2); text-decoration: none; background: var(--ground);
-  }
-  .striplink { color: var(--blue); text-decoration: none; }
-  .striplink:hover { text-decoration: underline; }
-  .chip-weekend { border-style: dashed; }
-  .chip-exam, .chip-study { border-color: var(--red); color: var(--red); background: var(--red-soft); }
-  .chiptag {
-    font-size: 9.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
-  }
-  .chip-exam .chiptag, .chip-study .chiptag { color: var(--red); }
 
   /* ---------- rows ---------- */
   .rows { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border-radius: 5px; overflow: hidden; }
@@ -499,6 +439,8 @@ PAGE = r"""<title>02-120 Semester Map</title>
     </nav>
   </header>
 
+  <p class="works">{{WORKS}}</p>
+
   <div class="legend">
     <span><i class="swatch" style="background:var(--rule-strong)"></i>Lecture</span>
     <span><i class="swatch" style="background:var(--blue)"></i>Recitation</span>
@@ -509,7 +451,7 @@ PAGE = r"""<title>02-120 Semester Map</title>
   {{WEEKS}}
 
   <footer>
-    <span>Recitation topics beyond Sorting II are announced closer to the date. Items marked <em>to be confirmed</em> are not yet final, and daily-challenge dates are provisional.</span>
+    <span>Recitation topics beyond Sorting II are announced closer to the date. Items marked <em>to be confirmed</em> are not yet final.</span>
     <span class="stamp">Updated {{STAMP}}</span>
   </footer>
 </div>
@@ -566,9 +508,6 @@ DOCUMENT_HEAD = """<!doctype html>
 def main() -> None:
     """Read the YAML and write the HTML page."""
     data = yaml.safe_load((HERE / "schedule.yaml").read_text())
-    challenge_file = HERE / "daily_challenges.yaml"
-    if challenge_file.exists():
-        data.update(yaml.safe_load(challenge_file.read_text()))
     arguments = []
     for value in sys.argv[1:]:
         if value != "--fragment":

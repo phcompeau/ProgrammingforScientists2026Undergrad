@@ -19,6 +19,11 @@ course:
   homework: "https://p4l-website.vercel.app/courses/02-120-homework/"
   daily: "https://p4l-website.vercel.app/courses/02-120-daily-challenges/"
   repo: "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
+  works: >-
+    You learn the basics of programming on your own time, from the readings and code-along
+    videos at programmingforlovers.com. We use class to build the scientific applications
+    together. Each day below lists what to finish beforehand, and class starts from the
+    assumption that you finished it.
   note: >-
     Code alongs listed under Complete before class are done on your own, ahead of that class meeting.
 
@@ -313,6 +318,8 @@ weeks:
     start: 2026-10-12
     end: 2026-10-16
     note: "Nothing is due. If you want a head start on trees, the Week 7 preparation is posted."
+    image: "assets/fall-break.jpg"
+    image_caption: "Drop in."
     days:
       - date: 2026-10-13
         kind: no-class
