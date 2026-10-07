@@ -134,7 +134,7 @@ Predators eat prey, and prey reproduce and swim away, producing waves of activit
 
 [![predator_prey](videos/previews/predator_prey.gif)](videos/predator_prey.mp4)
 
-**[Clusters](videos/predator_prey.mp4).**
+**[Mixed clusters](videos/predator_prey.mp4).** Clusters of prey, some with predators already inside.
 
 ```
 python3 main.py Moore rules/predator_prey.txt boards/predator_prey.csv output/predator_prey 5 270 color_maps/predator_prey.txt
@@ -146,6 +146,14 @@ python3 main.py Moore rules/predator_prey.txt boards/predator_prey.csv output/pr
 
 ```
 python3 main.py Moore rules/predator_prey.txt boards/predator_prey_random.csv output/predator_prey_random 5 290 color_maps/predator_prey.txt
+```
+
+[![predator_prey_clusters](videos/previews/predator_prey_clusters.gif)](videos/predator_prey_clusters.mp4)
+
+**[Nine clusters](videos/predator_prey_clusters.mp4).** Nine separate clusters of prey, with a single small group of predators in the top-left one. The prey grow until they merge and fill the board, while the predators sweep across behind them like a wildfire.
+
+```
+python3 main.py Moore rules/predator_prey.txt boards/predator_prey_clusters.csv output/predator_prey_clusters 5 540 color_maps/predator_prey.txt
 ```
 
 ## Langton's ant
@@ -176,6 +184,14 @@ python3 main.py Moore rules/wireworld.txt boards/wireworld.csv output/wireworld 
 
 ```
 python3 main.py Moore rules/wireworld.txt boards/wireworld_nae.csv output/wireworld_nae 10 50 color_maps/wireworld.txt
+```
+
+[![wireworld_pulse](videos/previews/wireworld_pulse.gif)](videos/wireworld_pulse.mp4)
+
+**[Clock](videos/wireworld_pulse.mp4).** A Wireworld clock: one electron circles a small loop forever, and every time it passes the output wire it sends a pulse down the wire, which splits into two branches.
+
+```
+python3 main.py Moore rules/wireworld.txt boards/wireworld_pulse.csv output/wireworld_pulse 5 200 color_maps/wireworld.txt
 ```
 
 ## Checkerboard
