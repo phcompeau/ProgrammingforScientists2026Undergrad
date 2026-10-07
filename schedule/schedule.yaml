@@ -343,6 +343,9 @@ weeks:
           - kind: required
             text: "Pull the course repository and copy Starter Code/gravity into python/src/; we build from it in class"
             url: "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
+          - kind: after
+            text: "Cellular Automata Gallery: every automaton in the starter code, with the command that runs it"
+            url: "cellular-automata.html"
       - date: 2026-10-07
         kind: deadline
         due:
