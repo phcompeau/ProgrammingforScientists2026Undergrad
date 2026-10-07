@@ -359,6 +359,9 @@ weeks:
           - kind: after
             text: "Building a Gravity Simulator, to replay what we build in class this week"
             url: ca_gravity
+          - kind: after
+            text: "Gravity Simulator Gallery: Jupiter's moons and every three-body orbit, with the command that runs each one"
+            url: "gravity.html"
       - date: 2026-10-09
         kind: recitation
         title: "Recitation 5: Project kickoff"
