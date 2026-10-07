@@ -5,6 +5,10 @@ commands:
     docs/cellular-automata.html  from  Finished Code/python/src/cellular_automata/README.md
     docs/gravity.html            from  Finished Code/python/src/gravity/README.md
 
+The page plays web copies of the videos from docs/gallery/<name>/ (GitHub serves
+the repository's MP4s as downloads, so they cannot play in a page); each card
+still links to the original on GitHub.
+
 Usage (from schedule/): python3 build_gallery_pages.py ..
 """
 import html
@@ -12,7 +16,6 @@ import re
 import sys
 
 BASE = "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
-RAW_BASE = "https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/"
 
 ENTRY = re.compile(
     r"\[!\[([a-z0-9_]+)\]\(videos/previews/[a-z0-9_]+\.gif\)\]\(videos/[a-z0-9_]+\.mp4\)\n\n"
@@ -93,6 +96,21 @@ HEAD = """<!doctype html>
   .cmd button:hover { border-color: var(--blue); color: var(--blue); }
   .watch { font-size: 14px; margin-top: 8px; }
   footer { margin-top: 48px; font-size: 14px; color: var(--muted); }
+  .media { cursor: zoom-in; }
+  .watch a { cursor: pointer; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center;
+    background: rgba(10, 12, 16, 0.88); padding: 16px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox figure { margin: 0; max-width: min(92vw, 92vh); width: 100%; }
+  .lightbox video { width: 100%; max-height: 84vh; display: block; background: #000; border-radius: 6px; }
+  .lightbox figcaption { color: #E9ECF2; font-size: 15px; margin-top: 10px; text-align: center; }
+  .lightbox figcaption a { color: #9EC3F5; }
+  .lightbox .close {
+    position: absolute; top: 12px; right: 16px; font: 600 30px/1 "Source Sans 3", sans-serif;
+    color: #fff; background: none; border: 0; cursor: pointer; padding: 6px 10px;
+  }
 </style>
 </head>
 <body>
@@ -104,7 +122,7 @@ AUTOMATA_INTRO = """  <a class="back" href="./">&larr; 02-120 semester map</a>
   <p class="sub">02-120 Programming for Scientists, Fall 2026 &middot; Phillip Compeau</p>
 
   <div class="narrow">
-  <p>Every automaton on this page runs on the engine that we built in class. From one to the next, the code does not change at all; only the rule file, the starting board, and the color map do. Each preview below is a short loop; click it to watch the full video.</p>
+  <p>Every automaton on this page runs on the engine that we built in class. From one to the next, the code does not change at all; only the rule file, the starting board, and the color map do. Each preview below is a short loop; click it to play the full video.</p>
 
   <section class="box">
     <h2>Running one yourself</h2>
@@ -123,7 +141,7 @@ GRAVITY_INTRO = """  <a class="back" href="./">&larr; 02-120 semester map</a>
   <p class="sub">02-120 Programming for Scientists, Fall 2026 &middot; Phillip Compeau</p>
 
   <div class="narrow">
-  <p>Every video on this page comes from the gravity simulator that we built in class. The physics engine never changes; only the starting universe in <code>data/</code> and the command-line arguments do. Each preview below is a short loop; click it to watch the full video.</p>
+  <p>Every video on this page comes from the gravity simulator that we built in class. The physics engine never changes; only the starting universe in <code>data/</code> and the command-line arguments do. Each preview below is a short loop; click it to play the full video. On this page, the trails are drawn thicker than in your own videos (and the three-body videos are zoomed in) so that they show up well on the web.</p>
 
   <section class="box">
     <h2>Running one yourself</h2>
@@ -137,7 +155,46 @@ GRAVITY_INTRO = """  <a class="back" href="./">&larr; 02-120 semester map</a>
   </div>
 """
 
-SCRIPT = """<script>
+SCRIPT = """<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+  <button class="close" type="button" aria-label="Close">&times;</button>
+  <figure>
+    <video controls playsinline loop></video>
+    <figcaption></figcaption>
+  </figure>
+</div>
+<script>
+  var box = document.getElementById("lightbox");
+  var player = box.querySelector("video");
+  var caption = box.querySelector("figcaption");
+  function openVideo(event) {
+    event.preventDefault();
+    var link = event.currentTarget;
+    player.src = link.getAttribute("data-video");
+    caption.innerHTML = "";
+    var title = document.createElement("span");
+    title.textContent = link.getAttribute("data-title") + " \u00b7 ";
+    var source = document.createElement("a");
+    source.href = link.getAttribute("href");
+    source.textContent = "original on GitHub";
+    caption.appendChild(title);
+    caption.appendChild(source);
+    box.classList.add("open");
+    var playing = player.play();
+    if (playing !== undefined) { playing.catch(function () {}); }
+  }
+  function closeVideo() {
+    box.classList.remove("open");
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+  }
+  var openers = document.querySelectorAll("[data-video]");
+  for (var k = 0; k < openers.length; k++) {
+    openers[k].addEventListener("click", openVideo);
+  }
+  box.querySelector(".close").addEventListener("click", closeVideo);
+  box.addEventListener("click", function (event) { if (event.target === box) { closeVideo(); } });
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape") { closeVideo(); } });
   var buttons = document.querySelectorAll(".cmd button");
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function (event) {
@@ -166,6 +223,7 @@ GALLERIES: list[dict[str, str]] = [
         "first_section": "## Game of Life",
         "media_bg": "#3a3a3a",
         "intro": AUTOMATA_INTRO,
+        "web": "gallery/automata",
     },
     {
         "folder": "Finished Code/python/src/gravity",
@@ -175,6 +233,7 @@ GALLERIES: list[dict[str, str]] = [
         "first_section": "## Jupiter's moons",
         "media_bg": "#000000",
         "intro": GRAVITY_INTRO,
+        "web": "gallery/gravity",
     },
 ]
 
@@ -192,7 +251,7 @@ def build_page(root: str, gallery: dict[str, str]) -> None:
     folder_path = gallery["folder"].replace(" ", "%20")
     folder_url = BASE + "/tree/main/" + folder_path
     blob = BASE + "/blob/main/" + folder_path + "/"
-    raw = RAW_BASE + folder_path + "/"
+    web = gallery["web"] + "/"
     text = open(root + "/" + gallery["folder"] + "/README.md").read()
     body = text[text.index(gallery["first_section"]):]
     sections: list[str] = []
@@ -210,15 +269,17 @@ def build_page(root: str, gallery: dict[str, str]) -> None:
         parts.append('  <div class="grid">')
         for m in ENTRY.finditer(rest):
             name, card_title, desc, cmd = m.groups()
-            video = blob + "videos/" + name + ".mp4"
-            gif = raw + "videos/previews/" + name + ".gif"
+            original = blob + "videos/" + name + ".mp4"
+            video = web + name + ".mp4"
+            gif = web + "previews/" + name + ".gif"
+            opener = f'href="{original}" data-video="{video}" data-title="{html.escape(card_title)}"'
             parts.append(
                 '    <div class="card">\n'
-                f'      <a class="media" href="{video}"><img src="{gif}" alt="{html.escape(card_title)}" loading="lazy"></a>\n'
+                f'      <a class="media" {opener}><img src="{gif}" alt="{html.escape(card_title)}" loading="lazy"></a>\n'
                 f'      <h3>{html.escape(card_title)}</h3>\n'
                 f'      <p>{inline(desc)}</p>\n'
                 f'      <div class="cmd"><pre>{html.escape(cmd)}</pre><button type="button">Copy</button></div>\n'
-                f'      <div class="watch"><a href="{video}">Watch the full video</a></div>\n'
+                f'      <div class="watch"><a {opener}>Watch the full video</a></div>\n'
                 '    </div>'
             )
             count += 1

@@ -71,6 +71,21 @@
   .cmd button:hover { border-color: var(--blue); color: var(--blue); }
   .watch { font-size: 14px; margin-top: 8px; }
   footer { margin-top: 48px; font-size: 14px; color: var(--muted); }
+  .media { cursor: zoom-in; }
+  .watch a { cursor: pointer; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center;
+    background: rgba(10, 12, 16, 0.88); padding: 16px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox figure { margin: 0; max-width: min(92vw, 92vh); width: 100%; }
+  .lightbox video { width: 100%; max-height: 84vh; display: block; background: #000; border-radius: 6px; }
+  .lightbox figcaption { color: #E9ECF2; font-size: 15px; margin-top: 10px; text-align: center; }
+  .lightbox figcaption a { color: #9EC3F5; }
+  .lightbox .close {
+    position: absolute; top: 12px; right: 16px; font: 600 30px/1 "Source Sans 3", sans-serif;
+    color: #fff; background: none; border: 0; cursor: pointer; padding: 6px 10px;
+  }
 </style>
 </head>
 <body>
@@ -80,7 +95,7 @@
   <p class="sub">02-120 Programming for Scientists, Fall 2026 &middot; Phillip Compeau</p>
 
   <div class="narrow">
-  <p>Every video on this page comes from the gravity simulator that we built in class. The physics engine never changes; only the starting universe in <code>data/</code> and the command-line arguments do. Each preview below is a short loop; click it to watch the full video.</p>
+  <p>Every video on this page comes from the gravity simulator that we built in class. The physics engine never changes; only the starting universe in <code>data/</code> and the command-line arguments do. Each preview below is a short loop; click it to play the full video. On this page, the trails are drawn thicker than in your own videos (and the three-body videos are zoomed in) so that they show up well on the web.</p>
 
   <section class="box">
     <h2>Running one yourself</h2>
@@ -97,129 +112,168 @@
   <p class="narrow">Jupiter and its four largest moons (Io, Europa, Ganymede, and Callisto), with their real masses, distances, and speeds, and the real gravitational constant.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/jupiter_moons.gif" alt="Jupiter&#x27;s moons" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons.mp4" data-video="gallery/gravity/jupiter_moons.mp4" data-title="Jupiter&#x27;s moons"><img src="gallery/gravity/previews/jupiter_moons.gif" alt="Jupiter&#x27;s moons" loading="lazy"></a>
       <h3>Jupiter&#x27;s moons</h3>
       <p>The run from the code along: 1,000 one-minute steps, or about 17 hours. That is not even half of one orbit of Io, the fastest moon.</p>
       <div class="cmd"><pre>python3 main.py jupiter_moons 1000 60 1500 10</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons.mp4" data-video="gallery/gravity/jupiter_moons.mp4" data-title="Jupiter&#x27;s moons">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons_17_days.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/jupiter_moons_17_days.gif" alt="Seventeen days" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons_17_days.mp4" data-video="gallery/gravity/jupiter_moons_17_days.mp4" data-title="Seventeen days"><img src="gallery/gravity/previews/jupiter_moons_17_days.gif" alt="Seventeen days" loading="lazy"></a>
       <h3>Seventeen days</h3>
       <p>The same system for 25,000 one-minute steps (about 17 days), long enough for every moon to complete an orbit: Io takes 1.8 days, Europa 3.6, Ganymede 7.2, and Callisto 16.7.</p>
       <div class="cmd"><pre>python3 main.py jupiter_moons 25000 60 1500 100</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons_17_days.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_moons_17_days.mp4" data-video="gallery/gravity/jupiter_moons_17_days.mp4" data-title="Seventeen days">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_double_g.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/jupiter_double_g.gif" alt="Gravity doubled" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_double_g.mp4" data-video="gallery/gravity/jupiter_double_g.mp4" data-title="Gravity doubled"><img src="gallery/gravity/previews/jupiter_double_g.gif" alt="Gravity doubled" loading="lazy"></a>
       <h3>Gravity doubled</h3>
       <p>The code along suggests changing the gravitational constant. Here we double it: open <code>data/jupiter_moons.txt</code>, change its second line from <code>6.67408e-11</code> to <code>1.334816e-10</code>, and run the 17-day command again. Each moon is now going too slowly for a circular orbit, so it falls inward and loops around Jupiter on a stretched ellipse. Change the line back when you are done.</p>
       <div class="cmd"><pre>python3 main.py jupiter_moons 25000 60 1500 100</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_double_g.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_double_g.mp4" data-video="gallery/gravity/jupiter_double_g.mp4" data-title="Gravity doubled">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_half_g.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/jupiter_half_g.gif" alt="Gravity halved" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_half_g.mp4" data-video="gallery/gravity/jupiter_half_g.mp4" data-title="Gravity halved"><img src="gallery/gravity/previews/jupiter_half_g.gif" alt="Gravity halved" loading="lazy"></a>
       <h3>Gravity halved</h3>
       <p>The same experiment with the second line changed to <code>3.33704e-11</code>. With gravity halved, each moon is moving at exactly escape speed, so all four fly away from Jupiter for good.</p>
       <div class="cmd"><pre>python3 main.py jupiter_moons 25000 60 1500 100</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_half_g.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/jupiter_half_g.mp4" data-video="gallery/gravity/jupiter_half_g.mp4" data-title="Gravity halved">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="three-body-choreographies">Three-body choreographies</h2>
   <p class="narrow">Three equal masses, with the gravitational constant set to 1, started from carefully chosen positions and velocities so that they trace a repeating pattern. The figure-eight was found by Cris Moore in 1993; the others are among the periodic orbits found by Milovan Šuvakov and Veljko Dmitrašinović in 2013. Each of these takes about a minute to run.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/figure_eight.gif" alt="Figure-eight" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight.mp4" data-video="gallery/gravity/figure_eight.mp4" data-title="Figure-eight"><img src="gallery/gravity/previews/figure_eight.gif" alt="Figure-eight" loading="lazy"></a>
       <h3>Figure-eight</h3>
       <p>All three bodies chase each other around a single figure-eight.</p>
       <div class="cmd"><pre>python3 main.py figure_eight 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight.mp4" data-video="gallery/gravity/figure_eight.mp4" data-title="Figure-eight">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/butterfly.gif" alt="Butterfly" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly.mp4" data-video="gallery/gravity/butterfly.mp4" data-title="Butterfly"><img src="gallery/gravity/previews/butterfly.gif" alt="Butterfly" loading="lazy"></a>
       <h3>Butterfly</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py butterfly 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly.mp4" data-video="gallery/gravity/butterfly.mp4" data-title="Butterfly">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/dragonfly.gif" alt="Dragonfly" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly.mp4" data-video="gallery/gravity/dragonfly.mp4" data-title="Dragonfly"><img src="gallery/gravity/previews/dragonfly.gif" alt="Dragonfly" loading="lazy"></a>
       <h3>Dragonfly</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py dragonfly 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly.mp4" data-video="gallery/gravity/dragonfly.mp4" data-title="Dragonfly">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/goggles.gif" alt="Goggles" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles.mp4" data-video="gallery/gravity/goggles.mp4" data-title="Goggles"><img src="gallery/gravity/previews/goggles.gif" alt="Goggles" loading="lazy"></a>
       <h3>Goggles</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py goggles 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles.mp4" data-video="gallery/gravity/goggles.mp4" data-title="Goggles">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/moth.gif" alt="Moth" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth.mp4" data-video="gallery/gravity/moth.mp4" data-title="Moth"><img src="gallery/gravity/previews/moth.gif" alt="Moth" loading="lazy"></a>
       <h3>Moth</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py moth 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth.mp4" data-video="gallery/gravity/moth.mp4" data-title="Moth">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/yarn.gif" alt="Yarn" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn.mp4" data-video="gallery/gravity/yarn.mp4" data-title="Yarn"><img src="gallery/gravity/previews/yarn.gif" alt="Yarn" loading="lazy"></a>
       <h3>Yarn</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py yarn 100000 0.0001 1500 300</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn.mp4" data-video="gallery/gravity/yarn.mp4" data-title="Yarn">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="high-resolution">High resolution</h2>
   <p class="narrow">Ten times as many generations with a time step ten times smaller: the same stretch of time, simulated more accurately, with smoother trails. These runs are much slower and need a lot of memory (around 15 GB), because our simulator keeps every generation of the universe in a list; if your computer struggles, stick to the versions above. Most of these look just like the versions above, which is a good sign that the simulation is accurate. The exception is goggles, a sensitive orbit whose shape visibly changes when we simulate it more accurately.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/figure_eight_hires.gif" alt="Figure-eight, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight_hires.mp4" data-video="gallery/gravity/figure_eight_hires.mp4" data-title="Figure-eight, high resolution"><img src="gallery/gravity/previews/figure_eight_hires.gif" alt="Figure-eight, high resolution" loading="lazy"></a>
       <h3>Figure-eight, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py figure_eight 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/figure_eight_hires.mp4" data-video="gallery/gravity/figure_eight_hires.mp4" data-title="Figure-eight, high resolution">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/butterfly_hires.gif" alt="Butterfly, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly_hires.mp4" data-video="gallery/gravity/butterfly_hires.mp4" data-title="Butterfly, high resolution"><img src="gallery/gravity/previews/butterfly_hires.gif" alt="Butterfly, high resolution" loading="lazy"></a>
       <h3>Butterfly, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py butterfly 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/butterfly_hires.mp4" data-video="gallery/gravity/butterfly_hires.mp4" data-title="Butterfly, high resolution">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/dragonfly_hires.gif" alt="Dragonfly, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly_hires.mp4" data-video="gallery/gravity/dragonfly_hires.mp4" data-title="Dragonfly, high resolution"><img src="gallery/gravity/previews/dragonfly_hires.gif" alt="Dragonfly, high resolution" loading="lazy"></a>
       <h3>Dragonfly, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py dragonfly 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/dragonfly_hires.mp4" data-video="gallery/gravity/dragonfly_hires.mp4" data-title="Dragonfly, high resolution">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/goggles_hires.gif" alt="Goggles, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles_hires.mp4" data-video="gallery/gravity/goggles_hires.mp4" data-title="Goggles, high resolution"><img src="gallery/gravity/previews/goggles_hires.gif" alt="Goggles, high resolution" loading="lazy"></a>
       <h3>Goggles, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py goggles 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/goggles_hires.mp4" data-video="gallery/gravity/goggles_hires.mp4" data-title="Goggles, high resolution">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/moth_hires.gif" alt="Moth, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth_hires.mp4" data-video="gallery/gravity/moth_hires.mp4" data-title="Moth, high resolution"><img src="gallery/gravity/previews/moth_hires.gif" alt="Moth, high resolution" loading="lazy"></a>
       <h3>Moth, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py moth 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/moth_hires.mp4" data-video="gallery/gravity/moth_hires.mp4" data-title="Moth, high resolution">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn_hires.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/gravity/videos/previews/yarn_hires.gif" alt="Yarn, high resolution" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn_hires.mp4" data-video="gallery/gravity/yarn_hires.mp4" data-title="Yarn, high resolution"><img src="gallery/gravity/previews/yarn_hires.gif" alt="Yarn, high resolution" loading="lazy"></a>
       <h3>Yarn, high resolution</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py yarn 1000000 0.00001 1500 3000</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn_hires.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/gravity/videos/yarn_hires.mp4" data-video="gallery/gravity/yarn_hires.mp4" data-title="Yarn, high resolution">Watch the full video</a></div>
     </div>
   </div>
   <footer>All 16 videos, with their commands, are also in the <a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/tree/main/Finished%20Code/python/src/gravity">course repository</a>.</footer>
 </div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+  <button class="close" type="button" aria-label="Close">&times;</button>
+  <figure>
+    <video controls playsinline loop></video>
+    <figcaption></figcaption>
+  </figure>
+</div>
 <script>
+  var box = document.getElementById("lightbox");
+  var player = box.querySelector("video");
+  var caption = box.querySelector("figcaption");
+  function openVideo(event) {
+    event.preventDefault();
+    var link = event.currentTarget;
+    player.src = link.getAttribute("data-video");
+    caption.innerHTML = "";
+    var title = document.createElement("span");
+    title.textContent = link.getAttribute("data-title") + " · ";
+    var source = document.createElement("a");
+    source.href = link.getAttribute("href");
+    source.textContent = "original on GitHub";
+    caption.appendChild(title);
+    caption.appendChild(source);
+    box.classList.add("open");
+    var playing = player.play();
+    if (playing !== undefined) { playing.catch(function () {}); }
+  }
+  function closeVideo() {
+    box.classList.remove("open");
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+  }
+  var openers = document.querySelectorAll("[data-video]");
+  for (var k = 0; k < openers.length; k++) {
+    openers[k].addEventListener("click", openVideo);
+  }
+  box.querySelector(".close").addEventListener("click", closeVideo);
+  box.addEventListener("click", function (event) { if (event.target === box) { closeVideo(); } });
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape") { closeVideo(); } });
   var buttons = document.querySelectorAll(".cmd button");
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function (event) {

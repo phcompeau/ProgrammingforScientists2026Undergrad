@@ -71,6 +71,21 @@
   .cmd button:hover { border-color: var(--blue); color: var(--blue); }
   .watch { font-size: 14px; margin-top: 8px; }
   footer { margin-top: 48px; font-size: 14px; color: var(--muted); }
+  .media { cursor: zoom-in; }
+  .watch a { cursor: pointer; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center;
+    background: rgba(10, 12, 16, 0.88); padding: 16px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox figure { margin: 0; max-width: min(92vw, 92vh); width: 100%; }
+  .lightbox video { width: 100%; max-height: 84vh; display: block; background: #000; border-radius: 6px; }
+  .lightbox figcaption { color: #E9ECF2; font-size: 15px; margin-top: 10px; text-align: center; }
+  .lightbox figcaption a { color: #9EC3F5; }
+  .lightbox .close {
+    position: absolute; top: 12px; right: 16px; font: 600 30px/1 "Source Sans 3", sans-serif;
+    color: #fff; background: none; border: 0; cursor: pointer; padding: 6px 10px;
+  }
 </style>
 </head>
 <body>
@@ -80,7 +95,7 @@
   <p class="sub">02-120 Programming for Scientists, Fall 2026 &middot; Phillip Compeau</p>
 
   <div class="narrow">
-  <p>Every automaton on this page runs on the engine that we built in class. From one to the next, the code does not change at all; only the rule file, the starting board, and the color map do. Each preview below is a short loop; click it to watch the full video.</p>
+  <p>Every automaton on this page runs on the engine that we built in class. From one to the next, the code does not change at all; only the rule file, the starting board, and the color map do. Each preview below is a short loop; click it to play the full video.</p>
 
   <section class="box">
     <h2>Running one yourself</h2>
@@ -97,171 +112,210 @@
   <p class="narrow">The Game of Life is just one rule file (<code>rules/gol_rules.txt</code>) for our general engine.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/gosper_gun.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/gosper_gun.gif" alt="Gosper gun" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/gosper_gun.mp4" data-video="gallery/automata/gosper_gun.mp4" data-title="Gosper gun"><img src="gallery/automata/previews/gosper_gun.gif" alt="Gosper gun" loading="lazy"></a>
       <h3>Gosper gun</h3>
       <p>A gun that fires a new glider every 30 generations, forever.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/gol_rules.txt boards/gosper_gun.csv output/gosper_gun 20 400</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/gosper_gun.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/gosper_gun.mp4" data-video="gallery/automata/gosper_gun.mp4" data-title="Gosper gun">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/r_pentomino.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/r_pentomino.gif" alt="R-pentomino" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/r_pentomino.mp4" data-video="gallery/automata/r_pentomino.mp4" data-title="R-pentomino"><img src="gallery/automata/previews/r_pentomino.gif" alt="R-pentomino" loading="lazy"></a>
       <h3>R-pentomino</h3>
       <p>Five live cells that take more than 1,000 generations to settle down.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/gol_rules.txt boards/r_pentomino.csv output/r_pentomino 8 1200</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/r_pentomino.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/r_pentomino.mp4" data-video="gallery/automata/r_pentomino.mp4" data-title="R-pentomino">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/dinner_table.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/dinner_table.gif" alt="Dinner table" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/dinner_table.mp4" data-video="gallery/automata/dinner_table.mp4" data-title="Dinner table"><img src="gallery/automata/previews/dinner_table.gif" alt="Dinner table" loading="lazy"></a>
       <h3>Dinner table</h3>
       <p>An oscillator that returns to its starting shape every 12 generations.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/gol_rules.txt boards/dinner_table.csv output/dinner_table 30 60</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/dinner_table.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/dinner_table.mp4" data-video="gallery/automata/dinner_table.mp4" data-title="Dinner table">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="langton-s-loops">Langton&#x27;s loops</h2>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langton_loop.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/langton_loop.gif" alt="Langton&#x27;s loops" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langton_loop.mp4" data-video="gallery/automata/langton_loop.mp4" data-title="Langton&#x27;s loops"><img src="gallery/automata/previews/langton_loop.gif" alt="Langton&#x27;s loops" loading="lazy"></a>
       <h3>Langton&#x27;s loops</h3>
       <p>The self-replicating automaton from class: loops are born, live, reproduce, and die. This one takes about ten minutes to render.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/langton_loop.txt boards/langton_loop.csv output/langton_loop 20 900</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langton_loop.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langton_loop.mp4" data-video="gallery/automata/langton_loop.mp4" data-title="Langton&#x27;s loops">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="rock-paper-scissors">Rock-paper-scissors</h2>
   <p class="narrow">Three states, and each one beats one of the others: rock beats scissors, scissors beats paper, paper beats rock.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_corners.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/rps_corners.gif" alt="Corners" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_corners.mp4" data-video="gallery/automata/rps_corners.mp4" data-title="Corners"><img src="gallery/automata/previews/rps_corners.gif" alt="Corners" loading="lazy"></a>
       <h3>Corners</h3>
       <p>The three states start in separate corners and spread until they collide.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/rps.txt boards/rps_corners.csv output/rps_corners 5 500 color_maps/rps.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_corners.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_corners.mp4" data-video="gallery/automata/rps_corners.mp4" data-title="Corners">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_random.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/rps_random.gif" alt="Random start" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_random.mp4" data-video="gallery/automata/rps_random.mp4" data-title="Random start"><img src="gallery/automata/previews/rps_random.gif" alt="Random start" loading="lazy"></a>
       <h3>Random start</h3>
       <p>The same rules starting from a random board.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/rps.txt boards/rps_random.csv output/rps_random 5 300 color_maps/rps.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_random.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_random.mp4" data-video="gallery/automata/rps_random.mp4" data-title="Random start">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_clusters.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/rps_clusters.gif" alt="Clusters" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_clusters.mp4" data-video="gallery/automata/rps_clusters.mp4" data-title="Clusters"><img src="gallery/automata/previews/rps_clusters.gif" alt="Clusters" loading="lazy"></a>
       <h3>Clusters</h3>
       <p>The same rules starting from a few small clusters; watch which one takes over.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/rps.txt boards/rps_clusters.csv output/rps_clusters 5 180 color_maps/rps.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_clusters.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_clusters.mp4" data-video="gallery/automata/rps_clusters.mp4" data-title="Clusters">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_bounce.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/rps_bounce.gif" alt="Bounce" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_bounce.mp4" data-video="gallery/automata/rps_bounce.mp4" data-title="Bounce"><img src="gallery/automata/previews/rps_bounce.gif" alt="Bounce" loading="lazy"></a>
       <h3>Bounce</h3>
       <p>A variant with its own rules: rock, paper, and scissors particles bounce around a walled box, and the winners of each collision survive.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/rps_bounce.txt boards/rps_bounce.csv output/rps_bounce 15 200 color_maps/rps_bounce.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_bounce.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/rps_bounce.mp4" data-video="gallery/automata/rps_bounce.mp4" data-title="Bounce">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="crystal-growth">Crystal growth</h2>
   <p class="narrow">Based on a research paper, this automaton grows a crystal outward from a small seed.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_1.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/crystal_growth_1.gif" alt="Seed 1" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_1.mp4" data-video="gallery/automata/crystal_growth_1.mp4" data-title="Seed 1"><img src="gallery/automata/previews/crystal_growth_1.gif" alt="Seed 1" loading="lazy"></a>
       <h3>Seed 1</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py Moore rules/crystal_growth.txt boards/crystal_growth_1.csv output/crystal_growth_1 5 80 color_maps/crystal_growth.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_1.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_1.mp4" data-video="gallery/automata/crystal_growth_1.mp4" data-title="Seed 1">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_2.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/crystal_growth_2.gif" alt="Seed 2" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_2.mp4" data-video="gallery/automata/crystal_growth_2.mp4" data-title="Seed 2"><img src="gallery/automata/previews/crystal_growth_2.gif" alt="Seed 2" loading="lazy"></a>
       <h3>Seed 2</h3>
       <p>The same rules from a different seed.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/crystal_growth.txt boards/crystal_growth_2.csv output/crystal_growth_2 5 60 color_maps/crystal_growth.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_2.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/crystal_growth_2.mp4" data-video="gallery/automata/crystal_growth_2.mp4" data-title="Seed 2">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="bml-traffic">BML traffic</h2>
   <p class="narrow">A classic traffic model: blue cars try to move up and orange cars try to move right, and a car waits whenever the cell ahead of it is occupied. Depending on how crowded the city is, traffic either flows freely or jams for good.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_random.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/bml_traffic_random.gif" alt="Random start" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_random.mp4" data-video="gallery/automata/bml_traffic_random.mp4" data-title="Random start"><img src="gallery/automata/previews/bml_traffic_random.gif" alt="Random start" loading="lazy"></a>
       <h3>Random start</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/bml_traffic.txt boards/bml_traffic_random.csv output/bml_traffic_random 5 400 color_maps/bml_traffic.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_random.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_random.mp4" data-video="gallery/automata/bml_traffic_random.mp4" data-title="Random start">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_diagonal.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/bml_traffic_diagonal.gif" alt="Diagonal start" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_diagonal.mp4" data-video="gallery/automata/bml_traffic_diagonal.mp4" data-title="Diagonal start"><img src="gallery/automata/previews/bml_traffic_diagonal.gif" alt="Diagonal start" loading="lazy"></a>
       <h3>Diagonal start</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/bml_traffic.txt boards/bml_traffic_diagonal.csv output/bml_traffic_diagonal 5 400 color_maps/bml_traffic.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_diagonal.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_diagonal.mp4" data-video="gallery/automata/bml_traffic_diagonal.mp4" data-title="Diagonal start">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_large.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/bml_traffic_large.gif" alt="Large city" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_large.mp4" data-video="gallery/automata/bml_traffic_large.mp4" data-title="Large city"><img src="gallery/automata/previews/bml_traffic_large.gif" alt="Large city" loading="lazy"></a>
       <h3>Large city</h3>
       <p>A 512 by 512 board. Keep the cell width at 3 or more here: below that, the cars are drawn too small to see.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/bml_traffic.txt boards/bml_traffic_large.csv output/bml_traffic_large 3 300 color_maps/bml_traffic.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_large.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/bml_traffic_large.mp4" data-video="gallery/automata/bml_traffic_large.mp4" data-title="Large city">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="predator-prey">Predator-prey</h2>
   <p class="narrow">Predators eat prey, and prey reproduce and swim away, producing waves of activity until the system burns out. This model is related to the chapter's practice exercises.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/predator_prey.gif" alt="Clusters" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey.mp4" data-video="gallery/automata/predator_prey.mp4" data-title="Clusters"><img src="gallery/automata/previews/predator_prey.gif" alt="Clusters" loading="lazy"></a>
       <h3>Clusters</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py Moore rules/predator_prey.txt boards/predator_prey.csv output/predator_prey 5 270 color_maps/predator_prey.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey.mp4" data-video="gallery/automata/predator_prey.mp4" data-title="Clusters">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey_random.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/predator_prey_random.gif" alt="Random start" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey_random.mp4" data-video="gallery/automata/predator_prey_random.mp4" data-title="Random start"><img src="gallery/automata/previews/predator_prey_random.gif" alt="Random start" loading="lazy"></a>
       <h3>Random start</h3>
       <p></p>
       <div class="cmd"><pre>python3 main.py Moore rules/predator_prey.txt boards/predator_prey_random.csv output/predator_prey_random 5 290 color_maps/predator_prey.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey_random.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/predator_prey_random.mp4" data-video="gallery/automata/predator_prey_random.mp4" data-title="Random start">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="langton-s-ant">Langton&#x27;s ant</h2>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langtons_ant.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/langtons_ant.gif" alt="Langton&#x27;s ant" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langtons_ant.mp4" data-video="gallery/automata/langtons_ant.mp4" data-title="Langton&#x27;s ant"><img src="gallery/automata/previews/langtons_ant.gif" alt="Langton&#x27;s ant" loading="lazy"></a>
       <h3>Langton&#x27;s ant</h3>
       <p>An ant turns right on a white cell and left on a black one, flips the color of the cell, and steps forward. The color map is required because the ant uses more states than the default color map covers.</p>
       <div class="cmd"><pre>python3 main.py vonNeumann rules/langtons_ant.txt boards/langtons_ant.csv output/langtons_ant 10 400 color_maps/langtons_ant.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langtons_ant.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/langtons_ant.mp4" data-video="gallery/automata/langtons_ant.mp4" data-title="Langton&#x27;s ant">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="wireworld">Wireworld</h2>
   <p class="narrow">Wireworld models electronic circuits: electrons (a head followed by a tail) travel along wires.</p>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/wireworld.gif" alt="Loop" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld.mp4" data-video="gallery/automata/wireworld.mp4" data-title="Loop"><img src="gallery/automata/previews/wireworld.gif" alt="Loop" loading="lazy"></a>
       <h3>Loop</h3>
       <p>An electron travels down a wire into a loop, splits in two, and the two halves cancel out when they meet on the far side.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/wireworld.txt boards/wireworld.csv output/wireworld 5 110 color_maps/wireworld.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld.mp4" data-video="gallery/automata/wireworld.mp4" data-title="Loop">Watch the full video</a></div>
     </div>
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld_nae.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/wireworld_nae.gif" alt="Branching wires" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld_nae.mp4" data-video="gallery/automata/wireworld_nae.mp4" data-title="Branching wires"><img src="gallery/automata/previews/wireworld_nae.gif" alt="Branching wires" loading="lazy"></a>
       <h3>Branching wires</h3>
       <p>Signals travel along a set of branching wires.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/wireworld.txt boards/wireworld_nae.csv output/wireworld_nae 10 50 color_maps/wireworld.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld_nae.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/wireworld_nae.mp4" data-video="gallery/automata/wireworld_nae.mp4" data-title="Branching wires">Watch the full video</a></div>
     </div>
   </div>
   <h2 id="checkerboard">Checkerboard</h2>
   <div class="grid">
     <div class="card">
-      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/checkerboard.mp4"><img src="https://raw.githubusercontent.com/phcompeau/ProgrammingforScientists2026Undergrad/main/Finished%20Code/python/src/cellular_automata/videos/previews/checkerboard.gif" alt="Checkerboard" loading="lazy"></a>
+      <a class="media" href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/checkerboard.mp4" data-video="gallery/automata/checkerboard.mp4" data-title="Checkerboard"><img src="gallery/automata/previews/checkerboard.gif" alt="Checkerboard" loading="lazy"></a>
       <h3>Checkerboard</h3>
       <p>A checkerboard with noisy patches settles down within a few generations, leaving only the outlines of the patches.</p>
       <div class="cmd"><pre>python3 main.py Moore rules/checkerboard.txt boards/checkerboard.csv output/checkerboard 5 20 color_maps/checkerboard.txt</pre><button type="button">Copy</button></div>
-      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/checkerboard.mp4">Watch the full video</a></div>
+      <div class="watch"><a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/blob/main/Finished%20Code/python/src/cellular_automata/videos/checkerboard.mp4" data-video="gallery/automata/checkerboard.mp4" data-title="Checkerboard">Watch the full video</a></div>
     </div>
   </div>
   <footer>All 19 videos, with their commands, are also in the <a href="https://github.com/phcompeau/ProgrammingforScientists2026Undergrad/tree/main/Finished%20Code/python/src/cellular_automata">course repository</a>.</footer>
 </div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+  <button class="close" type="button" aria-label="Close">&times;</button>
+  <figure>
+    <video controls playsinline loop></video>
+    <figcaption></figcaption>
+  </figure>
+</div>
 <script>
+  var box = document.getElementById("lightbox");
+  var player = box.querySelector("video");
+  var caption = box.querySelector("figcaption");
+  function openVideo(event) {
+    event.preventDefault();
+    var link = event.currentTarget;
+    player.src = link.getAttribute("data-video");
+    caption.innerHTML = "";
+    var title = document.createElement("span");
+    title.textContent = link.getAttribute("data-title") + " · ";
+    var source = document.createElement("a");
+    source.href = link.getAttribute("href");
+    source.textContent = "original on GitHub";
+    caption.appendChild(title);
+    caption.appendChild(source);
+    box.classList.add("open");
+    var playing = player.play();
+    if (playing !== undefined) { playing.catch(function () {}); }
+  }
+  function closeVideo() {
+    box.classList.remove("open");
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+  }
+  var openers = document.querySelectorAll("[data-video]");
+  for (var k = 0; k < openers.length; k++) {
+    openers[k].addEventListener("click", openVideo);
+  }
+  box.querySelector(".close").addEventListener("click", closeVideo);
+  box.addEventListener("click", function (event) { if (event.target === box) { closeVideo(); } });
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape") { closeVideo(); } });
   var buttons = document.querySelectorAll(".cmd button");
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function (event) {
