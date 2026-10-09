@@ -404,11 +404,6 @@ weeks:
             text: "Data for Trees"
             url: ca_datatrees
             minutes: 7
-      - date: 2026-10-21
-        kind: deadline
-        due:
-          - text: "Revised project proposal due (only if we asked for one)"
-            url: "project/Project_Description_F26.pdf"
       - date: 2026-10-22
         kind: lecture
         title: "Trees II"
@@ -444,6 +439,9 @@ weeks:
         kind: no-class
         title: "No recitation: optional Midterm 1 debrief and project office hours"
         detail: "The TAs open GHC 4211 at the usual section times. Attendance is not taken."
+        due:
+          - text: "Revised project proposal due (only if we asked for one)"
+            url: "project/Project_Description_F26.pdf"
 
   - title: "Parallel programming 1"
     label: "Week 9"
