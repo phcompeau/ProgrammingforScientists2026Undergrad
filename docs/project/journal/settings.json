@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/save_journal.py\" || python \"$CLAUDE_PROJECT_DIR/.claude/hooks/save_journal.py\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/save_journal.py\" || python \"$CLAUDE_PROJECT_DIR/.claude/hooks/save_journal.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="02-120 Programming for Scientists, Fall 2026: set up your project build journal.">
+<title>Build Journal Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #F7F8FA;
+    --surface: #FFFFFF;
+    --surface-2: #F1F3F7;
+    --ink: #171A20;
+    --ink-2: #3A3F4A;
+    --muted: #6B7280;
+    --rule: #E3E6EC;
+    --rule-strong: #CDD2DB;
+    --blue: #1F5FAD;
+    --red: #B01B2E;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "Source Sans 3", system-ui, sans-serif; font-size: 17px; line-height: 1.6;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+  .back { font-size: 14px; }
+  a { color: var(--blue); }
+  h1 { font-family: Spectral, Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15; margin: 18px 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  h2 { font-family: Spectral, Georgia, serif; font-weight: 600; font-size: 23px; margin: 34px 0 6px; }
+  p { margin: 0 0 14px; color: var(--ink-2); }
+  code {
+    font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--rule); border-radius: 3px; padding: 1px 5px;
+  }
+  .box {
+    margin: 36px 0 0; padding: 18px 20px; background: var(--surface);
+    border: 1px solid var(--rule-strong); border-left: 3px solid var(--red); border-radius: 4px;
+  }
+  .box h2 { margin-top: 0; }
+  .box ol { margin: 0; padding-left: 22px; color: var(--ink-2); }
+  .wrap > ul { margin: 0 0 14px; padding-left: 22px; color: var(--ink-2); }
+  .wrap > ul li { margin: 0 0 8px; }
+  .box li { margin: 0 0 8px; }
+  footer { margin-top: 40px; font-size: 14px; color: var(--muted); }
+</style>
+<style>
+  pre { font-family: "IBM Plex Mono", monospace; font-size: 13.5px; background: var(--surface-2); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; overflow-x: auto; }
+  ol li, ul li { margin-bottom: 8px; color: var(--ink-2); }
+  .prompt { background: var(--surface); border-left: 3px solid var(--red); padding: 12px 16px; margin: 0 0 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../../index.html">&larr; 02-120 Fall 2026</a>
+<h1>Set Up Your Build Journal</h1>
+<p class="sub">Do this once, in your project repository. It takes about a minute.</p>
+
+<h2>For you</h2>
+<p>Open Claude Code in your project folder and paste this:</p>
+<div class="prompt"><code>Follow the setup instructions at https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/ for my 02-120 build journal, then tell me what you did.</code></div>
+<p>After that, every Claude Code session in this folder is copied into a <code>journal/</code> folder automatically, including the sessions you had before you set this up. All you have to do is commit and push regularly. We collect your repository at 11:59 pm on each checkpoint date: October 30, November 10, November 20, and December 1.</p>
+<p>Then, by Friday, October 30, submit your repository link on Canvas (<b>Project Repository Link</b>) and add GitHub user <code>phcompeau</code> as a collaborator if your repository is private.</p>
+<p><b>Privacy.</b> Your journal holds only the sessions from this project folder, never your other folders or your personal memory and skills. Read through <code>journal/</code> before you push if you are worried, and never paste a password or API key into Claude Code. Only course staff read your journal.</p>
+
+<h2>For Claude</h2>
+<p>You are setting up a student's build journal for the 02-120 final project. Work in the root of the student's project repository (the folder where Claude Code is running).</p>
+<ol>
+<li>Download <a href="save_journal.py">save_journal.py</a> from <code>https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/save_journal.py</code> and save it, unchanged, as <code>.claude/hooks/save_journal.py</code>.</li>
+<li>Add the hooks in <a href="settings.json">settings.json</a> (<code>https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/settings.json</code>) to the project's <code>.claude/settings.json</code>. If that file already exists, merge the <code>SessionStart</code> and <code>SessionEnd</code> entries into it without removing anything already there. Use <code>.claude/settings.json</code>, not <code>settings.local.json</code>, so that the hooks are committed with the repository.</li>
+<li>Run the script once by hand from the project root (<code>python3 .claude/hooks/save_journal.py</code>, or <code>python</code> on Windows) and confirm that <code>journal/</code> now contains one or more <code>.jsonl</code> files.</li>
+<li>Make sure that neither <code>journal/</code> nor <code>.claude/</code> is listed in <code>.gitignore</code>.</li>
+<li>Check the journal files for anything that looks like a password, API key, or token. If you find one, tell the student and help them redact it before committing.</li>
+<li>Commit <code>.claude/hooks/save_journal.py</code>, <code>.claude/settings.json</code>, and <code>journal/</code> with the message <code>Set up build journal</code>, and push.</li>
+<li>Tell the student what you did, and remind them to submit their repository link on Canvas by October 30 and to commit and push regularly.</li>
+</ol>
+</div>
+</body>
+</html>
