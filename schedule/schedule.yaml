@@ -462,7 +462,7 @@ weeks:
       - date: 2026-10-23
         kind: recitation
         title: "Recitation 6: Binary search trees"
-        detail: "Recursion returns: range queries on the E. coli gene table."
+        detail: "Evolution in 12 flasks: storing the Lenski E. coli mutation catalog in a binary search tree."
         due:
           - text: "HW4 due (boids)"
             flag: true
