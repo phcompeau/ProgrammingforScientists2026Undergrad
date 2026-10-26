@@ -502,7 +502,7 @@ weeks:
             minutes: 37
             note: "We build this together in class; the video is here if you want to review it."
       - date: 2026-10-30
-        kind: no-class
+        kind: recitation
         title: "Recitation: project office hours"
         detail: "The TAs hold project office hours in GHC 4211 at the usual section times. Attendance is not required, but come as you wrangle your projects; bring anything from Midterm 1 you found challenging, too."
         due:
