@@ -471,34 +471,40 @@ weeks:
     label: "Week 8"
     start: 2026-10-26
     end: 2026-10-30
-    note: "Midterm 1 is Tuesday. Chapter 6 starts Thursday, with nothing to prepare."
+    note: "Midterm 1 is Tuesday. On Thursday we finish UPGMA and start Chapter 6; code alongs 6.1 and 6.2 are the prep."
     days:
       - date: 2026-10-27
         kind: exam
         title: "Midterm 1"
         detail: "Monte Carlo and PRNGs, cellular automata, top-down design, OOP."
+      - date: 2026-10-28
+        kind: deadline
+        due:
+          - text: "Check Your Work for code along 6.2 due (partial_sum and sum_two_procs)"
+            url: "https://p4l-website.vercel.app/courses/02-120-homework/"
       - date: 2026-10-29
         kind: lecture
-        title: "Parallel I"
-        detail: "Why parallelism, and our first parallel program. Nothing to prepare: we build it together the class after the exam. Code alongs 6.1 to 6.3 replace the daily challenge today."
+        title: "Trees wrap-up; Parallel I"
+        detail: "We finish UPGMA, then build code along 6.3 together: splitting work across any number of processes and timing the speedup."
         prepare:
-          - kind: after
+          - kind: required
             text: "Code along 6.1: Parallelism vs. Concurrency"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/parallelism-vs-concurrency/"
             minutes: 15
-          - kind: after
+          - kind: required
             text: "Code along 6.2: Summing a List Across Processes"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/summing-a-list-across-processes-in-python/"
             minutes: 40
+            note: "Its Check Your Work (partial_sum and sum_two_procs) is due by the end of Wednesday, October 28."
           - kind: after
             text: "Code along 6.3: Any Number of Processes and Timing the Speedup"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/any-number-of-processes-and-timing-the-speedup-in-python/"
             minutes: 37
-            note: "Do all three in place of today's daily challenge; if we did not reach 6.3 in class, it is new material."
+            note: "We build this together in class; the video is here if you want to review it."
       - date: 2026-10-30
         kind: no-class
-        title: "No recitation: optional Midterm 1 debrief and project office hours"
-        detail: "The TAs open GHC 4211 at the usual section times. Attendance is not taken."
+        title: "Recitation: project office hours"
+        detail: "The TAs hold project office hours in GHC 4211 at the usual section times. Attendance is not required, but come as you wrangle your projects; bring anything from Midterm 1 you found challenging, too."
         due:
           - text: "Project repository link due on Canvas (set up your build journal first)"
             url: "project/journal/"
