@@ -490,7 +490,6 @@ weeks:
             text: "Code along 6.2: Summing a List Across Processes"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/summing-a-list-across-processes-in-python/"
             minutes: 40
-            note: "Its Check Your Work (partial_sum and sum_two_procs) is due by the end of Wednesday, October 28."
           - kind: in-class
             text: "Code along 6.3: Any Number of Processes and Timing the Speedup"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/any-number-of-processes-and-timing-the-speedup-in-python/"
