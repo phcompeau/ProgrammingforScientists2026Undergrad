@@ -477,11 +477,6 @@ weeks:
         kind: exam
         title: "Midterm 1"
         detail: "Monte Carlo and PRNGs, cellular automata, top-down design, OOP."
-      - date: 2026-10-28
-        kind: deadline
-        due:
-          - text: "Check Your Work for code along 6.2 due (partial_sum and sum_two_procs)"
-            url: "https://p4l-website.vercel.app/courses/02-120-homework/"
       - date: 2026-10-29
         kind: lecture
         title: "Trees wrap-up; Parallel I"
