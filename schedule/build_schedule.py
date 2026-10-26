@@ -31,7 +31,12 @@ PREP_LABELS = {
     "required": "",
     "after": "After class",
     "reference": "Optional",
+    "in-class": "Built in class",
 }
+
+# Kinds that belong to the "In class" cell instead of "Complete before class":
+# code alongs we build together (the video is a replay) and follow-up work.
+CLASS_CELL_KINDS = ["in-class", "after"]
 
 
 def esc(text: str) -> str:
@@ -63,11 +68,18 @@ def format_minutes(total: int) -> str:
     return f"{hours} hr {minutes} min"
 
 
-def render_prepare(day: dict[str, Any], links: dict[str, str]) -> str:
-    """Render the 'Prepare first' cell for one day."""
-    items = day.get("prepare", [])
-    if not items:
-        return '<span class="none">&middot;</span>'
+def split_prepare(day: dict[str, Any], in_class_cell: bool) -> list[dict[str, Any]]:
+    """Return the day's prepare items for one cell: the class cell or the before-class cell."""
+    chosen: list[dict[str, Any]] = []
+    for item in day.get("prepare", []):
+        kind = item.get("kind", "required")
+        if (kind in CLASS_CELL_KINDS) == in_class_cell:
+            chosen.append(item)
+    return chosen
+
+
+def render_items(items: list[dict[str, Any]], links: dict[str, str]) -> str:
+    """Render a list of prepare items with their tags, minutes, and notes."""
     pieces: list[str] = []
     previous_kind = ""
     for item in items:
@@ -89,10 +101,20 @@ def render_prepare(day: dict[str, Any], links: dict[str, str]) -> str:
         if "note" in item:
             note = f'<span class="prepnote">{esc(item["note"])}</span>'
         tag = ""
-        if label:
+        if label and kind in CLASS_CELL_KINDS:
+            pieces.append(f'<li class="prephead"><span class="tag tag-{kind}">{esc(label)}</span></li>')
+        elif label:
             tag = f'<span class="tag tag-{kind}">{esc(label)}</span>'
         pieces.append(f'<li class="prep prep-{kind}">{tag}{body}{badge}{note}</li>')
     return '<ul class="preplist">' + "".join(pieces) + "</ul>"
+
+
+def render_prepare(day: dict[str, Any], links: dict[str, str]) -> str:
+    """Render the 'Complete before class' cell for one day."""
+    items = split_prepare(day, False)
+    if not items:
+        return '<span class="none">&middot;</span>'
+    return render_items(items, links)
 
 
 def render_due(day: dict[str, Any], homework: str) -> str:
@@ -112,8 +134,8 @@ def render_due(day: dict[str, Any], homework: str) -> str:
     return '<ul class="duelist">' + "".join(pieces) + "</ul>"
 
 
-def render_class(day: dict[str, Any]) -> str:
-    """Render the 'In class' cell for one day."""
+def render_class(day: dict[str, Any], links: dict[str, str]) -> str:
+    """Render the 'In class' cell for one day, with the code alongs built in class."""
     kind = day["kind"]
     if kind == "deadline":
         return '<span class="none">&middot;</span>'
@@ -124,7 +146,11 @@ def render_class(day: dict[str, Any]) -> str:
     detail = ""
     if day.get("detail"):
         detail = f'<div class="detail">{esc(day["detail"])}</div>'
-    return f'<div class="ctitle">{title}{chip}</div>{detail}'
+    built = ""
+    items = split_prepare(day, True)
+    if items:
+        built = '<div class="built">' + render_items(items, links) + "</div>"
+    return f'<div class="ctitle">{title}{chip}</div>{detail}{built}'
 
 
 def render_day(day: dict[str, Any], course: dict[str, Any], links: dict[str, str]) -> str:
@@ -138,7 +164,7 @@ def render_day(day: dict[str, Any], course: dict[str, Any], links: dict[str, str
           <span class="date">{esc(format_date(when))}</span>
           <span class="kind">{esc(kind_label)}</span>
         </div>
-        <div class="cell cell-class"><span class="colhead">In class</span>{render_class(day)}</div>
+        <div class="cell cell-class"><span class="colhead">In class</span>{render_class(day, links)}</div>
         <div class="cell cell-prep"><span class="colhead">Before class</span>{render_prepare(day, links)}</div>
         <div class="cell cell-due"><span class="colhead">Due</span>{render_due(day, course["homework"])}</div>
       </div>"""
@@ -454,6 +480,9 @@ PAGE = r"""<title>02-120 Semester Map</title>
   ul.preplist, ul.duelist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
   .prep, .due { font-size: 14.5px; line-height: 1.42; max-width: 72ch; }
   .prep-reference, .prep-after { color: var(--muted); }
+  .built { margin-top: 9px; }
+  .prephead { margin-bottom: -3px; }
+  .prephead + .prep { margin-top: 0; }
   .tag {
     font-family: "IBM Plex Mono", monospace; font-size: 9.5px; letter-spacing: .1em;
     text-transform: uppercase; padding: 2px 6px; border-radius: 3px;

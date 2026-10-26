@@ -245,11 +245,11 @@ weeks:
             text: "Simulating Craps"
             url: ca_craps
             minutes: 39
-          - kind: after
+          - kind: in-class
             text: "Parsing Election Polling Data from Files, to replay what we build in class"
             url: ca_polling
             minutes: 61
-          - kind: after
+          - kind: in-class
             text: "Simulating an Election from Polling Data, the second half of what we build in class"
             url: ca_election
       - date: 2026-09-18
@@ -307,7 +307,7 @@ weeks:
           - kind: required
             text: "Pull the course repository and copy Starter Code/game_of_life into python/src/; we build from it in class"
             url: "https://github.com/phcompeau/ProgrammingforScientists2026Undergrad"
-          - kind: after
+          - kind: in-class
             text: "Implementing the Game of Life, to replay what we build in class"
             url: ca_gol
       - date: 2026-10-01
@@ -315,7 +315,7 @@ weeks:
         title: "An infinitude of cellular automata"
         detail: "We generalize the Game of Life to any cellular automaton, including the self-replicating Langton loops."
         prepare:
-          - kind: after
+          - kind: in-class
             text: "An Infinitude of Cellular Automata, including Self-Replicating Langton Loops, to replay what we build in class; it leads directly into HW3"
             url: ca_langton
       - date: 2026-10-02
@@ -357,7 +357,7 @@ weeks:
         title: "OOP II"
         detail: "We finish the engine and animate the solar system."
         prepare:
-          - kind: after
+          - kind: in-class
             text: "Building a Gravity Simulator, to replay what we build in class this week"
             url: ca_gravity
           - kind: after
@@ -417,19 +417,19 @@ weeks:
             text: "Install R, then RStudio Desktop; we use them on Thursday to draw our trees"
             url: "https://cran.r-project.org/"
             note: "Install R first from CRAN, then RStudio Desktop from https://posit.co/download/rstudio-desktop/. Then open RStudio and run install.packages(c(\"ape\", \"rstudioapi\")) in its console."
-          - kind: after
+          - kind: in-class
             text: "Code along 5.4: How UPGMA Works"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/how-upgma-works/"
             minutes: 25
-          - kind: after
+          - kind: in-class
             text: "Code along 5.5: Planning UPGMA Top-Down"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/planning-upgma-top-down-in-python/"
             minutes: 44
-          - kind: after
+          - kind: in-class
             text: "Code along 5.6: Validating Input, Initializing the Tree, and What Slices Copy"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/validating-input-initializing-the-tree-and-what-slices-copy/"
             minutes: 25
-          - kind: after
+          - kind: in-class
             text: "Code along 5.7: Shrinking the Matrix and Clusters"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/shrinking-the-matrix-and-clusters-in-python/"
             minutes: 35
@@ -443,19 +443,19 @@ weeks:
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/newick-format-in-python/"
             minutes: 26
             note: "Watch for the idea; you do not need to write this code. to_newick_ages() is already filled in inside Starter Code/upgma/datatypes.py. If you copied the starter folder before Saturday, October 17, pull the repository and copy that method into your own datatypes.py."
-          - kind: after
+          - kind: in-class
             text: "Code along 5.8: An Introduction to Recursion"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/an-introduction-to-recursion-in-python/"
             minutes: 25
-          - kind: after
+          - kind: in-class
             text: "Code along 5.9: Counting Leaves Recursively"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/counting-leaves-recursively-in-python/"
             minutes: 26
-          - kind: after
+          - kind: in-class
             text: "Code along 5.11: Running UPGMA on Real Data"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/running-upgma-on-real-data-in-python/"
             minutes: 18
-          - kind: after
+          - kind: in-class
             text: "Code along 5.12: Touring Our Evolutionary Trees"
             url: "https://programmingforlovers.com/chapter-5/chapter-5-python-code-alongs/touring-our-evolutionary-trees/"
             minutes: 27
@@ -496,11 +496,10 @@ weeks:
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/summing-a-list-across-processes-in-python/"
             minutes: 40
             note: "Its Check Your Work (partial_sum and sum_two_procs) is due by the end of Wednesday, October 28."
-          - kind: after
+          - kind: in-class
             text: "Code along 6.3: Any Number of Processes and Timing the Speedup"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/any-number-of-processes-and-timing-the-speedup-in-python/"
             minutes: 37
-            note: "We build this together in class; the video is here if you want to review it."
       - date: 2026-10-30
         kind: recitation
         title: "Recitation: project office hours"
@@ -537,11 +536,11 @@ weeks:
           - kind: required
             text: "Download diffusion-python.zip from code along 6.5 and unzip it into python/src/; we build from it in class"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/a-serial-diffusion-simulator-in-python/"
-          - kind: after
+          - kind: in-class
             text: "Code along 6.5: A Serial Diffusion Simulator"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/a-serial-diffusion-simulator-in-python/"
             minutes: 19
-          - kind: after
+          - kind: in-class
             text: "Code along 6.6: Parallel Diffusion with Pool and starmap"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/parallel-diffusion-with-pool-and-starmap-in-python/"
             minutes: 49
@@ -566,11 +565,11 @@ weeks:
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/reaction-diffusion-designing-the-serial-engine-in-python/"
             minutes: 34
             note: "Download reaction-diffusion-python.zip from this page; we build on it in class."
-          - kind: after
+          - kind: in-class
             text: "Code along 6.8: Reaction-Diffusion: Applying Reactions"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/reaction-diffusion-applying-reactions-in-python/"
             minutes: 34
-          - kind: after
+          - kind: in-class
             text: "Code along 6.11: A Tour of Reaction Systems"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/a-tour-of-reaction-systems/"
             minutes: 36
@@ -601,11 +600,11 @@ weeks:
           - kind: required
             text: "Install Visual X-TOY"
             url: "https://lift.cs.princeton.edu/xtoy/"
-          - kind: after
+          - kind: in-class
             text: "Code along 7.3: Meet X-Toy, a Virtual Computer"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/meet-x-toy/"
             minutes: 38
-          - kind: after
+          - kind: in-class
             text: "Code along 7.4: Bitwise Operations in X-Toy"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/bitwise-operations-in-x-toy/"
             minutes: 20
@@ -627,15 +626,15 @@ weeks:
         title: "Assembly II"
         detail: "Negative numbers, branching, and our first loops and functions in X-Toy. Nothing new to prepare."
         prepare:
-          - kind: after
+          - kind: in-class
             text: "Code along 7.5: Negative Numbers and Two's Complement"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/negative-numbers-and-twos-complement-in-x-toy/"
             minutes: 13
-          - kind: after
+          - kind: in-class
             text: "Code along 7.6: Indirect Memory, Branching, and If/Else"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/indirect-memory-branching-and-if-else-in-x-toy/"
             minutes: 15
-          - kind: after
+          - kind: in-class
             text: "Code along 7.7: Loops and Functions in X-Toy: Multiplication"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/loops-and-functions-in-x-toy/"
             minutes: 34
@@ -645,11 +644,11 @@ weeks:
         title: "Assembly III"
         detail: "Subroutines in X-Toy: computing a GCD the slow way. Nothing new to prepare."
         prepare:
-          - kind: after
+          - kind: in-class
             text: "Code along 7.8: The Trivial GCD Algorithm in X-Toy"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/trivial-gcd-in-x-toy/"
             minutes: 36
-          - kind: after
+          - kind: in-class
             text: "Code along 7.9: Subroutines in X-Toy: Running Trivial GCD"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/subroutines-for-trivial-gcd-in-x-toy/"
             minutes: 32
@@ -673,15 +672,15 @@ weeks:
         title: "Assembly IV: The limits of the machine"
         detail: "Euclid's beautiful speedup for GCD, paradoxes of self-reference, then Turing machines and the halting problem: what no computer can ever do. Nothing new to prepare."
         prepare:
-          - kind: after
+          - kind: in-class
             text: "Code along 7.10: Euclid's GCD Algorithm in X-Toy: A Beautiful Speedup"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/euclids-gcd-algorithm-in-x-toy/"
             minutes: 18
-          - kind: after
+          - kind: in-class
             text: "Code along 7.11: The Limits of the Machine: Self-Reference and Programs That Rewrite Themselves"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/self-reference-and-programs-that-rewrite-themselves/"
             minutes: 27
-          - kind: after
+          - kind: in-class
             text: "Code along 7.12: Turing Machines and the Halting Problem"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/turing-machines-and-the-halting-problem/"
             minutes: 31

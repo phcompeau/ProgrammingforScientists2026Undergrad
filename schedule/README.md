@@ -18,8 +18,10 @@ which GitHub Pages serves. Commit and push, and the live page updates.
   `recitation`, `exam`, `no-class`, or `deadline`.
 - **Preparation** goes under `prepare:`. `kind: required` means complete it before that
   day, which is the default and the whole point of the "Complete before class" column.
-  `kind: after` and `kind: reference` render with a tag and do not count toward the
-  week's required-prep total.
+  `kind: in-class` is a code along we build together in class (its video is the replay);
+  `kind: after` is follow-up work NOT covered in class. Both render in the "In class"
+  cell, never under "Complete before class". `kind: reference` renders in the
+  before-class column with an "Optional" tag.
 - **Links** are keys into the `links:` block (`ca_conditionals`, `ch2_text`, ...) so a
   URL is written once. A full URL also works.
 - **Due items** link to the homework autograder course unless given their own `url:`.
