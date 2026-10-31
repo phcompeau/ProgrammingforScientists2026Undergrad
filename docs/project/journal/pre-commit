@@ -1,0 +1,5 @@
+#!/bin/sh
+# 02-120 build journal: refresh journal/ before every commit, whichever AI tool you use.
+python3 .claude/hooks/save_journal.py </dev/null 2>/dev/null || python .claude/hooks/save_journal.py </dev/null
+git add journal
+exit 0
