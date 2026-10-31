@@ -42,7 +42,9 @@ def claude_log_folder(hook_input: dict, project: Path) -> Path:
 SECRET_PATTERN = re.compile(
     r"(sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}"
     r"|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|xox[abprs]-[A-Za-z0-9-]{10,}"
-    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----)"
+    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----"
+    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----)",
+    re.DOTALL,
 )
 
 
@@ -53,7 +55,9 @@ def scrub(text: str) -> str:
 def copy_if_changed(source: Path, destination: Path) -> int:
     source_time = source.stat().st_mtime
     if destination.exists() and destination.stat().st_mtime == source_time:
-        return 0
+        existing = destination.read_text(encoding="utf-8", errors="replace")
+        if not SECRET_PATTERN.search(existing):
+            return 0
     text = source.read_text(encoding="utf-8", errors="replace")
     destination.write_text(scrub(text), encoding="utf-8")
     os.utime(destination, (source_time, source_time))
@@ -114,7 +118,7 @@ def tool_note(agent: str, name: str, details: dict) -> str:
     if isinstance(target, list):
         target = " ".join(target)
     if target:
-        return f"*{agent} used {name}: `{short(target, 100)}`*"
+        return f"*{agent} used {name}: `{short(scrub(str(target)), 100)}`*"
     return f"*{agent} used {name}*"
 
 
