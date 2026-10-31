@@ -11,7 +11,6 @@ before every commit. You can also run it by hand: python save_journal.py
 import json
 import os
 import re
-import shutil
 import sys
 from pathlib import Path
 
@@ -40,10 +39,24 @@ def claude_log_folder(hook_input: dict, project: Path) -> Path:
     return Path.home() / ".claude" / "projects" / slug
 
 
+SECRET_PATTERN = re.compile(
+    r"(sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}"
+    r"|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35}|xox[abprs]-[A-Za-z0-9-]{10,}"
+    r"|-----BEGIN [A-Z ]*PRIVATE KEY-----)"
+)
+
+
+def scrub(text: str) -> str:
+    return SECRET_PATTERN.sub("[REDACTED]", text)
+
+
 def copy_if_changed(source: Path, destination: Path) -> int:
-    if destination.exists() and destination.stat().st_size == source.stat().st_size:
+    source_time = source.stat().st_mtime
+    if destination.exists() and destination.stat().st_mtime == source_time:
         return 0
-    shutil.copy2(source, destination)
+    text = source.read_text(encoding="utf-8", errors="replace")
+    destination.write_text(scrub(text), encoding="utf-8")
+    os.utime(destination, (source_time, source_time))
     return 1
 
 
@@ -180,7 +193,8 @@ def write_readable(log_file: Path, agent: str, readable: Path) -> None:
             else:
                 lines += claude_entry(record)
     if len(lines) > 1:
-        (readable / f"{log_file.stem}.md").write_text("\n".join(collapse_repeats(lines)), encoding="utf-8")
+        text = scrub("\n".join(collapse_repeats(lines)))
+        (readable / f"{log_file.stem}.md").write_text(text, encoding="utf-8")
 
 
 def write_all_readable(journal: Path) -> None:
