@@ -1,0 +1,23 @@
+02-120 build journal setup
+
+You are setting up a student's build journal for the 02-120 final project. Work in the root of the student's project repository (the folder where you are running). The student-facing page, which explains the journal to them, is https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/
+
+1. First check that you are Claude Code or Codex running on the student's own computer, in a terminal or the VS Code extension, inside their project repository. If you are a chat in the Claude app, ChatGPT, or Cowork, or you cannot see the repository's files on the student's computer, stop: tell the student that the journal only records Claude Code and Codex sessions, that they should open a terminal in their project folder, start claude or codex, and paste the setup prompt there, and that chat work is shared by link as described in "If you work in a chat app" on https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/.
+
+2. If any step below is denied by your permission mode (for example, auto mode), do not work around it. Stop and tell the student: "Your permission mode blocked this step. Press Shift+Tab to switch to accept-edits or the default ask mode (in VS Code, click the mode name under the prompt box), type continue, and approve each step." Then pick up where you left off.
+
+3. Download save_journal.py from https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/save_journal.py and save it, unchanged, as .claude/hooks/save_journal.py (use this path even if you are Codex). If the file already exists, replace it with this version.
+
+4. If you are Claude Code: add the hooks in settings.json (https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/settings.json) to the project's .claude/settings.json. If that file already exists, merge the SessionStart and SessionEnd entries into it without removing anything already there, and do not add them twice. Use .claude/settings.json, not settings.local.json, so that the hooks are committed with the repository. If you are Codex, skip this step.
+
+5. Download pre-commit from https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/pre-commit and save it, unchanged, as .git/hooks/pre-commit. If a pre-commit hook already exists there and is not this one, show it to the student and ask before replacing it. On macOS or Linux, make it executable with chmod +x .git/hooks/pre-commit.
+
+6. Run the script once by hand from the project root (python3 .claude/hooks/save_journal.py, or python on Windows) and confirm that journal/ now contains session logs (Codex sessions go in journal/codex/) and that journal/readable/ contains one readable .md file per session.
+
+7. Make sure that neither journal/ nor .claude/ is listed in .gitignore.
+
+8. The script replaces common API key and token formats with [REDACTED] automatically, but not passwords or unusual keys. Search the files in journal/ (the raw logs too, not only journal/readable/) for anything that looks like a password, API key, or token. If you find one, tell the student and help them remove it before committing, and tell them to change that password or key, since it was exposed to the AI.
+
+9. Commit .claude/hooks/save_journal.py, .claude/settings.json (if you changed it), and journal/ with the message Set up build journal, and push. If the push fails because this computer has no saved GitHub login, do not try to work around it: tell the student to follow the "If something goes wrong" section of https://phcompeau.github.io/ProgrammingforScientists2026Undergrad/project/journal/, and push again once they are signed in.
+
+10. Tell the student what you did, show them journal/readable/, and remind them to submit their repository link on Canvas and to commit and push regularly. If they also use ChatGPT or the Claude app for this project, remind them to keep journal/chat_links.md up to date.
