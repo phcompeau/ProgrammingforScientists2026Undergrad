@@ -1,0 +1,33 @@
+# Rock-paper-scissors-lizard-Spock
+# 0=Rock  1=Paper  2=Scissors  3=Lizard  4=Spock
+# Rock    beats Scissors(2) and Lizard(3)
+# Paper   beats Rock(0) and Spock(4)
+# Scissors beats Paper(1) and Lizard(3)
+# Lizard  beats Paper(1) and Spock(4)
+# Spock   beats Rock(0) and Scissors(2)
+diffusion,0,1
+diffusion,1,1
+diffusion,2,1
+diffusion,3,1
+diffusion,4,1
+name,0,Rock
+name,1,Paper
+name,2,Scissors
+name,3,Lizard
+name,4,Spock
+color,0,160,160,160
+color,1,76,155,232
+color,2,232,105,76
+color,3,93,191,122
+color,4,184,127,217
+background,18,18,31
+0,2,0,1.0
+0,3,0,1.0
+1,0,1,1.0
+1,4,1,1.0
+2,1,2,1.0
+2,3,2,1.0
+3,1,3,1.0
+3,4,3,1.0
+4,0,4,1.0
+4,2,4,1.0
