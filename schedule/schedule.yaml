@@ -538,6 +538,9 @@ weeks:
             text: "Code along 6.6: Parallel Diffusion with Pool and starmap"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/parallel-diffusion-with-pool-and-starmap-in-python/"
             minutes: 49
+          - kind: after
+            text: "UPGMA Dataset Tour: all eight trees from our UPGMA code, what each one shows, and the commands that build them"
+            url: "upgma.html"
       - date: 2026-11-06
         kind: recitation
         title: "Recitation 7: Stacks and queues"

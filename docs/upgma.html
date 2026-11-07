@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="02-120 Programming for Scientists, Fall 2026: all eight datasets run through our UPGMA code, with the tree R draws for each and why it matters.">
+<title>UPGMA Dataset Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one readable column for projecting; each dataset is a numbered-free entry with a verdict chip and the run's tree in mono. */
+  :root {
+    color-scheme: light;
+    --bg: #F7F8FA; --surface: #FFFFFF; --fg: #171A20; --muted: #6B7280; --line: #E3E6EC;
+    --accent: #1F5FAD;
+    --ok: #1d6b4f; --ok-bg: #dcefe6; --mid: #8a5a00; --mid-bg: #f6ead2; --bad: #B01B2E; --bad-bg: #f7dde0;
+    --font-display: Spectral, Georgia, serif;
+    --font-body: "Source Sans 3", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--font-body);
+    font-size: 1.15rem; line-height: 1.6;
+  }
+  .wrap {
+    max-width: 46rem; margin: 0 auto;
+    padding-block: 3rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; flex-direction: column; gap: 2.5rem;
+  }
+  header { display: flex; flex-direction: column; gap: 0.75rem; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 6vw, 3.4rem);
+    line-height: 1.05; margin: 0; text-wrap: balance;
+  }
+  .lede { margin: 0; color: var(--muted); max-width: 40rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.95rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .chip {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap;
+  }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.mid { color: var(--mid); background: var(--mid-bg); }
+  .chip.bad { color: var(--bad); background: var(--bad-bg); }
+  .list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+  article {
+    display: flex; flex-direction: column; gap: 0.7rem;
+    padding-block: 1.75rem; border-bottom: 1px solid var(--line); min-width: 0;
+  }
+  .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; margin: 0; line-height: 1.2; }
+  .meta { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+  p { margin: 0; }
+  .why { color: var(--fg); }
+  .why strong { color: var(--accent); }
+  .tree {
+    font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.5; color: var(--muted);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 0.6rem 0.8rem; overflow-x: auto; white-space: pre;
+  }
+  .tree b { color: var(--fg); font-weight: 600; }
+  .fig { margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+  .fig img { display: block; width: 100%; height: auto; background: #ffffff; border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem; box-sizing: border-box; }
+  .fig.tall { max-height: 80vh; overflow-y: auto; border: 1px solid var(--line); border-radius: 6px; }
+  .fig.tall img { border: 0; }
+  figcaption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+  footer { color: var(--muted); font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  code { font-family: var(--font-mono); font-size: 0.9em; }
+  .fig img { cursor: zoom-in; }
+  .zoom-hint { color: var(--accent); }
+  .lb { position: fixed; inset: 0; z-index: 50; background: rgba(10, 14, 12, 0.92); display: none; touch-action: none; overflow: hidden; }
+  .lb.open { display: block; }
+  .lb img { position: absolute; left: 0; top: 0; transform-origin: 0 0; background: #ffffff; max-width: none; user-select: none; -webkit-user-drag: none; cursor: grab; }
+  .lb img.dragging { cursor: grabbing; }
+  .lb-bar { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; z-index: 2; }
+  .lb-bar button { font: 600 1.05rem var(--font-body); min-width: 44px; height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid #3a4743; background: #18201d; color: #e4ebe8; cursor: pointer; }
+  .lb-bar button:hover { background: #24302b; }
+  .lb-help { position: absolute; left: 12px; bottom: 12px; right: 12px; color: #c9d4cf; font-size: 0.85rem; z-index: 2; pointer-events: none; }
+  .lb-title { position: absolute; left: 12px; top: 12px; right: 260px; color: #e4ebe8; font-family: var(--font-mono); font-size: 0.85rem; z-index: 2; pointer-events: none; }
+  .back { font-size: 14px; color: var(--accent); }
+  .box { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 4px; }
+  .box h2 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .box ol { margin: 0 0 0.6rem; padding-left: 22px; }
+  .box pre { margin: 0.4rem 0 0.8rem; padding: 10px 12px; background: #F1F3F7; border: 1px solid var(--line); border-radius: 4px; font-family: var(--font-mono); font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a class="back" href="./">&larr; 02-120 semester map</a>
+    <div class="eyebrow">02-120 · Chapter 5 · Trees</div>
+    <h1>Eight trees from one algorithm</h1>
+    <p class="lede">Every dataset in <code>Starter Code/upgma/Data</code>, run through UPGMA. UPGMA assumes a molecular clock: every lineage mutates at the same rate. Watch where that assumption holds and where it breaks.</p>
+    <div class="legend">
+      <span><span class="chip ok">Nails it</span> matches the accepted tree</span>
+      <span><span class="chip mid">Mostly</span> right shape, some misplacements</span>
+      <span><span class="chip bad">Misses</span> gets the famous answer wrong</span>
+    </div>
+  </header>
+
+  <div class="list">
+    <article>
+      <div class="head"><h2>Great Apes</h2><span class="chip ok">Nails it</span></div>
+      <div class="meta">9 mitochondrial genomes · Jukes-Cantor distances</div>
+      <p class="why">Human, chimpanzee, and bonobo come out together, then gorilla, orangutan, gibbon, and rhesus macaque, with mouse and zebra finch as outgroups. Every split lands where primatologists put it, including chimp and bonobo as each other's closest relatives. <strong>Why we care:</strong> this is the sanity check. Closely related species with similar mutation rates are exactly the case UPGMA was built for, so if your code gets this one wrong, the bug is in your code, not the biology.</p>
+          <figure class="fig"><img src="gallery/upgma/great_apes.png" data-full="gallery/upgma/full/great_apes.png" alt="UPGMA tree of the Great Apes dataset" loading="lazy"><figcaption>great_apes.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>Giant Panda Bears</h2><span class="chip ok">Nails it</span></div>
+      <div class="meta">10 mitochondrial genomes · Jukes-Cantor distances</div>
+      <p class="why">For a century, people argued over whether the giant panda was a bear, a raccoon relative, or something of its own. Our tree puts the giant panda inside the bears as the first branch to split off, while the red panda, despite the shared name and bamboo diet, groups with the raccoon and ferret. <strong>Why we care:</strong> two animals that look and eat alike turn out to be distant cousins. Sequence data settles a question that anatomy couldn't, and a few dozen lines of Python reproduce the answer.</p>
+          <figure class="fig"><img src="gallery/upgma/giant_panda_bears.png" data-full="gallery/upgma/full/giant_panda_bears.png" alt="UPGMA tree of bears, pandas, raccoon and ferret" loading="lazy"><figcaption>giant_panda_bears.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>HIV Subtypes</h2><span class="chip ok">Nails it</span></div>
+      <div class="meta">13 gag protein sequences · edit distances</div>
+      <p class="why">HIV-2 clusters with SIV from sooty mangabeys. HIV-1 group M (the pandemic strains, subtypes A through G) forms its own cluster, group N sits next to chimpanzee SIV, and group O sits next to gorilla SIV. <strong>Why we care:</strong> the tree shows that HIV did not jump into humans once. It crossed from other primates several separate times, and each human group sits next to the animal virus it came from. This is how epidemiologists trace where an outbreak came from.</p>
+          <figure class="fig"><img src="gallery/upgma/hiv_subtypes.png" data-full="gallery/upgma/full/hiv_subtypes.png" alt="UPGMA tree of HIV-1, HIV-2 and primate SIV strains" loading="lazy"><figcaption>hiv_subtypes.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>Hemoglobin (HBA1)</h2><span class="chip mid">Mostly</span></div>
+      <div class="meta">100 animals · hemoglobin alpha protein · edit distances</div>
+      <p class="why">The biggest animal tree we have. Fish group with fish, frogs with the newt, and the geese, swans, and ducks sort into clean clusters. Among mammals, the echidna (an egg-laying monotreme) branches first, and the primates nest exactly right: human beside chimp and bonobo, then gibbon, then the two orangutans. A few placements wander, such as the brown rat near the base of the mammals. <strong>Why we care:</strong> one protein, about 140 amino acids long, recovers most of the vertebrate family tree. It also shows what scale buys you: with 100 species, a few odd placements stand out against an overall pattern that is clearly right.</p>
+          <figure class="fig tall"><img src="gallery/upgma/hemoglobin.png" data-full="gallery/upgma/full/hemoglobin.png" alt="UPGMA tree of 100 animals from hemoglobin alpha" loading="lazy"><figcaption>hemoglobin.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>SARS-CoV-2 in the UK</h2><span class="chip mid">Mostly</span></div>
+      <div class="meta">261 spike proteins, Nov 2020 to Mar 2024 · edit distances</div>
+      <p class="why">This tree has a hidden time axis. Samples taken far apart in time should land far apart in the tree, and they mostly do: tree distance and the gap between sampling dates correlate at about 0.56 (Spearman). Cutting the tree into a few groups gives an early cluster (Nov 2020 to Dec 2021), a tight cluster from Dec 2021 to Feb 2022, around when Omicron arrived, a large 2022 to 2024 cluster, and a separate late-2023 to 2024 group. Two samples from Feb 2022 sit off on their own. <strong>Why we care:</strong> this is evolution we lived through, measured in months instead of millions of years. The waves of variants are visible in the tree, and so is the noise: a single odd sample can be a new variant or a sequencing error.</p>
+          <figure class="fig tall"><img src="gallery/upgma/SARS_spike.png" data-full="gallery/upgma/full/SARS_spike.png" alt="UPGMA tree of 261 UK SARS-CoV-2 spike proteins, colored by year" loading="lazy"><figcaption>SARS_spike.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>Human mtDNA Haplogroups</h2><span class="chip mid">Mostly</span></div>
+      <div class="meta">25 human mitochondrial genomes · coding region · Jukes-Cantor distances</div>
+      <p class="why">The deepest split in the tree separates the L0 lineages (San and Khoe-San of southern Africa), then L1 (Yoruba, Biaka), then L2, and every non-African lineage sits nested inside the African diversity. That is the out-of-Africa story, recovered from DNA alone. The fine structure is messier: the Native American haplogroups A, B, C, and D do not cluster together. <strong>Why we care:</strong> these genomes differ by less than half a percent, so there is very little signal to work with. The root of human history comes through clearly, but the recent branches blur. That shows the limit of what this data can say, which matters as much as the result itself.</p>
+          <figure class="fig tall"><img src="gallery/upgma/mitochondrial_haplogroups.png" data-full="gallery/upgma/full/mitochondrial_haplogroups.png" alt="UPGMA tree of 25 human mitochondrial haplogroups" loading="lazy"><figcaption>mitochondrial_haplogroups.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>Cytochrome C</h2><span class="chip bad">Misses</span></div>
+      <div class="meta">16 eukaryotes · cytochrome c protein · edit distances</div>
+      <p class="why">This is the textbook molecular-clock protein, and yeast, bread mold, and Arabidopsis do split off as the outgroup they should be. But human and chimp land away from the other primates. Gorilla, orangutan, and rhesus form their own group outside all the other animals, and chicken lands among the mammals. Look at the matrix: human is 28 edits from gorilla but only 9 from dog. That points to a problem with those primate sequences, not with UPGMA. <strong>Why we care:</strong> garbage in, garbage out. When a tree looks wrong, the first suspect is the data. Ask the class: how would you check whether those sequences were the right protein?</p>
+      <div class="tree">human→chimp 0 · human→dog 9 · <b>human→gorilla 28</b> · gorilla→orangutan 5</div>
+          <figure class="fig"><img src="gallery/upgma/cytochrome_c.png" data-full="gallery/upgma/full/cytochrome_c.png" alt="UPGMA tree of 16 eukaryotes from cytochrome c" loading="lazy"><figcaption>cytochrome_c.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+
+    <article>
+      <div class="head"><h2>Cetaceans</h2><span class="chip bad">Misses</span></div>
+      <div class="meta">12 mitochondrial genomes · Jukes-Cantor distances</div>
+      <p class="why">The famous result is that whales evolved from inside the even-toed hoofed mammals, and the hippo is the whale's closest living relative. UPGMA misses it. The whales and dolphins cluster together, but the hippo goes with the cow and giraffe, and the pig lands with the horse and rhino, which are odd-toed animals from a different order. <strong>Why we care:</strong> this is what it looks like when the molecular clock assumption fails. Lineages that mutated at different rates get pulled into the wrong places. It is the best motivation in this folder for a method that does not assume a clock: run neighbor-joining on the same matrix (right) and the hippo lands beside the whales.</p>
+          <figure class="fig"><img src="gallery/upgma/cetaceans_upgma_vs_nj.png" data-full="gallery/upgma/full/cetaceans_upgma_vs_nj.png" alt="UPGMA tree beside the neighbor-joining tree for the cetacean dataset" loading="lazy"><figcaption>cetaceans_upgma_vs_nj.nwk drawn with visualize_trees.R · <span class="zoom-hint">click to zoom</span></figcaption></figure>
+    </article>
+  </div>
+
+  <section class="box">
+    <h2>Running them yourself</h2>
+    <ol>
+      <li>Open a terminal in your <code>python/src/upgma</code> folder (your finished UPGMA code, with the <code>Data</code> folder from <code>Starter Code/upgma</code>).</li>
+      <li>Build one tree, for example the Great Apes (use <code>python</code> instead of <code>python3</code> on Windows):</li>
+    </ol>
+    <pre>python3 main.py Data/Great-Apes/great_apes.mtx Output</pre>
+    <p>Or build all eight at once on a Mac:</p>
+    <pre>for f in Data/*/*.mtx; do python3 main.py "$f" Output; done</pre>
+    <p>Each run writes a Newick file to <code>Output/</code>. To draw the trees, open <code>visualize_trees.R</code> in RStudio and click <strong>Source</strong>; the pictures appear in <code>Images/</code>. The script draws every dataset, so build all eight trees first, or comment out the calls at the bottom of the script for the trees you have not built. Cytochrome C is commented out by default; uncomment <code>CytochromeC()</code> to draw it.</p>
+  </section>
+
+  <footer>
+    <p>Trees computed with the course's finished UPGMA code (<code>Finished Code/python/src/upgma</code>) on each <code>.mtx</code> file, then drawn with <code>visualize_trees.R</code> (the cetacean figure is the script's UPGMA vs neighbor-joining comparison). Your implementation may break ties differently on the edit-distance datasets.</p>
+  </footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Zoomed tree">
+  <div class="lb-title" id="lb-title"></div>
+  <div class="lb-bar">
+    <button type="button" id="lb-out" aria-label="Zoom out">&minus;</button>
+    <button type="button" id="lb-fit" aria-label="Fit to screen">Fit</button>
+    <button type="button" id="lb-in" aria-label="Zoom in">+</button>
+    <button type="button" id="lb-close" aria-label="Close">&times;</button>
+  </div>
+  <img id="lb-img" alt="">
+  <div class="lb-help">Scroll or pinch to zoom · drag to pan · double-click to zoom in · 0 fits · Esc closes</div>
+</div>
+<script>
+(function () {
+  var lb = document.getElementById("lb");
+  var img = document.getElementById("lb-img");
+  var title = document.getElementById("lb-title");
+  var s = 1, x = 0, y = 0, fitScale = 1;
+  var pointers = new Map();
+  var lastMid = null, lastDist = 0;
+
+  function apply() {
+    img.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + ")";
+  }
+  function fit() {
+    var w = img.naturalWidth, h = img.naturalHeight;
+    if (!w || !h) { return; }
+    fitScale = Math.min(window.innerWidth / w, (window.innerHeight - 110) / h) * 0.96;
+    s = fitScale;
+    x = (window.innerWidth - w * s) / 2;
+    y = 60 + (window.innerHeight - 110 - h * s) / 2;
+    apply();
+  }
+  function zoomAt(cx, cy, factor) {
+    var ns = Math.min(Math.max(s * factor, fitScale * 0.5), 4);
+    x = cx - (cx - x) * ns / s;
+    y = cy - (cy - y) * ns / s;
+    s = ns;
+    apply();
+  }
+  function open(fig) {
+    var small = fig.querySelector("img");
+    var name = small.getAttribute("src");
+    title.textContent = fig.querySelector("figcaption").firstChild.textContent.replace(" drawn with visualize_trees.R · ", "");
+    img.alt = small.alt;
+    img.onload = fit;
+    img.src = small.getAttribute("data-full");
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+    if (img.complete && img.naturalWidth) { fit(); }
+  }
+  function close() {
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+    pointers.clear();
+  }
+
+  document.querySelectorAll(".fig").forEach(function (fig) {
+    fig.querySelector("img").addEventListener("click", function () { open(fig); });
+  });
+  document.getElementById("lb-close").addEventListener("click", close);
+  document.getElementById("lb-fit").addEventListener("click", fit);
+  document.getElementById("lb-in").addEventListener("click", function () { zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1.5); });
+  document.getElementById("lb-out").addEventListener("click", function () { zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1 / 1.5); });
+
+  lb.addEventListener("wheel", function (e) {
+    e.preventDefault();
+    zoomAt(e.clientX, e.clientY, Math.exp(-e.deltaY * 0.0015));
+  }, { passive: false });
+  img.addEventListener("dblclick", function (e) { zoomAt(e.clientX, e.clientY, 2); });
+
+  img.addEventListener("pointerdown", function (e) {
+    img.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    img.classList.add("dragging");
+    lastMid = null;
+  });
+  img.addEventListener("pointermove", function (e) {
+    if (!pointers.has(e.pointerId)) { return; }
+    var prev = pointers.get(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 1) {
+      x += e.clientX - prev.x;
+      y += e.clientY - prev.y;
+      apply();
+    } else if (pointers.size === 2) {
+      var pts = Array.from(pointers.values());
+      var mid = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 };
+      var dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      if (lastMid) {
+        x += mid.x - lastMid.x;
+        y += mid.y - lastMid.y;
+        zoomAt(mid.x, mid.y, dist / lastDist);
+      }
+      lastMid = mid;
+      lastDist = dist;
+    }
+  });
+  function release(e) {
+    pointers.delete(e.pointerId);
+    lastMid = null;
+    if (pointers.size === 0) { img.classList.remove("dragging"); }
+  }
+  img.addEventListener("pointerup", release);
+  img.addEventListener("pointercancel", release);
+
+  lb.addEventListener("click", function (e) { if (e.target === lb) { close(); } });
+  document.addEventListener("keydown", function (e) {
+    if (!lb.classList.contains("open")) { return; }
+    if (e.key === "Escape") { close(); }
+    else if (e.key === "+" || e.key === "=") { zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1.5); }
+    else if (e.key === "-") { zoomAt(window.innerWidth / 2, window.innerHeight / 2, 1 / 1.5); }
+    else if (e.key === "0") { fit(); }
+  });
+  window.addEventListener("resize", function () { if (lb.classList.contains("open")) { fit(); } });
+})();
+</script>
+</body>
+</html>
