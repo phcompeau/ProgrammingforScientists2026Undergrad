@@ -1,0 +1,24 @@
+# Food chain (3 trophic levels)
+# Species 0 = Grass    -- births spontaneously (sun + soil)
+# Species 1 = Rabbits  -- eat grass on contact
+# Species 2 = Wolves   -- eat rabbits on contact, die naturally
+#
+# Linear energy flow (different topology from RPS-style cycles):
+#   grass -> rabbits -> wolves
+#
+# Trophic pyramid: birth rate replenishes the base, death rate trims the top.
+# Stochastic LV-style oscillations expected (neutral-stability spirals).
+diffusion,0,3
+diffusion,1,3
+diffusion,2,3
+name,0,Grass
+name,1,Rabbits
+name,2,Wolves
+color,0,93,191,122
+color,1,201,168,124
+color,2,112,112,112
+background,18,18,31
+birth,0,0.020
+death,2,0.025
+1,0,1,0.1
+2,1,2,0.1

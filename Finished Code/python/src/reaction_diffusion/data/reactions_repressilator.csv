@@ -1,0 +1,26 @@
+# Repressilator (Elowitz & Leibler, 2000)
+# A synthetic genetic oscillator with three mutually repressing genes.
+#
+# Species 0 = lacI  -- represses cI
+# Species 1 = tetR  -- represses lacI
+# Species 2 = cI    -- represses tetR
+#
+# Cyclic repression: lacI -> cI -> tetR -> lacI (each represses the next).
+# In particle terms: when repressor R contacts target T, T is converted
+# to R. This is topologically identical to Rock-Paper-Scissors but
+# grounded in the biological circuit.
+#
+# Low speed so spatial domains persist and oscillation fronts are visible.
+diffusion,0,1
+diffusion,1,1
+diffusion,2,1
+name,0,lacI
+name,1,tetR
+name,2,cI
+color,0,76,207,207
+color,1,232,196,76
+color,2,232,76,138
+background,18,18,31
+0,2,0,0.15
+1,0,1,0.15
+2,1,2,0.15

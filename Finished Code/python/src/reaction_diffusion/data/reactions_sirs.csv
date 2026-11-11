@@ -1,0 +1,28 @@
+# SIRS Epidemic Model
+# Species 0 = Susceptible (S)  -- can be infected on contact with I
+# Species 1 = Infected (I)     -- spontaneously recovers to R
+# Species 2 = Recovered (R)    -- spontaneously loses immunity back to S
+#
+# Infection: I contacts S -> S becomes I
+# Recovery:  I -> R spontaneously (gamma)
+# Waning:    R -> S spontaneously (delta)
+#
+# R0 = conversion_rate * density_factor * N_S / gamma
+# Tune: want R0 > 1 for endemic oscillations, not too large or epidemic burns out fast.
+# density_factor = pi*28^2 / (800*600) ~ 0.00513
+# With N_S~200, conversion_rate=0.1: R0 ~ 0.1 * 0.00513 * 200 / 0.05 ~ 2.1
+#
+# Low speed preserves spatial structure so epidemic waves are visible.
+diffusion,0,1
+diffusion,1,1
+diffusion,2,1
+name,0,Susceptible
+name,1,Infected
+name,2,Recovered
+color,0,76,155,232
+color,1,232,105,76
+color,2,93,191,122
+background,18,18,31
+1,0,1,0.1
+spontaneous,1,2,0.05
+spontaneous,2,0,0.05

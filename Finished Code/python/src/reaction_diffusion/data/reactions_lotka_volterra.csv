@@ -1,0 +1,22 @@
+# Lotka-Volterra predator-prey (2 species)
+# Species 0 = prey (rabbits)
+# Species 1 = predator (foxes)
+#
+# Prey reproduce spontaneously (birth).
+# Predator eats prey on contact: prey -> predator.
+# Predator dies spontaneously (death).
+#
+# Rates tuned for equilibrium near N_eq of each species in an 800x600 box (activation_range=28):
+#   density factor = pi*28^2 / (800*600) ~ 0.00513
+#   equilibrium: birth_rate = death_rate = N_eq * conversion_rate * density_factor
+#   N_eq=50: birth_rate = death_rate = 50 * 0.1 * 0.00513 ~ 0.026
+diffusion,0,1
+diffusion,1,1
+name,0,Prey
+name,1,Predator
+color,0,93,191,122
+color,1,232,105,76
+background,18,18,31
+birth,0,0.026
+death,1,0.026
+1,0,1,0.1

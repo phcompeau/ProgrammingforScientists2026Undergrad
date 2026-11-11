@@ -1,0 +1,19 @@
+# Rock-Paper-Scissors (3 species)
+# 0 = Rock     beats Scissors
+# 1 = Paper    beats Rock
+# 2 = Scissors beats Paper
+# Cyclic dominance: 0 -> 2 -> 1 -> 0
+# Low speed so spatial domains persist and spiral waves can form.
+diffusion,0,1
+diffusion,1,1
+diffusion,2,1
+name,0,Rock
+name,1,Paper
+name,2,Scissors
+color,0,160,160,160
+color,1,76,155,232
+color,2,232,105,76
+background,18,18,31
+0,2,0,1.0
+1,0,1,1.0
+2,1,2,1.0
