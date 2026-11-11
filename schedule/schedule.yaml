@@ -566,6 +566,15 @@ weeks:
             text: "Code along 6.8: Reaction-Diffusion: Applying Reactions"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/reaction-diffusion-applying-reactions-in-python/"
             minutes: 34
+      - date: 2026-11-12
+        kind: lecture
+        title: "Parallel IV"
+        detail: "We are about a class behind: we finish the reaction-diffusion simulator, then tour the patterns that predators, epidemics, and rock paper scissors produce."
+        prepare:
+          - kind: in-class
+            text: "Code along 6.8: Reaction-Diffusion: Applying Reactions (finishing what we started Tuesday)"
+            url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/reaction-diffusion-applying-reactions-in-python/"
+            minutes: 34
           - kind: in-class
             text: "Code along 6.11: A Tour of Reaction Systems"
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/a-tour-of-reaction-systems/"
@@ -580,7 +589,20 @@ weeks:
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/parallel-reaction-diffusion-processing-strips-in-python/"
             minutes: 28
             note: "New material, not covered in class. Needed for HW6."
-      - date: 2026-11-12
+      - date: 2026-11-13
+        kind: no-class
+        title: "No recitation: AI4Bio symposium"
+
+  - title: "Assembly Language: Loops, Functions, and GCD"
+    label: "Week 11"
+    start: 2026-11-16
+    end: 2026-11-20
+    days:
+      - date: 2026-11-16
+        kind: deadline
+        due:
+          - text: "HW6 due (parallel sandpiles)"
+      - date: 2026-11-17
         kind: lecture
         title: "Assembly I"
         detail: "Come in knowing binary and hexadecimal; we meet X-Toy, a virtual computer, and its bitwise operations."
@@ -589,7 +611,7 @@ weeks:
             text: "Code along 7.1: The CPU, Memory, and Binary"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/the-cpu-memory-and-binary/"
             minutes: 29
-            note: "7.1 and 7.2 are one continuous lesson on the math of binary and hexadecimal, and the only prep for the rest of the course; Wednesday's daily challenge practices it. Every later code along we build together in class."
+            note: "Finish by Monday, November 16. 7.1 and 7.2 are one continuous lesson on the math of binary and hexadecimal, and the only prep for the rest of the course; the 11/11 and 11/13 daily challenges practice it and are both due Monday 11/16. Every later code along we build together in class."
           - kind: required
             text: "Code along 7.2: Hexadecimal: A Shorthand for Binary"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/hexadecimal-a-shorthand-for-binary/"
@@ -605,20 +627,7 @@ weeks:
             text: "Code along 7.4: Bitwise Operations in X-Toy"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/bitwise-operations-in-x-toy/"
             minutes: 20
-      - date: 2026-11-13
-        kind: no-class
-        title: "No recitation: AI4Bio symposium"
-
-  - title: "Assembly Language: Loops, Functions, and GCD"
-    label: "Week 11"
-    start: 2026-11-16
-    end: 2026-11-20
-    days:
-      - date: 2026-11-16
-        kind: deadline
-        due:
-          - text: "HW6 due (parallel sandpiles)"
-      - date: 2026-11-17
+      - date: 2026-11-19
         kind: lecture
         title: "Assembly II"
         detail: "Negative numbers, branching, and our first loops and functions in X-Toy. Nothing new to prepare."
@@ -636,20 +645,6 @@ weeks:
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/loops-and-functions-in-x-toy/"
             minutes: 34
             note: "Needed for HW7."
-      - date: 2026-11-19
-        kind: lecture
-        title: "Assembly III"
-        detail: "Subroutines in X-Toy: computing a GCD the slow way. Nothing new to prepare."
-        prepare:
-          - kind: in-class
-            text: "Code along 7.8: The Trivial GCD Algorithm in X-Toy"
-            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/trivial-gcd-in-x-toy/"
-            minutes: 36
-          - kind: in-class
-            text: "Code along 7.9: Subroutines in X-Toy: Running Trivial GCD"
-            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/subroutines-for-trivial-gcd-in-x-toy/"
-            minutes: 32
-            note: "Needed for HW7."
       - date: 2026-11-20
         kind: recitation
         title: "Recitation 8: Depth-first search and hard problems"
@@ -666,18 +661,27 @@ weeks:
     days:
       - date: 2026-11-24
         kind: lecture
-        title: "Assembly IV: The limits of the machine"
-        detail: "Euclid's beautiful speedup for GCD, paradoxes of self-reference, then Turing machines and the halting problem: what no computer can ever do. Nothing new to prepare."
+        title: "Assembly III"
+        detail: "Subroutines in X-Toy: computing a GCD the slow way. Nothing new to prepare. Euclid's speedup and the limits of the machine (7.10-7.12) follow if time allows."
         prepare:
           - kind: in-class
+            text: "Code along 7.8: The Trivial GCD Algorithm in X-Toy"
+            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/trivial-gcd-in-x-toy/"
+            minutes: 36
+          - kind: in-class
+            text: "Code along 7.9: Subroutines in X-Toy: Running Trivial GCD"
+            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/subroutines-for-trivial-gcd-in-x-toy/"
+            minutes: 32
+            note: "Needed for HW7."
+          - kind: after
             text: "Code along 7.10: Euclid's GCD Algorithm in X-Toy: A Beautiful Speedup"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/euclids-gcd-algorithm-in-x-toy/"
             minutes: 18
-          - kind: in-class
+          - kind: after
             text: "Code along 7.11: The Limits of the Machine: Self-Reference and Programs That Rewrite Themselves"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/self-reference-and-programs-that-rewrite-themselves/"
             minutes: 27
-          - kind: in-class
+          - kind: after
             text: "Code along 7.12: Turing Machines and the Halting Problem"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/turing-machines-and-the-halting-problem/"
             minutes: 31
