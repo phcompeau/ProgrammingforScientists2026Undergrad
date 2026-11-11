@@ -598,10 +598,6 @@ weeks:
     start: 2026-11-16
     end: 2026-11-20
     days:
-      - date: 2026-11-16
-        kind: deadline
-        due:
-          - text: "HW6 due (parallel sandpiles)"
       - date: 2026-11-17
         kind: lecture
         title: "Assembly I"
@@ -650,6 +646,7 @@ weeks:
         title: "Recitation 8: Depth-first search and hard problems"
         detail: "Backtracking for the knight's tour, and why some graph questions may never be easy."
         due:
+          - text: "HW6 due (parallel sandpiles)"
           - text: "First version of your project app live on the web"
             url: "project/Project_Description_F26.pdf"
 
