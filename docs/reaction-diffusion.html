@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="02-120 Programming for Scientists, Fall 2026: every reaction system from our parallel reaction-diffusion simulator, with the command that runs each one and its serial and parallel run times.">
+<title>Reaction Systems Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one readable column for projecting. A timing table up top, then one entry per reaction system: commands with measured times, then a snapshot (click to play) beside its counts plot. */
+  :root {
+    color-scheme: light;
+    --bg: #F7F8FA; --surface: #FFFFFF; --fg: #171A20; --muted: #6B7280; --line: #E3E6EC;
+    --accent: #1F5FAD;
+    --ok: #1d6b4f; --ok-bg: #dcefe6; --mid: #8a5a00; --mid-bg: #f6ead2; --bad: #B01B2E; --bad-bg: #f7dde0;
+    --code-bg: #F1F3F7; --code-fg: #171A20; --code-line: #CDD2DB;
+    --font-display: Spectral, Georgia, serif;
+    --font-body: "Source Sans 3", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a { color: var(--accent); }
+  .back { font-size: 14px; }
+  .box { padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--bad); border-radius: 4px; display: flex; flex-direction: column; gap: 0.5rem; font-size: 1.02rem; }
+  .box h2 { font-size: 1.3rem; }
+  .box ol { margin: 0; padding-left: 22px; }
+  .play { position: relative; display: block; }
+  .play::after { content: "\25B6  Play"; position: absolute; left: 10px; bottom: 10px; font: 500 0.75rem var(--font-mono); color: #ffffff; background: rgba(10, 12, 16, 0.78); padding: 0.25rem 0.6rem; border-radius: 999px; }
+  .lb video { max-width: 100%; max-height: 100%; background: #000000; border-radius: 6px; cursor: default; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--font-body);
+    font-size: 1.15rem; line-height: 1.6;
+  }
+  .wrap {
+    max-width: 54rem; margin: 0 auto;
+    padding-block: 3rem 4rem;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; flex-direction: column; gap: 2.5rem;
+  }
+  header { display: flex; flex-direction: column; gap: 0.75rem; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 600; font-size: clamp(2.2rem, 6vw, 3.2rem);
+    line-height: 1.05; margin: 0; text-wrap: balance;
+  }
+  .lede { margin: 0; color: var(--muted); max-width: 44rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.95rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .chip {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap;
+  }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.mid { color: var(--mid); background: var(--mid-bg); }
+  .chip.bad { color: var(--bad); background: var(--bad-bg); }
+
+  section.summary { display: flex; flex-direction: column; gap: 0.9rem; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; margin: 0; line-height: 1.2; text-wrap: balance; }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.5rem 0.75rem; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  thead th { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  th[scope="row"], thead th:first-child { text-align: left; }
+  th[scope="row"] { font-weight: 400; }
+  td.sp { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; }
+  td.sp b { min-width: 3.2rem; color: var(--accent); }
+  .bar { display: inline-block; width: 6rem; height: 0.5rem; background: var(--ok-bg); border-radius: 999px; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+  .small { font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+  .list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+  article {
+    display: flex; flex-direction: column; gap: 0.9rem;
+    padding-block: 1.75rem; border-bottom: 1px solid var(--line); min-width: 0;
+  }
+  .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; }
+  .meta { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+  p { margin: 0; }
+  .why strong { color: var(--accent); }
+  .ask { font-size: 1rem; color: var(--mid); background: var(--mid-bg); border-radius: 6px; padding: 0.6rem 0.8rem; }
+  .ask b { font-weight: 700; }
+  .rules { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.15rem; font-size: 1.02rem; }
+
+  .runs { display: flex; flex-direction: column; gap: 0.8rem; }
+  .run { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+  .cmd {
+    display: flex; align-items: stretch; background: var(--code-bg); border: 1px solid var(--code-line);
+    border-radius: 6px; min-width: 0;
+  }
+  .cmd code {
+    flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; color: var(--code-fg);
+    font-family: var(--font-mono); font-size: 0.82rem; padding: 0.6rem 0.8rem;
+  }
+  .copy {
+    font: 600 0.75rem var(--font-mono); letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--code-fg); background: transparent; border: 0; border-left: 1px solid var(--code-line);
+    padding: 0 0.9rem; cursor: pointer; border-radius: 0 6px 6px 0; min-width: 4.6rem;
+  }
+  .copy:hover { color: var(--accent); }
+  .copy:focus-visible, .lb-bar button:focus-visible, .fig img:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .times { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 1.1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .times b { color: var(--fg); font-weight: 600; }
+  .runnote { font-size: 0.95rem; color: var(--muted); }
+
+  .figs { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 0.9rem; align-items: start; }
+  .figs.one { grid-template-columns: minmax(0, 22rem); }
+  @media (max-width: 640px) { .figs { grid-template-columns: minmax(0, 1fr); } }
+  .fig { margin: 0; display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+  .fig img { display: block; width: 100%; height: auto; background: #ffffff; border: 1px solid var(--line); border-radius: 6px; box-sizing: border-box; cursor: zoom-in; }
+  figcaption { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.5; color: var(--muted); }
+  footer { color: var(--muted); font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  code { font-family: var(--font-mono); font-size: 0.9em; }
+
+  .lb { position: fixed; inset: 0; z-index: 50; background: rgba(10, 14, 12, 0.94); display: none; align-items: center; justify-content: center; padding: 60px 16px 16px; box-sizing: border-box; cursor: zoom-out; }
+  .lb.open { display: flex; }
+  .lb img { max-width: 100%; max-height: 100%; background: #ffffff; border-radius: 6px; }
+  .lb-bar { position: absolute; top: calc(12px + env(safe-area-inset-top, 0px)); right: calc(12px + env(safe-area-inset-right, 0px)); }
+  .lb-bar button { font: 600 1.05rem var(--font-body); min-width: 44px; height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid #3a4743; background: #18201d; color: #e4ebe8; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="./">&larr; 02-120 semester map</a>
+    <div class="eyebrow">02-120 · Chapter 6 · Parallel programming</div>
+    <h1>Eight systems from one simulator</h1>
+    <p class="lede">Every reaction file in <code>reaction_diffusion/data</code>, run through the simulator we built. Each entry has the command to paste, how long the serial and parallel simulations took on a 10-core laptop, and a video of the run. Changing the system means writing a new CSV file, never new code.</p>
+    <div class="legend">
+      <span><span class="chip ok">8x and up</span> parallel pays off</span>
+      <span><span class="chip mid">3x to 8x</span> some gain</span>
+      <span><span class="chip bad">Under 3x</span> too little work to split</span>
+    </div>
+  </header>
+
+  <section class="box">
+    <h2>Running one yourself</h2>
+    <ol>
+      <li>Open a terminal in your <code>python/src/reaction_diffusion</code> folder.</li>
+      <li>Copy a command from below and run it (use <code>python</code> instead of <code>python3</code> on Windows).</li>
+      <li>Your animation and counts plot appear in a subfolder of <code>output/</code> named after the reaction file.</li>
+    </ol>
+    <p>The arguments are, in order: how to place the particles (<code>random</code> scatters every species across the box, and <code>clustered</code> gives each species its own vertical band), the reaction file, the number of particles of each species, the width and height of the box, and the number of steps. Your pictures and times will differ from ours, because the simulation is random.</p>
+  </section>
+
+  <section class="summary">
+    <h2>Serial versus parallel, every run</h2>
+    <p class="small">Simulation time only (no rendering) on an Apple M2 Pro with 10 processes, one run each, so treat every number as rough. Speedup grows with the number of particles, because checking every pair of particles for reactions is the work that gets split across strips.</p>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Demo</th><th scope="col">Particles at start</th><th scope="col">Steps</th><th scope="col">Serial</th><th scope="col">Parallel</th><th scope="col">Speedup</th></tr></thead><tbody><tr><th scope="row">Lotka-Volterra, 50 steps</th><td>1,000</td><td>50</td><td>1.0 s</td><td>0.2 s</td><td class="sp"><span class="bar"><span style="width:10.8%"></span></span><b>4.3x</b></td></tr>
+<tr><th scope="row">Lotka-Volterra, 250 steps</th><td>1,000</td><td>250</td><td>2.7 s</td><td>0.3 s</td><td class="sp"><span class="bar"><span style="width:21.3%"></span></span><b>8.5x</b></td></tr>
+<tr><th scope="row">Lotka-Volterra, 1,500 steps</th><td>1,000</td><td>1,500</td><td>23 s</td><td>1.6 s</td><td class="sp"><span class="bar"><span style="width:35.7%"></span></span><b>14x</b></td></tr>
+<tr><th scope="row">Lotka-Volterra, 4,500 steps</th><td>1,000</td><td>4,500</td><td>1 min 03 s</td><td>5.5 s</td><td class="sp"><span class="bar"><span style="width:28.7%"></span></span><b>11x</b></td></tr>
+<tr><th scope="row">Gause competition</th><td>1,500</td><td>4,500</td><td>44 s</td><td>3.8 s</td><td class="sp"><span class="bar"><span style="width:29.3%"></span></span><b>12x</b></td></tr>
+<tr><th scope="row">SIRS epidemic</th><td>1,500</td><td>4,500</td><td>2 min 50 s</td><td>9.2 s</td><td class="sp"><span class="bar"><span style="width:46.7%"></span></span><b>19x</b></td></tr>
+<tr><th scope="row">Food chain</th><td>300</td><td>2,000</td><td>4.0 s</td><td>0.7 s</td><td class="sp"><span class="bar"><span style="width:13.9%"></span></span><b>5.5x</b></td></tr>
+<tr><th scope="row">Repressilator, 500 per species</th><td>1,500</td><td>4,500</td><td>4 min 46 s</td><td>13 s</td><td class="sp"><span class="bar"><span style="width:57.1%"></span></span><b>23x</b></td></tr>
+<tr><th scope="row">Repressilator, 1,500 per species</th><td>4,500</td><td>1,000</td><td>9 min 38 s</td><td>17 s</td><td class="sp"><span class="bar"><span style="width:87.1%"></span></span><b>35x</b></td></tr>
+<tr><th scope="row">Repressilator, 4,500 per species</th><td>13,500</td><td>1,000</td><td>~77 min 59 s</td><td>2 min 09 s</td><td class="sp"><span class="bar"><span style="width:91.1%"></span></span><b>36x</b></td></tr>
+<tr><th scope="row">Rock-paper-scissors</th><td>4,500</td><td>1,000</td><td>3 min 00 s</td><td>16 s</td><td class="sp"><span class="bar"><span style="width:27.6%"></span></span><b>11x</b></td></tr>
+<tr><th scope="row">Rock-paper-scissors, bands</th><td>1,500</td><td>1,000</td><td>58 s</td><td>2.5 s</td><td class="sp"><span class="bar"><span style="width:58.9%"></span></span><b>23x</b></td></tr>
+<tr><th scope="row">Lizard-Spock, bands</th><td>7,500</td><td>1,000</td><td>~26 min 34 s</td><td>40 s</td><td class="sp"><span class="bar"><span style="width:100.0%"></span></span><b>40x</b></td></tr>
+<tr><th scope="row">Lizard-Spock, scattered</th><td>7,500</td><td>1,000</td><td>25 min 09 s</td><td>46 s</td><td class="sp"><span class="bar"><span style="width:82.0%"></span></span><b>33x</b></td></tr>
+<tr><th scope="row">Gray-Scott</th><td>1,550</td><td>4,000</td><td>1 min 41 s</td><td>7.3 s</td><td class="sp"><span class="bar"><span style="width:34.9%"></span></span><b>14x</b></td></tr></tbody></table></div>
+    <p class="small">A <code>~</code> marks a serial time measured on a shorter run and scaled up to the full step count, because the full serial run would take too long to wait for. In systems with births and deaths, the run time also depends on how large the populations happen to grow, so two runs of the same command can differ a lot.</p>
+  </section>
+
+  <div class="list">
+    <article>
+      <div class="head"><h2>Predators and prey: Lotka-Volterra</h2><span class="chip ok">14x at 1,500 steps</span></div>
+      <div class="meta">2 species · 500 of each at the start · 1000 by 1000 box</div>
+      <ul class="rules">
+        <li>A predator (orange) that meets a prey (green) eats it and makes another predator, with probability 0.1.</li>
+        <li>Prey reproduce on their own, so more prey means more births.</li>
+        <li>Predators die at a fixed rate.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 50</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 50">Copy</button></div>
+<div class="times"><span><b>Serial</b> 1.0 s</span><span><b>Parallel</b> 0.2 s</span><span class="chip mid">4.3x faster</span></div>
+<p class="runnote">Not much happens in 50 steps: predators rise and prey fall.</p>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 250</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 250">Copy</button></div>
+<div class="times"><span><b>Serial</b> 2.7 s</span><span><b>Parallel</b> 0.3 s</span><span class="chip ok">8.5x faster</span></div>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 1500</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 1500">Copy</button></div>
+<div class="times"><span><b>Serial</b> 23 s</span><span><b>Parallel</b> 1.6 s</span><span class="chip ok">14x faster</span></div>
+<p class="runnote">The first full cycles of boom and bust appear.</p>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 4500</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_lotka_volterra.csv 500 1000 1000 4500">Copy</button></div>
+<div class="times"><span><b>Serial</b> 1 min 03 s</span><span><b>Parallel</b> 5.5 s</span><span class="chip ok">11x faster</span></div>
+<p class="runnote">Run this one with the serial block commented out. In this run the prey hit zero at step 3,285.</p>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/lv_4500_snapshot.png" data-video="gallery/reaction_diffusion/lv_4500.mp4" alt="Predators (orange) sweep through a boom of prey (green)." loading="lazy"></span><figcaption>Step 2,985. Predators (orange) sweep through a boom of prey (green). Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/lv_4500_counts.png" alt="Each boom in prey is followed by a boom in predators. The swings grow until the prey hit zero, and then the predators starve." loading="lazy"><figcaption>Each boom in prey is followed by a boom in predators. The swings grow until the prey hit zero, and then the predators starve. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">Many rabbits make the wolves happy, so the wolves rise. Then the wolves run short of rabbits and die off, the rabbits recover, and the cycle repeats. The differential equations from the 1920s oscillate smoothly forever. Our finite, random particles drift from one cycle to a larger one, and on a long enough run somebody goes extinct. Usually the prey run out and the predators starve after them. If the predators happen to die first, nothing stops the prey, and the simulation slows to a crawl as their numbers explode: press Ctrl+C and run it again. <strong>Why we care:</strong> this is the run that earns the parallel code its keep. The story only shows up over thousands of steps, and thousands of steps is exactly what the serial simulator makes you wait for.</p>
+      <p class="ask"><b>Ask the class:</b> if we keep raising the number of steps, what happens to the serial time? Once we trust the parallel simulator, is the serial run still worth waiting for?</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Two predators, one food supply: Gause</h2><span class="chip ok">12x</span></div>
+      <div class="meta">3 species · 500 of each at the start · 1000 by 1000 box · 4,500 steps</div>
+      <ul class="rules">
+        <li>The resource (green) reproduces on its own.</li>
+        <li>Competitors A (blue) and B (orange) each eat the resource with probability 0.1. They never touch each other.</li>
+        <li>Both competitors die on their own. B dies slightly faster: 0.03 against 0.02.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_gause.csv 500 1000 1000 4500</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_gause.csv 500 1000 1000 4500">Copy</button></div>
+<div class="times"><span><b>Serial</b> 44 s</span><span><b>Parallel</b> 3.8 s</span><span class="chip ok">12x faster</span></div>
+<p class="runnote">The two times come from two runs whose populations averaged the same size.</p>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/gause_snapshot.png" data-video="gallery/reaction_diffusion/gause.mp4" alt="Competitor A (blue) spreads through a boom in the resource (green). Competitor B (orange) is already extinct." loading="lazy"></span><figcaption>Step 1,530. Competitor A (blue) spreads through a boom in the resource (green). Competitor B (orange) is already extinct. Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/gause_counts.png" alt="B goes extinct at step 970. A then eats the resource to zero at step 1,675 and starves." loading="lazy"><figcaption>B goes extinct at step 970. A then eats the resource to zero at step 1,675 and starves. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">Two nearly identical competitors start scattered through the same box, and one of them dwindles away while the other feasts on each boom in the resource. In 9 of our 10 runs, the loser was B. The winner does not get a happy ending here: with no rival, A eats the resource down to nothing and then starves, so every one of our runs ended with an empty box. The first half of the story is the competitive exclusion principle: two species that compete for exactly the same resource cannot coexist forever. <strong>Why we care:</strong> it gives a mathematical reason that ecosystems sort into niches. If two predators are going to share an environment, they had better not eat the same food.</p>
+      <p class="ask"><b>Ask the class:</b> before you press Enter, can both competitors survive on the same food supply?</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Epidemics: SIRS</h2><span class="chip ok">19x</span></div>
+      <div class="meta">3 species · 500 of each at the start · 1000 by 1000 box · 4,500 steps</div>
+      <ul class="rules">
+        <li>An infected individual (orange) that meets a susceptible one (blue) infects them with probability 0.1.</li>
+        <li>Infected individuals recover on their own (green), so the disease is not lethal.</li>
+        <li>Recovered individuals slowly lose immunity and become susceptible again. That is the final S in SIRS.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_sirs.csv 500 1000 1000 4500</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_sirs.csv 500 1000 1000 4500">Copy</button></div>
+<div class="times"><span><b>Serial</b> 2 min 50 s</span><span><b>Parallel</b> 9.2 s</span><span class="chip ok">19x faster</span></div>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/sirs_snapshot.png" data-video="gallery/reaction_diffusion/sirs.mp4" alt="Pockets of susceptible individuals (blue) among infected (orange) and recovered (green)." loading="lazy"></span><figcaption>Step 2,880. Pockets of susceptible individuals (blue) among infected (orange) and recovered (green). Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/sirs_counts.png" alt="After an early wave of infections, the counts jitter around an equilibrium." loading="lazy"><figcaption>After an early wave of infections, the counts jitter around an equilibrium. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">The counts are noisy, but everything heads toward an equilibrium where the disease stays in the population. Every species takes steps of length 1, because people do not spread out wildly, and that leaves pockets of susceptible people ringed by infected and recovered ones. <strong>Why we care:</strong> nobody should forecast a real epidemic with this. The point is that the simulator we built for ecology models a disease with no change to the code.</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Grass, rabbits, wolves: the food chain</h2><span class="chip mid">5.5x</span></div>
+      <div class="meta">3 species · 200 grass, 80 rabbits, 20 wolves · 800 by 600 box · 2,000 steps · the exercise from the code along</div>
+      <ul class="rules">
+        <li>Grass (green) sprouts on its own.</li>
+        <li>Rabbits (tan) eat grass, and wolves (gray) eat rabbits, each with probability 0.1.</li>
+        <li>Wolves die at a fixed rate.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_food_chain.csv 200,80,20 800 600 2000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_food_chain.csv 200,80,20 800 600 2000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 4.0 s</span><span><b>Parallel</b> 0.7 s</span><span class="chip mid">5.5x faster</span></div>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/food_chain_snapshot.png" data-video="gallery/reaction_diffusion/food_chain.mp4" alt="Grass (green), rabbits (tan), and wolves (gray)." loading="lazy"></span><figcaption>Step 1,995. Grass (green), rabbits (tan), and wolves (gray). Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/food_chain_counts.png" alt="The three levels of the food chain over 2,000 steps." loading="lazy"><figcaption>The three levels of the food chain over 2,000 steps. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">Three levels, one line of energy: grass to rabbits to wolves. The comma-separated counts give each species its own starting number. <strong>Why we care:</strong> it is Lotka-Volterra with one more link, and it shows one of the smallest speedups on the page. With only a few hundred particles there is very little work to split, and the cost of handing strips to processes eats much of the gain.</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>A genetic oscillator: the repressilator</h2><span class="chip ok">35x at 4,500 particles</span></div>
+      <div class="meta">3 species · 1000 by 1000 box · no births or deaths, so the total never changes</div>
+      <ul class="rules">
+        <li>lacI (light blue) converts cI, tetR (yellow) converts lacI, and cI (pink) converts tetR, each with probability 0.15.</li>
+        <li>Each species eats the one it represses, and the three rules close a cycle.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_repressilator.csv 500 1000 1000 4500</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_repressilator.csv 500 1000 1000 4500">Copy</button></div>
+<div class="times"><span><b>Serial</b> 4 min 46 s</span><span><b>Parallel</b> 13 s</span><span class="chip ok">23x faster</span></div>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_repressilator.csv 1500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_repressilator.csv 1500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 9 min 38 s</span><span><b>Parallel</b> 17 s</span><span class="chip ok">35x faster</span></div>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_repressilator.csv 4500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_repressilator.csv 4500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> about 77 min 59 s (est.)</span><span><b>Parallel</b> 2 min 09 s</span><span class="chip ok">36x faster</span></div>
+<p class="runnote">13,500 particles is close to the limit of a laptop. The serial run would take over an hour.</p>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/repress_1500_snapshot.png" data-video="gallery/reaction_diffusion/repress_1500.mp4" alt="Patches of lacI (light blue), tetR (yellow), and cI (pink), with reactions on the frontiers." loading="lazy"></span><figcaption>Step 885. Patches of lacI (light blue), tetR (yellow), and cI (pink), with reactions on the frontiers. Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/repress_1500_counts.png" alt="A peak in cI (pink) is followed by lacI (light blue), then tetR (yellow), then cI again." loading="lazy"><figcaption>A peak in cI (pink) is followed by lacI (light blue), then tetR (yellow), then cI again. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">Particles that start at random sort themselves into patches of each color, and all the change happens on the frontiers between patches. The counts peak in a fixed order: pink, then light blue, then yellow, then pink again. When pink is abundant it is a feast for light blue, which is the same idea that drove Lotka-Volterra 75 years earlier. More particles means less randomness and sharper peaks. <strong>Why we care:</strong> Elowitz and Leibler built this circuit in a living bacterium around 2000, and three lines of a CSV file reproduce its oscillation.</p>
+      <p class="ask"><b>Ask the class:</b> every species starts with the same count, placed at random. Will they stay balanced? If not, in what order will they rise and fall?</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Rock, paper, scissors</h2><span class="chip ok">11x</span></div>
+      <div class="meta">3 species · 1000 by 1000 box · 1,000 steps · the repressilator with every rate set to 1.0</div>
+      <ul class="rules">
+        <li>Rock (gray) beats scissors (orange), paper (blue) beats rock, and scissors beats paper.</li>
+        <li>Every encounter converts the loser. There is no dice roll.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_rps.csv 1500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_rps.csv 1500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 3 min 00 s</span><span><b>Parallel</b> 16 s</span><span class="chip ok">11x faster</span></div>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py clustered data/reactions_rps.csv 500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py clustered data/reactions_rps.csv 500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 58 s</span><span><b>Parallel</b> 2.5 s</span><span class="chip ok">23x faster</span></div>
+<p class="runnote">Fewer particles, started in bands: the fronts chase each other and begin to curl.</p>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/rps_1500_snapshot.png" data-video="gallery/reaction_diffusion/rps_1500.mp4" alt="Rock (gray), paper (blue), and scissors (orange) in interleaved fronts." loading="lazy"></span><figcaption>Step 545. Rock (gray), paper (blue), and scissors (orange) in interleaved fronts. Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/rps_1500_counts.png" alt="With every rate at 1.0, the species take turns peaking much faster than in the repressilator." loading="lazy"><figcaption>With every rate at 1.0, the species take turns peaking much faster than in the repressilator. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <div class="figs one"><figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/rps_clustered_snapshot.png" data-video="gallery/reaction_diffusion/rps_clustered.mp4" alt="Rock-paper-scissors with 500 per species, started in bands." loading="lazy"></span><figcaption>Step 390. Rock-paper-scissors with 500 per species, started in bands. Click to play.</figcaption></figure></div>
+      <p class="why">Taking the randomness out of the reactions makes the oscillations faster and the peaks sharper than the repressilator's. The order is scissors, then rock, then paper: when scissors are everywhere, every rock is surrounded by prey. Started in bands with fewer particles, the fronts chase each other and begin to curl. <strong>Why we care:</strong> one number in a CSV file separates a landmark of synthetic biology from a playground game. And the serial simulator would keep us waiting 3 min 00 s for what the parallel one does in 16 s.</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Rock, paper, scissors, lizard, Spock</h2><span class="chip ok">33x</span></div>
+      <div class="meta">5 species · 1,500 of each (7,500 particles) · 1000 by 1000 box · 1,000 steps</div>
+      <ul class="rules">
+        <li>Rock (gray) beats scissors and lizard. Paper (blue) beats rock and Spock.</li>
+        <li>Scissors (orange) beats paper and lizard. Lizard (green) beats paper and Spock.</li>
+        <li>Spock (purple) beats rock and scissors. Every rate is 1.0.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py clustered data/reactions_rpsls.csv 1500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py clustered data/reactions_rpsls.csv 1500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> about 26 min 34 s (est.)</span><span><b>Parallel</b> 40 s</span><span class="chip ok">40x faster</span></div>
+<p class="runnote">Bands are unfair: rock and paper are gone within 25 steps.</p>
+</div>
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_rpsls.csv 1500 1000 1000 1000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_rpsls.csv 1500 1000 1000 1000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 25 min 09 s</span><span><b>Parallel</b> 46 s</span><span class="chip ok">33x faster</span></div>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/rpsls_1500_snapshot.png" data-video="gallery/reaction_diffusion/rpsls_1500.mp4" alt="Rock (gray), paper (blue), scissors (orange), lizard (green), and Spock (purple)." loading="lazy"></span><figcaption>Step 595. Rock (gray), paper (blue), scissors (orange), lizard (green), and Spock (purple). Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/rpsls_1500_counts.png" alt="All five species survive this run, but the peaks are far less orderly than with three." loading="lazy"><figcaption>All five species survive this run, but the peaks are far less orderly than with three. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">Five species still make radiating stripes, but the peaks are far less orderly than with three, and we would need many more particles to see a clean rotation. Often one or two strategies die out and leave an ordinary three-way game. That is what happens when we start in bands: rock and paper vanish within 25 steps, and scissors, lizard, and Spock play on. <strong>Why we care:</strong> this is the heaviest run on the tour: 25 min 09 s of serial work done in 46 s. It is the one where the fans spin up and the gap between serial and parallel is easiest to feel.</p>
+    </article>
+
+    <article>
+      <div class="head"><h2>Turing patterns: Gray-Scott</h2><span class="chip ok">14x</span></div>
+      <div class="meta">3 species · 1,500 U, 50 V, 0 P · 800 by 600 box · 4,000 steps · an extra to explore</div>
+      <ul class="rules">
+        <li>V (yellow) meets U (blue) and turns it into another V, with probability 0.5.</li>
+        <li>V decays into inert P (dark), and P turns back into U.</li>
+        <li>U takes steps of length 4 and V of length 1: the food moves fast and the activator moves slowly.</li>
+      </ul>
+      <div class="runs">
+        <div class="run">
+<div class="cmd"><code>python3 main.py random data/reactions_gray_scott.csv 1500,50,0 800 600 4000</code><button type="button" class="copy" data-cmd="python3 main.py random data/reactions_gray_scott.csv 1500,50,0 800 600 4000">Copy</button></div>
+<div class="times"><span><b>Serial</b> 1 min 41 s</span><span><b>Parallel</b> 7.3 s</span><span class="chip ok">14x faster</span></div>
+</div>
+      </div>
+      <div class="figs">
+<figure class="fig"><span class="play"><img src="gallery/reaction_diffusion/gray_scott_snapshot.png" data-video="gallery/reaction_diffusion/gray_scott.mp4" alt="V (yellow) has taken over most of the box, with U (blue) and P (dark) scattered through it." loading="lazy"></span><figcaption>Step 2,415. V (yellow) has taken over most of the box, with U (blue) and P (dark) scattered through it. Click to play the run at double speed.</figcaption></figure>
+<figure class="fig"><img src="gallery/reaction_diffusion/gray_scott_counts.png" alt="V explodes through the U it started with, then settles." loading="lazy"><figcaption>V explodes through the U it started with, then settles. The axis counts frames, and one frame is 5 steps.</figcaption></figure>
+</div>
+      <p class="why">This is the particle version of the model behind spots and stripes on animal coats. Slow V clusters eat the U around them while fresh U drifts in from far away. With this few particles, V takes over most of the box and we get noisy patches, with no crisp spots. <strong>Why we care:</strong> sharp Turing patterns need a huge number of particles, far more than a laptop can simulate. That is the argument for a cluster with hundreds of cores.</p>
+    </article>
+  </div>
+
+  <footer>
+    <p>A good order: the first three Lotka-Volterra runs with the serial simulator still on, to watch the gap open. Then comment out the serial block in <code>main.py</code>, as in <a href="https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/a-tour-of-reaction-systems/">the code along</a>, and run everything else in parallel only. Food chain and Gray-Scott are extras.</p>
+    <p>Timed 11/12 with the course's finished code (<code>Finished Code/python/src/reaction_diffusion</code>). Serial runs were timed a few at a time, each on its own core. The Gause times come from a matched pair of runs, because one early collapse makes a run finish in seconds.</p>
+  </footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Zoomed figure">
+  <div class="lb-bar"><button type="button" id="lb-close" aria-label="Close">&times;</button></div>
+  <img id="lb-img" alt="">
+  <video id="lb-video" controls playsinline loop hidden></video>
+</div>
+<script>
+(function () {
+  var lb = document.getElementById("lb");
+  var big = document.getElementById("lb-img");
+  var player = document.getElementById("lb-video");
+  function close() {
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+    player.pause();
+    player.removeAttribute("src");
+    player.load();
+  }
+  function open(img) {
+    var video = img.getAttribute("data-video");
+    if (video) {
+      big.hidden = true;
+      player.hidden = false;
+      player.src = video;
+      var playing = player.play();
+      if (playing !== undefined) { playing.catch(function () {}); }
+    } else {
+      player.hidden = true;
+      big.hidden = false;
+      big.src = img.getAttribute("src");
+      big.alt = img.alt;
+    }
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  document.querySelectorAll(".fig img").forEach(function (img) {
+    img.tabIndex = 0;
+    img.addEventListener("click", function () { open(img); });
+    img.addEventListener("keydown", function (e) { if (e.key === "Enter") { open(img); } });
+  });
+  lb.addEventListener("click", function (e) { if (e.target !== player) { close(); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { close(); } });
+
+  document.querySelectorAll(".copy").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var text = button.getAttribute("data-cmd");
+      function done() {
+        button.textContent = "Copied";
+        setTimeout(function () { button.textContent = "Copy"; }, 1400);
+      }
+      function fallback() {
+        var code = button.parentNode.querySelector("code");
+        var range = document.createRange();
+        range.selectNodeContents(code);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        button.textContent = "Selected";
+        setTimeout(function () { button.textContent = "Copy"; }, 1400);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      } else {
+        fallback();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

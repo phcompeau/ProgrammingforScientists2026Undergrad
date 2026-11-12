@@ -589,6 +589,9 @@ weeks:
             url: "https://programmingforlovers.com/chapter-6/chapter-6-python-code-alongs/parallel-reaction-diffusion-processing-strips-in-python/"
             minutes: 28
             note: "New material, not covered in class. Needed for HW6."
+          - kind: after
+            text: "Reaction Systems Tour: all eight reaction systems from our simulator, with the command that runs each one and its serial and parallel run times"
+            url: "reaction-diffusion.html"
       - date: 2026-11-13
         kind: no-class
         title: "No recitation: AI4Bio symposium"
