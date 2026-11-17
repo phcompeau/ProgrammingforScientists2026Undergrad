@@ -646,8 +646,8 @@ weeks:
             note: "Needed for HW7."
       - date: 2026-11-20
         kind: recitation
-        title: "Recitation 8: Depth-first search and hard problems"
-        detail: "Backtracking for the knight's tour, and why some graph questions may never be easy."
+        title: "Recitation 8: Theory and the limits of computation"
+        detail: "Self-reference, the halting problem, and P vs. NP, and how this connects to what OpenAI is doing right now."
         due:
           - text: "HW6 due (parallel sandpiles)"
           - text: "First version of your project app live on the web"
@@ -694,10 +694,6 @@ weeks:
     start: 2026-11-30
     end: 2026-12-04
     days:
-      - date: 2026-11-30
-        kind: deadline
-        due:
-          - text: "HW7 due (assembly)"
       - date: 2026-12-01
         kind: lecture
         title: "Project demo day"
@@ -713,6 +709,8 @@ weeks:
         kind: no-class
         title: "No recitation: optional Midterm 2 review"
         detail: "Attendance is not taken."
+        due:
+          - text: "HW7 due (assembly)"
 
   - title: "Finals week"
     label: "Finals"
