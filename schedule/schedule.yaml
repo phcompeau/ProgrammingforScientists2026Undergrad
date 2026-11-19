@@ -644,6 +644,9 @@ weeks:
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/loops-and-functions-in-x-toy/"
             minutes: 34
             note: "Needed for HW7."
+          - kind: after
+            text: "Reaction Systems Tour: all eight reaction systems from our simulator, with the command that runs each one and its serial and parallel run times"
+            url: "reaction-diffusion.html"
       - date: 2026-11-20
         kind: recitation
         title: "Recitation 8: Theory and the limits of computation"
