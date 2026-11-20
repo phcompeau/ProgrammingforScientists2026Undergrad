@@ -649,8 +649,8 @@ weeks:
             url: "reaction-diffusion.html"
       - date: 2026-11-20
         kind: recitation
-        title: "Recitation 8: Theory and the limits of computation"
-        detail: "Self-reference, the halting problem, and P vs. NP, and how this connects to what OpenAI is doing right now."
+        title: "Recitation 8: Self-reference and the halting problem"
+        detail: "Programs that talk about themselves, and the halting problem: a question no program can answer."
         due:
           - text: "HW6 due (parallel sandpiles)"
           - text: "First version of your project app live on the web"
@@ -665,7 +665,7 @@ weeks:
       - date: 2026-11-24
         kind: lecture
         title: "Assembly III"
-        detail: "Subroutines in X-Toy: computing a GCD the slow way. Nothing new to prepare. Euclid's speedup and the limits of the machine (7.10-7.12) follow if time allows."
+        detail: "Subroutines in X-Toy: computing a GCD the slow way. Nothing new to prepare. Euclid's speedup (7.10) follows if time allows."
         prepare:
           - kind: in-class
             text: "Code along 7.8: The Trivial GCD Algorithm in X-Toy"
@@ -680,14 +680,6 @@ weeks:
             text: "Code along 7.10: Euclid's GCD Algorithm in X-Toy: A Beautiful Speedup"
             url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/euclids-gcd-algorithm-in-x-toy/"
             minutes: 18
-          - kind: after
-            text: "Code along 7.11: The Limits of the Machine: Self-Reference and Programs That Rewrite Themselves"
-            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/self-reference-and-programs-that-rewrite-themselves/"
-            minutes: 27
-          - kind: after
-            text: "Code along 7.12: Turing Machines and the Halting Problem"
-            url: "https://programmingforlovers.com/chapter-7/chapter-7-python-code-alongs/turing-machines-and-the-halting-problem/"
-            minutes: 31
       - date: 2026-11-26
         kind: no-class
         title: "Thanksgiving, no class and no recitation"
@@ -709,9 +701,9 @@ weeks:
         title: "Project assessment, in class"
         detail: "Closed and on paper, about your own project."
       - date: 2026-12-04
-        kind: no-class
-        title: "No recitation: optional Midterm 2 review"
-        detail: "Attendance is not taken."
+        kind: recitation
+        title: "Recitation 9: P vs. NP"
+        detail: "P vs. NP, and how it connects to what OpenAI is doing right now."
         due:
           - text: "HW7 due (assembly)"
 
