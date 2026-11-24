@@ -1,0 +1,33 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+// EuclidGCD(a, b)
+//     if a == 0
+//         return b
+//     if b == 0
+//         return a
+//     while a != b
+//         if a > b
+//             a = a - b
+//         else
+//             b = b - a
+//     return a
+
+function main
+// Reads a and b from stdin and stores them in M[01] and M[02].
+// Calls EuclidGCD at 0x20.
+// Writes the GCD (in R6) to stdout, then halts.
+
+
+function EuclidGCD
+// Input: R1 = a, R2 = b
+// Output: R6 = GCD(a, b)
+// Return address: RF
+// Hint: TOY can only test whether a register is zero or positive,
+// so compute a - b and branch on its sign.
